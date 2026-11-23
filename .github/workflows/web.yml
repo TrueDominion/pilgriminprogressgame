@@ -69,7 +69,8 @@ jobs:
 
       - name: Asset pipeline test
         run: |
-          sudo apt-get install -y -qq ffmpeg > /dev/null
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg > /dev/null
           pip install -q numpy pillow
           python3 tools/tests/test_pipeline.py
 
