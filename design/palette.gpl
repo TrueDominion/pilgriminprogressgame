@@ -1,0 +1,52 @@
+GIMP Palette
+Name: Pilgrim in Progress master v1
+Columns: 8
+# 48 colours. Locked in phase 1. Anchors from the web prototype.
+ 15  10  26	night #0f0a1a
+ 29  21  48	night #1d1530 night (anchor)
+ 36  26  56	night #241a38 ink (anchor)
+ 53  42  82	night #352a52
+ 74  63 107	night #4a3f6b
+107  95 138	night #6b5f8a
+255 250 240	parchment #fffaf0
+244 234 213	parchment #f4ead5 parchment (anchor)
+227 211 176	parchment #e3d3b0
+201 180 138	parchment #c9b48a
+168 144 106	parchment #a8906a
+133 112  79	parchment #85704f
+ 94  78  56	parchment #5e4e38
+ 59  48  36	parchment #3b3024
+255 242 194	gold #fff2c2
+249 215 126	gold #f9d77e
+240 185  77	gold #f0b94d gold (anchor)
+212 147  47	gold #d4932f
+168 105  30	gold #a8691e
+247 165 138	ember #f7a58a
+227 118  90	ember #e3765a
+196  81  58	ember #c4513a ember (anchor)
+156  58  43	ember #9c3a2b
+110  38  32	ember #6e2620
+ 67  24  23	ember #431817
+214 230 163	moss #d6e6a3
+169 199 122	moss #a9c77a
+132 169  94	moss #84a95e
+106 143  78	moss #6a8f4e moss (anchor)
+ 79 110  59	moss #4f6e3b
+ 54  80  44	moss #36502c
+ 34  51  30	moss #22331e
+228 241 247	sky #e4f1f7
+168 211 230	sky #a8d3e6
+115 174 208	sky #73aed0
+ 77 132 176	sky #4d84b0
+ 53  94 140	sky #355e8c
+ 38  64 106	sky #26406a
+ 26  42  72	sky #1a2a48
+138  90  52	earth #8a5a34
+107  74  46	earth #6b4a2e
+ 74  48  32	earth #4a3020
+ 46  29  20	earth #2e1d14
+199 195 207	stone #c7c3cf
+152 147 166	stone #9893a6
+108 103 125	stone #6c677d
+ 70  66  90	stone #46425a
+184  58 107	accent #b83a6b

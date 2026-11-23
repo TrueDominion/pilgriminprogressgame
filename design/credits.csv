@@ -1,0 +1,2 @@
+date,phase,batch,asset_ids,model,estimated_credits,actual_credits,approved_by,balance_after,notes
+2026-11-23,1,cost-quotes,n/a,estimate tools only,0,0,n/a,908.5,"Phase 1 quotes via Higgsfield estimate tools; no jobs submitted. Starting balance 908.5 (Plus plan)."

@@ -3,7 +3,7 @@
 A 2D pixel-art side-scrolling adventure after John Bunyan's *The Pilgrim's Progress* (1678).
 Paid, native iOS game. Web builds for playtesting.
 
-**Status:** Phase 1 (plan) awaiting approval. See `design/gdd.md`.
+**Status:** Phase 1 (plan) awaiting approval. Start with `design/phase1-review.md`.
 
 ## Stack
 

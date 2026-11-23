@@ -1,0 +1,302 @@
+id,role,type,size,stage,prompt,model,job_id,references,status,final_path,human_modified,credits_est,credits_spent,phase
+CON-style-01,style formula test,image,1024x1024,all,Style test 1: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-02,style formula test,image,1024x1024,all,Style test 2: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-03,style formula test,image,1024x1024,all,Style test 3: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-04,style formula test,image,1024x1024,all,Style test 4: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-05,style formula test,image,1024x1024,all,Style test 5: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-06,style formula test,image,1024x1024,all,Style test 6: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-07,style formula test,image,1024x1024,all,Style test 7: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-08,style formula test,image,1024x1024,all,Style test 8: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-09,style formula test,image,1024x1024,all,Style test 9: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CON-style-10,style formula test,image,1024x1024,all,Style test 10: Christian on a road at dusk. [FORMULA],nano_banana_pro,,prototype art/*.webp,planned,,,4,,2
+CHR-christian-burden,character reference sheet,image,1536x1024,1-4,Reference sheet: christian burden (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,2
+CHR-christian-free,character reference sheet,image,1536x1024,4-5,Reference sheet: christian free (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,CHR-christian-burden,planned,,,4,,3
+CHR-christian-armour,character reference sheet,image,1536x1024,5-9,Reference sheet: christian armour (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,CHR-christian-burden,planned,,,4,,3
+CHR-evangelist,character reference sheet,image,1536x1024,1-3,Reference sheet: evangelist (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,2
+CHR-pliable,character reference sheet,image,1536x1024,1-2,Reference sheet: pliable (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,2
+CHR-obstinate,character reference sheet,image,1536x1024,1,Reference sheet: obstinate (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,2
+CHR-help,character reference sheet,image,1536x1024,2,Reference sheet: help (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,3
+CHR-goodwill,character reference sheet,image,1536x1024,3,Reference sheet: goodwill (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,3
+CHR-faithful,character reference sheet,image,1536x1024,6-7,Reference sheet: faithful (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,3
+CHR-hopeful,character reference sheet,image,1536x1024,7-9,Reference sheet: hopeful (see art-bible 5). [FORMULA] + sheet line,nano_banana_pro,,,planned,,,4,,3
+CHR-giant-despair,character reference sheet,image,1536x1024,8,Reference sheet: giant despair (see art-bible 5). [FORMULA] + sheet line,Monsters studio then nano_banana_pro restyle,,,planned,,,16,,3
+CHR-apollyon,character reference sheet,image,1536x1024,6,Reference sheet: apollyon (see art-bible 5). [FORMULA] + sheet line,Monsters studio then nano_banana_pro restyle,,,planned,,,16,,3
+ANM-christian-burden-idle,sprite animation,spritesheet (loop),32x48,1-4,"Key pose: christian-burden idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-walk,sprite animation,spritesheet (loop),32x48,1-4,"Key pose: christian-burden walk, side view facing right. Video: single walk motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-jump,sprite animation,spritesheet (once),32x48,1-4,"Key pose: christian-burden jump, side view facing right. Video: single jump motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-fall,sprite animation,spritesheet (once),32x48,1-4,"Key pose: christian-burden fall, side view facing right. Video: single fall motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-land,sprite animation,spritesheet (once),32x48,1-4,"Key pose: christian-burden land, side view facing right. Video: single land motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-hurt,sprite animation,spritesheet (once),32x48,1-4,"Key pose: christian-burden hurt, side view facing right. Video: single hurt motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-interact,sprite animation,spritesheet (once),32x48,1-4,"Key pose: christian-burden interact, side view facing right. Video: single interact motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-read,sprite animation,spritesheet (once),32x48,1-4,"Key pose: christian-burden read, side view facing right. Video: single read motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-burden-wade,sprite animation,spritesheet (loop),32x48,1-4,"Key pose: christian-burden wade, side view facing right. Video: single wade motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden,planned,,,20,,2
+ANM-christian-free-idle,sprite animation,spritesheet (loop),32x48,4-5,"Key pose: christian-free idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-free-run,sprite animation,spritesheet (loop),32x48,4-5,"Key pose: christian-free run, side view facing right. Video: single run motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-free-jump,sprite animation,spritesheet (once),32x48,4-5,"Key pose: christian-free jump, side view facing right. Video: single jump motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-free-double-jump,sprite animation,spritesheet (once),32x48,4-5,"Key pose: christian-free double-jump, side view facing right. Video: single double-jump motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-free-fall,sprite animation,spritesheet (once),32x48,4-5,"Key pose: christian-free fall, side view facing right. Video: single fall motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-free-land,sprite animation,spritesheet (once),32x48,4-5,"Key pose: christian-free land, side view facing right. Video: single land motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-free-hurt,sprite animation,spritesheet (once),32x48,4-5,"Key pose: christian-free hurt, side view facing right. Video: single hurt motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-free-interact,sprite animation,spritesheet (once),32x48,4-5,"Key pose: christian-free interact, side view facing right. Video: single interact motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-free,planned,,,20,,3
+ANM-christian-armour-idle,sprite animation,spritesheet (loop),32x48,5-9,"Key pose: christian-armour idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-run,sprite animation,spritesheet (loop),32x48,5-9,"Key pose: christian-armour run, side view facing right. Video: single run motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-jump,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour jump, side view facing right. Video: single jump motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-double-jump,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour double-jump, side view facing right. Video: single double-jump motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-fall,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour fall, side view facing right. Video: single fall motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-land,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour land, side view facing right. Video: single land motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-hurt,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour hurt, side view facing right. Video: single hurt motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-interact,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour interact, side view facing right. Video: single interact motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-attack,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour attack, side view facing right. Video: single attack motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-block,sprite animation,spritesheet (once),32x48,5-9,"Key pose: christian-armour block, side view facing right. Video: single block motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-armour-block-walk,sprite animation,spritesheet (loop),32x48,5-9,"Key pose: christian-armour block-walk, side view facing right. Video: single block-walk motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-armour,planned,,,20,,3
+ANM-christian-scripted-burden-falls,sprite animation,spritesheet (once),32x48,"4,5,9","Key pose: christian-scripted burden-falls, side view facing right. Video: single burden-falls motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden; CHR-christian-free,planned,,,20,,3
+ANM-christian-scripted-doze,sprite animation,spritesheet (once),32x48,"4,5,9","Key pose: christian-scripted doze, side view facing right. Video: single doze motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden; CHR-christian-free,planned,,,20,,3
+ANM-christian-scripted-river-wade,sprite animation,spritesheet (loop),32x48,"4,5,9","Key pose: christian-scripted river-wade, side view facing right. Video: single river-wade motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-christian-burden; CHR-christian-free,planned,,,20,,3
+ANM-hopeful-idle,sprite animation,spritesheet (loop),32x48,7-9,"Key pose: hopeful idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-hopeful,planned,,,20,,3
+ANM-hopeful-walk,sprite animation,spritesheet (loop),32x48,7-9,"Key pose: hopeful walk, side view facing right. Video: single walk motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-hopeful,planned,,,20,,3
+ANM-hopeful-jump,sprite animation,spritesheet (once),32x48,7-9,"Key pose: hopeful jump, side view facing right. Video: single jump motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-hopeful,planned,,,20,,3
+ANM-hopeful-fall,sprite animation,spritesheet (once),32x48,7-9,"Key pose: hopeful fall, side view facing right. Video: single fall motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-hopeful,planned,,,20,,3
+ANM-hopeful-help,sprite animation,spritesheet (once),32x48,7-9,"Key pose: hopeful help, side view facing right. Video: single help motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-hopeful,planned,,,20,,3
+ANM-hopeful-river-wade,sprite animation,spritesheet (loop),32x48,7-9,"Key pose: hopeful river-wade, side view facing right. Video: single river-wade motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-hopeful,planned,,,20,,3
+ANM-faithful-idle,sprite animation,spritesheet (loop),32x48,6-7,"Key pose: faithful idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-faithful,planned,,,20,,3
+ANM-faithful-walk,sprite animation,spritesheet (loop),32x48,6-7,"Key pose: faithful walk, side view facing right. Video: single walk motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-faithful,planned,,,20,,3
+ANM-evangelist-idle,sprite animation,spritesheet (loop),32x48,1-3,"Key pose: evangelist idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-evangelist,planned,,,20,,2
+ANM-evangelist-point,sprite animation,spritesheet (once),32x48,1-3,"Key pose: evangelist point, side view facing right. Video: single point motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-evangelist,planned,,,20,,2
+ANM-obstinate-idle,sprite animation,spritesheet (loop),32x48,1,"Key pose: obstinate idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-obstinate,planned,,,20,,2
+ANM-obstinate-argue,sprite animation,spritesheet (once),32x48,1,"Key pose: obstinate argue, side view facing right. Video: single argue motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-obstinate,planned,,,20,,2
+ANM-pliable-idle,sprite animation,spritesheet (loop),32x48,1-2,"Key pose: pliable idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-pliable,planned,,,20,,2
+ANM-pliable-walk,sprite animation,spritesheet (loop),32x48,1-2,"Key pose: pliable walk, side view facing right. Video: single walk motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-pliable,planned,,,20,,2
+ANM-help-idle,sprite animation,spritesheet (loop),32x48,2,"Key pose: help idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-help,planned,,,20,,3
+ANM-help-reach,sprite animation,spritesheet (once),32x48,2,"Key pose: help reach, side view facing right. Video: single reach motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-help,planned,,,20,,3
+ANM-goodwill-idle,sprite animation,spritesheet (loop),32x48,3,"Key pose: goodwill idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-goodwill,planned,,,20,,3
+ANM-goodwill-welcome,sprite animation,spritesheet (once),32x48,3,"Key pose: goodwill welcome, side view facing right. Video: single welcome motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-goodwill,planned,,,20,,3
+ANM-giant-despair-walk,sprite animation,spritesheet (loop),64x96,8,"Key pose: giant-despair walk, side view facing right. Video: single walk motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-giant-despair,planned,,,20,,3
+ANM-giant-despair-idle,sprite animation,spritesheet (loop),64x96,8,"Key pose: giant-despair idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-giant-despair,planned,,,20,,3
+ANM-giant-despair-alert,sprite animation,spritesheet (once),64x96,8,"Key pose: giant-despair alert, side view facing right. Video: single alert motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-giant-despair,planned,,,20,,3
+ANM-giant-despair-stunned,sprite animation,spritesheet (once),64x96,8,"Key pose: giant-despair stunned, side view facing right. Video: single stunned motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-giant-despair,planned,,,20,,3
+ANM-apollyon-hover,sprite animation,spritesheet (loop),96x96,6,"Key pose: apollyon hover, side view facing right. Video: single hover motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-apollyon,planned,,,20,,3
+ANM-apollyon-land,sprite animation,spritesheet (once),96x96,6,"Key pose: apollyon land, side view facing right. Video: single land motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-apollyon,planned,,,20,,3
+ANM-apollyon-dart-throw,sprite animation,spritesheet (once),96x96,6,"Key pose: apollyon dart-throw, side view facing right. Video: single dart-throw motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-apollyon,planned,,,20,,3
+ANM-apollyon-swipe,sprite animation,spritesheet (once),96x96,6,"Key pose: apollyon swipe, side view facing right. Video: single swipe motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-apollyon,planned,,,20,,3
+ANM-apollyon-hurt,sprite animation,spritesheet (once),96x96,6,"Key pose: apollyon hurt, side view facing right. Video: single hurt motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-apollyon,planned,,,20,,3
+ANM-apollyon-flee,sprite animation,spritesheet (once),96x96,6,"Key pose: apollyon flee, side view facing right. Video: single flee motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,CHR-apollyon,planned,,,20,,3
+ANM-lion-idle,sprite animation,spritesheet (loop),48x32,5,"Key pose: lion idle, side view facing right. Video: single idle motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,SPR-lion keypose,planned,,,20,,3
+ANM-lion-roar,sprite animation,spritesheet (once),48x32,5,"Key pose: lion roar, side view facing right. Video: single roar motion only + camera/facing/prop locks.",flux_2 + seedance_2_5 480p 4s,,SPR-lion keypose,planned,,,20,,3
+NPC-worldly-wiseman,minor NPC key pose,sprite (static),32x48,3,"Single character worldly wiseman, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-interpreter,minor NPC key pose,sprite (static),32x48,4,"Single character interpreter, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-damsel,minor NPC key pose,sprite (static),32x48,4,"Single character damsel, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-oil-pourer,minor NPC key pose,sprite (static),32x48,4,"Single character oil pourer, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-shining-one,minor NPC key pose,sprite (static),32x48,"4,9","Single character shining one, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-formalist,minor NPC key pose,sprite (static),32x48,5,"Single character formalist, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-hypocrisy,minor NPC key pose,sprite (static),32x48,5,"Single character hypocrisy, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-timorous,minor NPC key pose,sprite (static),32x48,5,"Single character timorous, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-mistrust,minor NPC key pose,sprite (static),32x48,5,"Single character mistrust, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-watchful,minor NPC key pose,sprite (static),32x48,5,"Single character watchful, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-palace-sisters,minor NPC key pose,sprite (static),32x48,5,"Single character palace sisters, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-vanity-merchant-a,minor NPC key pose,sprite (static),32x48,7,"Single character vanity merchant a, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-vanity-merchant-b,minor NPC key pose,sprite (static),32x48,7,"Single character vanity merchant b, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-vanity-merchant-c,minor NPC key pose,sprite (static),32x48,7,"Single character vanity merchant c, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-vanity-guard,minor NPC key pose,sprite (static),32x48,7,"Single character vanity guard, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-townsfolk-a,minor NPC key pose,sprite (static),32x48,1,"Single character townsfolk a, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,2
+NPC-townsfolk-b,minor NPC key pose,sprite (static),32x48,1,"Single character townsfolk b, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,2
+NPC-christian-family,minor NPC key pose,sprite (static),32x48,1,"Single character christian family, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,2
+NPC-shepherds,minor NPC key pose,sprite (static),32x48,9,"Single character shepherds, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+NPC-vain-confidence,minor NPC key pose,sprite (static),32x48,8,"Single character vain confidence, side view facing right. [FORMULA] + key pose line",flux_2,,,planned,,,2,,3
+BG-s1-sky-smoke,parallax layer,image (layer),wide x 448,1,Stage 1 parallax layer: sky smoke. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,2
+BG-s1-far-city,parallax layer,image (layer),wide x 448,1,Stage 1 parallax layer: far city. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,2
+BG-s1-mid-streets,parallax layer,image (layer),wide x 448,1,Stage 1 parallax layer: mid streets. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,2
+BG-s1-near-walls,parallax layer,image (layer),wide x 448,1,Stage 1 parallax layer: near walls. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,2
+BG-s2-sky-grey,parallax layer,image (layer),wide x 448,2,Stage 2 parallax layer: sky grey. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s2-far-bog,parallax layer,image (layer),wide x 448,2,Stage 2 parallax layer: far bog. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s2-mid-reeds,parallax layer,image (layer),wide x 448,2,Stage 2 parallax layer: mid reeds. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s2-near-dead-trees,parallax layer,image (layer),wide x 448,2,Stage 2 parallax layer: near dead trees. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s3-sky,parallax layer,image (layer),wide x 448,3,Stage 3 parallax layer: sky. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s3-far-sinai,parallax layer,image (layer),wide x 448,3,Stage 3 parallax layer: far sinai. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s3-mid-castle,parallax layer,image (layer),wide x 448,3,Stage 3 parallax layer: mid castle. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s3-near-hedges,parallax layer,image (layer),wide x 448,3,Stage 3 parallax layer: near hedges. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s3-fg-grass,parallax layer,image (layer),wide x 448,3,Stage 3 parallax layer: fg grass. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s4-interior-parlour,parallax layer,image (layer),wide x 448,4,Stage 4 parallax layer: interior parlour. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s4-interior-fire-room,parallax layer,image (layer),wide x 448,4,Stage 4 parallax layer: interior fire room. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s4-sky-dawn,parallax layer,image (layer),wide x 448,4,Stage 4 parallax layer: sky dawn. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s4-far-hill-cross,parallax layer,image (layer),wide x 448,4,Stage 4 parallax layer: far hill cross. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s4-mid-walls,parallax layer,image (layer),wide x 448,4,Stage 4 parallax layer: mid walls. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s5-sky,parallax layer,image (layer),wide x 448,5,Stage 5 parallax layer: sky. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s5-far-palace,parallax layer,image (layer),wide x 448,5,Stage 5 parallax layer: far palace. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s5-mid-hill,parallax layer,image (layer),wide x 448,5,Stage 5 parallax layer: mid hill. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s5-near-rocks,parallax layer,image (layer),wide x 448,5,Stage 5 parallax layer: near rocks. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s5-fg-wind-grass,parallax layer,image (layer),wide x 448,5,Stage 5 parallax layer: fg wind grass. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s6-sky-valley,parallax layer,image (layer),wide x 448,6,Stage 6 parallax layer: sky valley. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s6-far-hills,parallax layer,image (layer),wide x 448,6,Stage 6 parallax layer: far hills. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s6-mid-valley,parallax layer,image (layer),wide x 448,6,Stage 6 parallax layer: mid valley. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s6-dark-ambient,parallax layer,image (layer),wide x 448,6,Stage 6 parallax layer: dark ambient. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s6-dark-fog,parallax layer,image (layer),wide x 448,6,Stage 6 parallax layer: dark fog. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s7-sky-day,parallax layer,image (layer),wide x 448,7,Stage 7 parallax layer: sky day. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s7-far-roofs,parallax layer,image (layer),wide x 448,7,Stage 7 parallax layer: far roofs. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s7-mid-stalls,parallax layer,image (layer),wide x 448,7,Stage 7 parallax layer: mid stalls. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s7-night-sky,parallax layer,image (layer),wide x 448,7,Stage 7 parallax layer: night sky. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s7-night-roofs,parallax layer,image (layer),wide x 448,7,Stage 7 parallax layer: night roofs. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s8-sky-storm,parallax layer,image (layer),wide x 448,8,Stage 8 parallax layer: sky storm. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s8-far-meadow,parallax layer,image (layer),wide x 448,8,Stage 8 parallax layer: far meadow. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s8-castle-exterior,parallax layer,image (layer),wide x 448,8,Stage 8 parallax layer: castle exterior. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s8-dungeon-interior,parallax layer,image (layer),wide x 448,8,Stage 8 parallax layer: dungeon interior. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s8-castle-yard,parallax layer,image (layer),wide x 448,8,Stage 8 parallax layer: castle yard. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s9-sky,parallax layer,image (layer),wide x 448,9,Stage 9 parallax layer: sky. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s9-far-mountains,parallax layer,image (layer),wide x 448,9,Stage 9 parallax layer: far mountains. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s9-mid-orchard,parallax layer,image (layer),wide x 448,9,Stage 9 parallax layer: mid orchard. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s9-river,parallax layer,image (layer),wide x 448,9,Stage 9 parallax layer: river. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+BG-s9-celestial-city,parallax layer,image (layer),wide x 448,9,Stage 9 parallax layer: celestial city. [FORMULA] + parallax line,nano_banana_pro + outpaint,,,planned,,,8,,3
+TIL-s1-base,tileset,tileset sheet,16x16 tiles,1,Stage 1 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s1-*,planned,,,12,,2
+TIL-s2-base,tileset,tileset sheet,16x16 tiles,2,Stage 2 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s2-*,planned,,,12,,3
+TIL-s3-base,tileset,tileset sheet,16x16 tiles,3,Stage 3 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s3-*,planned,,,12,,3
+TIL-s4-base,tileset,tileset sheet,16x16 tiles,4,Stage 4 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s4-*,planned,,,12,,3
+TIL-s5-base,tileset,tileset sheet,16x16 tiles,5,Stage 5 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s5-*,planned,,,12,,3
+TIL-s6-base,tileset,tileset sheet,16x16 tiles,6,Stage 6 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s6-*,planned,,,12,,3
+TIL-s7-base,tileset,tileset sheet,16x16 tiles,7,Stage 7 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s7-*,planned,,,12,,3
+TIL-s8-base,tileset,tileset sheet,16x16 tiles,8,Stage 8 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s8-*,planned,,,12,,3
+TIL-s9-base,tileset,tileset sheet,16x16 tiles,9,Stage 9 base tileset. [FORMULA] + tileset line,nano_banana_pro,,BG-s9-*,planned,,,12,,3
+TIL-s4-interior,tileset,tileset sheet,16x16 tiles,4,Interpreter's house interior tiles,nano_banana_pro,,,planned,,,12,,3
+TIL-s8-dungeon,tileset,tileset sheet,16x16 tiles,8,Dungeon and castle interior tiles,nano_banana_pro,,,planned,,,12,,3
+PRP-book,prop,sprite (static),16-64 px,various,Single object: book. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-roll,prop,sprite (static),16-64 px,various,Single object: roll. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-sword,prop,sprite (static),16-64 px,various,Single object: sword. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-shield,prop,sprite (static),16-64 px,various,Single object: shield. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-helmet,prop,sprite (static),16-64 px,various,Single object: helmet. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-key-promise,prop,sprite (static),16-64 px,various,Single object: key promise. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-scroll,prop,sprite (static),16-64 px,various,Single object: scroll. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-checkpoint-marker,prop,sprite (static),16-64 px,various,Single object: checkpoint marker. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-checkpoint-lit,prop,sprite (static),16-64 px,various,Single object: checkpoint lit. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-signpost,prop,sprite (static),16-64 px,various,Single object: signpost. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-barrel,prop,sprite (static),16-64 px,various,Single object: barrel. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-crate,prop,sprite (static),16-64 px,various,Single object: crate. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-cart,prop,sprite (static),16-64 px,various,Single object: cart. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-burden-sack,prop,sprite (static),16-64 px,various,Single object: burden sack. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-cross,prop,sprite (static),16-64 px,various,Single object: cross. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-sepulchre,prop,sprite (static),16-64 px,various,Single object: sepulchre. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-wicket-gate,prop,sprite (static),16-64 px,various,Single object: wicket gate. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-water-jug,prop,sprite (static),16-64 px,various,Single object: water jug. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-broom,prop,sprite (static),16-64 px,various,Single object: broom. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-telescope,prop,sprite (static),16-64 px,various,Single object: telescope. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-stile,prop,sprite (static),16-64 px,various,Single object: stile. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-pillar,prop,sprite (static),16-64 px,various,Single object: pillar. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-lion-chain,prop,sprite (static),16-64 px,various,Single object: lion chain. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-market-stall-a,prop,sprite (static),16-64 px,various,Single object: market stall a. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-market-stall-b,prop,sprite (static),16-64 px,various,Single object: market stall b. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-market-stall-c,prop,sprite (static),16-64 px,various,Single object: market stall c. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-cage,prop,sprite (static),16-64 px,various,Single object: cage. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-iron-gate,prop,sprite (static),16-64 px,various,Single object: iron gate. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-cell-door,prop,sprite (static),16-64 px,various,Single object: cell door. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-sunlight-shaft,prop,sprite (static),16-64 px,various,Single object: sunlight shaft. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-healing-leaf,prop,sprite (static),16-64 px,various,Single object: healing leaf. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-arbour,prop,sprite (static),16-64 px,various,Single object: arbour. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-bench,prop,sprite (static),16-64 px,various,Single object: bench. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-boulder,prop,sprite (static),16-64 px,various,Single object: boulder. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-arrow,prop,sprite (static),16-64 px,various,Single object: arrow. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-fiery-dart,prop,sprite (static),16-64 px,various,Single object: fiery dart. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-lamp,prop,sprite (static),16-64 px,various,Single object: lamp. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-dummy,prop,sprite (static),16-64 px,various,Single object: dummy. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-palace-door,prop,sprite (static),16-64 px,various,Single object: palace door. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+PRP-city-gate,prop,sprite (static),16-64 px,various,Single object: city gate. [FORMULA] + prop line,gpt_image_2_6,,,planned,,,1.5,,2
+APR-light-mote,animated prop,spritesheet (loop),16-64 px,various,Animated: light mote loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+APR-fire-hearth,animated prop,spritesheet (loop),16-64 px,various,Animated: fire hearth loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+APR-torch,animated prop,spritesheet (loop),16-64 px,various,Animated: torch loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+APR-mud-bubbles,animated prop,spritesheet (loop),16-64 px,various,Animated: mud bubbles loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+APR-water-surface,animated prop,spritesheet (loop),16-64 px,various,Animated: water surface loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+APR-river-water,animated prop,spritesheet (loop),16-64 px,various,Animated: river water loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+APR-floor-fire,animated prop,spritesheet (loop),16-64 px,various,Animated: floor fire loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+APR-dust-cloud,animated prop,spritesheet (loop),16-64 px,various,Animated: dust cloud loop,gpt_image_2_6 + seedance_2_5 480p,,,planned,,,20,,3
+UI-panel-frame,UI element,image,8-64 px,ui,UI: panel frame. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-button,UI element,image,8-64 px,ui,UI: button. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-button-pressed,UI element,image,8-64 px,ui,UI: button pressed. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-dialogue-box,UI element,image,8-64 px,ui,UI: dialogue box. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-portrait-frame,UI element,image,8-64 px,ui,UI: portrait frame. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-hope-lamp-full,UI element,image,8-64 px,ui,UI: hope lamp full. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-hope-lamp-empty,UI element,image,8-64 px,ui,UI: hope lamp empty. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-light-icon,UI element,image,8-64 px,ui,UI: light icon. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-scroll-icon,UI element,image,8-64 px,ui,UI: scroll icon. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-pause-icon,UI element,image,8-64 px,ui,UI: pause icon. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-touch-stick,UI element,image,8-64 px,ui,UI: touch stick. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-touch-button-jump,UI element,image,8-64 px,ui,UI: touch button jump. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-touch-button-action,UI element,image,8-64 px,ui,UI: touch button action. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-touch-button-block,UI element,image,8-64 px,ui,UI: touch button block. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-checkbox,UI element,image,8-64 px,ui,UI: checkbox. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-slider,UI element,image,8-64 px,ui,UI: slider. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-save-slot-card,UI element,image,8-64 px,ui,UI: save slot card. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-lock-icon,UI element,image,8-64 px,ui,UI: lock icon. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-codex-entry-frame,UI element,image,8-64 px,ui,UI: codex entry frame. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UI-stage-card-frame,UI element,image,8-64 px,ui,UI: stage card frame. [FORMULA] + UI line,gpt_image_2_6,,,planned,,,1.5,,2
+UIB-title-art,UI illustration,image,480x270+,ui,title art. [FORMULA] + still line,nano_banana_pro,,,planned,,,6,,2
+UIB-title-art-dawn,UI illustration,image,480x270+,ui,title art dawn. [FORMULA] + still line,nano_banana_pro,,,planned,,,6,,4
+UIB-world-map,UI illustration,image,480x270+,ui,world map. [FORMULA] + still line,nano_banana_pro,,,planned,,,6,,4
+UIB-codex-epilogue,UI illustration,image,480x270+,ui,codex epilogue. [FORMULA] + still line,nano_banana_pro,,,planned,,,6,,4
+UIB-logo-wordmark,UI illustration,image,480x270+,ui,logo wordmark. [FORMULA] + still line,nano_banana_pro,,,planned,,,6,,2
+STL-s1-opening-book,cutscene still,image,480x270,1,Stage 1 still: opening book. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,2
+STL-s2-help-pulls,cutscene still,image,480x270,2,Stage 2 still: help pulls. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s3-goodwill-gate,cutscene still,image,480x270,3,Stage 3 still: goodwill gate. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s4-burden-falls,cutscene still,image,480x270,4,Stage 4 still: burden falls. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s4-shining-ones,cutscene still,image,480x270,4,Stage 4 still: shining ones. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s5-armoury,cutscene still,image,480x270,5,Stage 5 still: armoury. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s6-apollyon-arrives,cutscene still,image,480x270,6,Stage 6 still: apollyon arrives. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s6-dawn,cutscene still,image,480x270,6,Stage 6 still: dawn. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s7-faithful-trial,cutscene still,image,480x270,7,Stage 7 still: faithful trial. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s7-hopeful-joins,cutscene still,image,480x270,7,Stage 7 still: hopeful joins. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s8-dungeon,cutscene still,image,480x270,8,Stage 8 still: dungeon. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s8-escape,cutscene still,image,480x270,8,Stage 8 still: escape. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s9-river,cutscene still,image,480x270,9,Stage 9 still: river. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s9-gate-opens,cutscene still,image,480x270,9,Stage 9 still: gate opens. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+STL-s9-credits-road,cutscene still,image,480x270,9,Stage 9 still: credits road. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
+MUS-title,music,audio (loop),90s,all,"Loopable instrumental, title (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,2
+MUS-stage1,music,audio (loop),90s,1,"Loopable instrumental, stage1 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,2
+MUS-stage2,music,audio (loop),90s,2,"Loopable instrumental, stage2 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-stage3,music,audio (loop),90s,3,"Loopable instrumental, stage3 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-stage4-house,music,audio (loop),90s,4,"Loopable instrumental, stage4 house (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-cross-sting,music,audio (loop),30s,4,"Loopable instrumental, cross sting (brief in design/audio-brief.md)",sonilo_music,,,planned,,,6,,3
+MUS-stage5,music,audio (loop),90s,5,"Loopable instrumental, stage5 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-stage6-valley,music,audio (loop),90s,6,"Loopable instrumental, stage6 valley (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-boss-apollyon,music,audio (loop),90s,6,"Loopable instrumental, boss apollyon (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-stage7-fair,music,audio (loop),90s,7,"Loopable instrumental, stage7 fair (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-stage8-castle,music,audio (loop),90s,8,"Loopable instrumental, stage8 castle (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-stage9,music,audio (loop),90s,9,"Loopable instrumental, stage9 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+MUS-finale-credits,music,audio (loop),120s,9,"Loopable instrumental, finale credits (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
+SFX-jump,sound effect,audio,0.3-4s,various,One isolated sound: jump,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-jump-burdened,sound effect,audio,0.3-4s,various,One isolated sound: jump burdened,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-double-jump,sound effect,audio,0.3-4s,various,One isolated sound: double jump,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-land,sound effect,audio,0.3-4s,various,One isolated sound: land,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-land-heavy,sound effect,audio,0.3-4s,various,One isolated sound: land heavy,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-footstep-stone,sound effect,audio,0.3-4s,various,One isolated sound: footstep stone,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-footstep-grass,sound effect,audio,0.3-4s,various,One isolated sound: footstep grass,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-footstep-mud,sound effect,audio,0.3-4s,various,One isolated sound: footstep mud,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-collect-light,sound effect,audio,0.3-4s,various,One isolated sound: collect light,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-collect-scroll,sound effect,audio,0.3-4s,various,One isolated sound: collect scroll,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-hurt,sound effect,audio,0.3-4s,various,One isolated sound: hurt,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-respawn-fade,sound effect,audio,0.3-4s,various,One isolated sound: respawn fade,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-checkpoint,sound effect,audio,0.3-4s,various,One isolated sound: checkpoint,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-menu-move,sound effect,audio,0.3-4s,various,One isolated sound: menu move,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-menu-select,sound effect,audio,0.3-4s,various,One isolated sound: menu select,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-menu-back,sound effect,audio,0.3-4s,various,One isolated sound: menu back,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-dialogue-blip,sound effect,audio,0.3-4s,various,One isolated sound: dialogue blip,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-book-read,sound effect,audio,0.3-4s,various,One isolated sound: book read,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-door-open,sound effect,audio,0.3-4s,various,One isolated sound: door open,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-knock,sound effect,audio,0.3-4s,various,One isolated sound: knock,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-mud-sink,sound effect,audio,0.3-4s,various,One isolated sound: mud sink,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-arrow-whoosh,sound effect,audio,0.3-4s,various,One isolated sound: arrow whoosh,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-arrow-hit,sound effect,audio,0.3-4s,various,One isolated sound: arrow hit,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-rock-fall,sound effect,audio,0.3-4s,various,One isolated sound: rock fall,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-rumble,sound effect,audio,0.3-4s,various,One isolated sound: rumble,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-sword-swing,sound effect,audio,0.3-4s,various,One isolated sound: sword swing,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-shield-block,sound effect,audio,0.3-4s,various,One isolated sound: shield block,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-deflect,sound effect,audio,0.3-4s,various,One isolated sound: deflect,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-dart-fire,sound effect,audio,0.3-4s,various,One isolated sound: dart fire,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-roar-lion,sound effect,audio,0.3-4s,various,One isolated sound: roar lion,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-roar-apollyon,sound effect,audio,0.3-4s,various,One isolated sound: roar apollyon,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-wings,sound effect,audio,0.3-4s,various,One isolated sound: wings,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-key-unlock,sound effect,audio,0.3-4s,various,One isolated sound: key unlock,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-giant-footstep,sound effect,audio,0.3-4s,various,One isolated sound: giant footstep,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-giant-stunned,sound effect,audio,0.3-4s,various,One isolated sound: giant stunned,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-river-water,sound effect,audio,0.3-4s,various,One isolated sound: river water,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-trumpet,sound effect,audio,0.3-4s,various,One isolated sound: trumpet,mirelo_text_to_audio,,,planned,,,1,,3
+SFX-crowd-market,sound effect,audio,0.3-4s,various,One isolated sound: crowd market,mirelo_text_to_audio,,,planned,,,1,,3
+VOX-narrator,narrator voice lines (about 40 lines),audio,per line,all,Narrator lines from content/dialogue (optional),inworld_text_to_speech,,,planned,,,96,,optional
+VOX-evangelist,Evangelist voice lines (about 12 lines),audio,per line,1-3,Evangelist lines (optional),inworld_text_to_speech,,,planned,,,29,,optional
+MKT-app-icon,app icon,image,1024x1024,store,App icon: Christian with burden silhouetted against the shining light. {F},nano_banana_pro,,CHR-christian-burden,planned,,,10,,5
+MKT-screenshot-frames,screenshot caption backgrounds,image,2868x1320,store,Decorative frame/caption band for store screenshots (gameplay captured from the game itself),gpt_image_2_6,,,planned,,,4,,5
+MKT-preview-video,App Store preview video,video,1920x886 (verify),store,"CAPTURED FROM THE GAME, not generated (Apple guideline 2.3.4). 0 credits.",screen capture,,,planned,,,0,,5
