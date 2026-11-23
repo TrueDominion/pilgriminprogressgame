@@ -1,0 +1,25 @@
+name: Bug
+description: Something broken in a build
+labels: ["bug"]
+body:
+  - type: input
+    id: build
+    attributes: { label: Build, description: Version and commit shown in the build, placeholder: "v0.2.0 (abc1234)" }
+    validations: { required: true }
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options: ["iOS (TestFlight)", "Web (Safari)", "Web (Chrome)", "Web (other)", "macOS"]
+    validations: { required: true }
+  - type: input
+    id: device
+    attributes: { label: Device and input, placeholder: "iPhone 12, touch" }
+  - type: textarea
+    id: steps
+    attributes: { label: Steps to reproduce }
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes: { label: Expected vs actual }
+    validations: { required: true }

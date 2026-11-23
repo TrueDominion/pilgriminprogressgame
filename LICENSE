@@ -1,0 +1,12 @@
+Copyright (c) 2026 TrueDominion. All rights reserved.
+
+This repository contains the source code, art, audio and text of the commercial game
+"Pilgrim in Progress". No licence is granted to copy, modify, distribute or sell any
+part of it without written permission from the copyright holder.
+
+Third-party material keeps its own licence:
+- Pixelify Sans and Figtree fonts: SIL Open Font License 1.1 (game/assets/fonts/OFL-*.txt)
+- Godot Engine: MIT licence (https://godotengine.org/license)
+- John Bunyan, The Pilgrim's Progress (1678): public domain
+- King James Version text: public domain in the United States; Crown copyright
+  (letters patent) applies in the United Kingdom. See docs/rights.md.

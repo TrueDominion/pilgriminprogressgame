@@ -1,0 +1,21 @@
+name: Task
+description: A unit of work on the board
+labels: ["task"]
+body:
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Phase
+      options: ["0 setup", "1 plan", "2 vertical slice", "3 production", "4 polish", "5 ship"]
+    validations: { required: true }
+  - type: input
+    id: stage
+    attributes: { label: Stage (if any), placeholder: "1 to 9, or n/a" }
+  - type: textarea
+    id: what
+    attributes: { label: What, description: The outcome, not the steps }
+    validations: { required: true }
+  - type: textarea
+    id: done
+    attributes: { label: Done when, description: How we test it }
+    validations: { required: true }

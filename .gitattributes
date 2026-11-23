@@ -1,0 +1,25 @@
+# Normalise line endings for text
+* text=auto eol=lf
+
+# Raw source media lives in Git LFS. Processed, in-game assets under /game stay in
+# plain git: they are small (pixel art, compressed audio) and this keeps CI from
+# spending LFS bandwidth on every build.
+art-src/**/*.png   filter=lfs diff=lfs merge=lfs -text
+art-src/**/*.jpg   filter=lfs diff=lfs merge=lfs -text
+art-src/**/*.jpeg  filter=lfs diff=lfs merge=lfs -text
+art-src/**/*.webp  filter=lfs diff=lfs merge=lfs -text
+art-src/**/*.mp4   filter=lfs diff=lfs merge=lfs -text
+art-src/**/*.mov   filter=lfs diff=lfs merge=lfs -text
+art-src/**/*.psd   filter=lfs diff=lfs merge=lfs -text
+art-src/**/*.aseprite filter=lfs diff=lfs merge=lfs -text
+audio-src/**/*.wav filter=lfs diff=lfs merge=lfs -text
+audio-src/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+audio-src/**/*.ogg filter=lfs diff=lfs merge=lfs -text
+audio-src/**/*.flac filter=lfs diff=lfs merge=lfs -text
+docs/marketing/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+
+# Godot binary resources
+*.woff2 binary
+*.png binary
+*.ogg binary
+*.wav binary

@@ -1,0 +1,27 @@
+# Godot
+.godot/
+game/.godot/
+*.translation
+export/
+build/
+# iOS export output (generated on the Mac)
+game/export/
+*.ipa
+*.xcarchive
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# Python tooling
+__pycache__/
+*.pyc
+.venv/
+# Secrets: never commit
+.env
+*.p12
+*.mobileprovision
+*.cer
+*.p8
+export_credentials.cfg
+.claude/settings.local.json

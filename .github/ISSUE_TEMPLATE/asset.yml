@@ -1,0 +1,15 @@
+name: Asset batch
+description: A Higgsfield generation batch (needs a cost estimate before work starts)
+labels: ["asset"]
+body:
+  - type: input
+    id: ids
+    attributes: { label: Asset ids from design/assets.csv }
+    validations: { required: true }
+  - type: input
+    id: estimate
+    attributes: { label: Estimated credits, description: Batches over 100 credits need owner approval }
+    validations: { required: true }
+  - type: textarea
+    id: notes
+    attributes: { label: References and notes }
