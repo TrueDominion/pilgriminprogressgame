@@ -44,3 +44,7 @@ Date: 2026-11-23. Decision needed: approve the plan (with any changes) so phase 
 5. **Git LFS covers only /art-src and /audio-src.** Processed in-game assets stay in plain git so CI never spends LFS bandwidth.
 6. **Added:** the Roll item (needed for the stage 5 arbour), Pilgrim's Aid assist option, phase restarts inside the Apollyon fight.
 7. **Screen fit:** Godot's built-in integer scaling letterboxed the iPhone by about a quarter of the screen; a small ScreenFit script now fills the screen at a whole-number scale (iPhone 15 Pro: 639 x 294 game pixels at 4x).
+
+## Gate outcome (2026-11-23)
+
+Approved by Matthew: plan accepted with all recommendations (D1, D5, D6, D7, D8 as recommended). D2: `main` created from the phase 0 commit. Credits: style tests only (about 20 credits); the Christian animation batch waits for approval of the look. D3, D4: owner actions in issue #6. D9, D10: deferred to the phase 2 gate as planned.
