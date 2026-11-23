@@ -54,15 +54,17 @@ Shared: coyote time 0.10 s, jump buffer 0.12 s, variable jump height (releasing 
 - The free set is a normal, responsive modern platformer. The contrast does the storytelling: the first jump after the Cross should make players laugh.
 - Burden penalty is mainly speed and jump height, not slippery control. Slippery control frustrates children; slowness and short jumps read as weight without being unfair.
 
-### 4.3 Level design limits (hard maximums)
+### 4.3 Level design limits
 
-| | Max step up | Max gap |
-|---|---|---|
-| Burdened | 2 tiles | 2 tiles |
-| Free, single jump | 3 tiles | 4 tiles |
-| Free, double jump | 5 tiles | 7 tiles |
+Measured with the real controller by `game/tests/movement_test.tscn` (runs in CI). The measured gap reach is one tile more than the phase 1 paper estimate, because a player only needs the hitbox's leading edge to reach the far ledge and can still jump for 0.1 s after leaving an edge (coyote time). Steps matched the estimate exactly.
 
-Computed reach: burdened 2.43 tiles gap, free 4.84, double 7.78. Required jumps on the critical path use the table above. Optional Scroll routes may use the full computed reach.
+| | Max step up | Max gap (well-timed) | Gap allowed on the critical path |
+|---|---|---|---|
+| Burdened | 2 tiles | 3 tiles | 2 tiles |
+| Free, single jump | 3 tiles | 5 tiles | 4 tiles |
+| Free, double jump | 5 tiles | 8 tiles | 7 tiles |
+
+Required jumps use the critical-path column. Optional Scroll routes may use the full maximum. Re-run the test after any change to `movement.json`.
 
 ### 4.4 Tuning rule
 

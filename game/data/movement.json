@@ -63,12 +63,15 @@
     "deflect_speed_multiplier": 1.25
   },
   "derived_for_level_design": {
-    "_doc": "Whole tiles the player can always clear, rounded down from the computed reach (tools: design/gdd.md 4.3). Hard maximums for level layouts.",
+    "_doc": "Measured by tests/movement_test.tscn with the real controller (includes hitbox width and coyote time). 'max' = clearable with a well-timed jump; 'path' = the limit for jumps the critical path requires (max minus 1 tile for gaps). Re-run the test after any movement change.",
     "burdened_max_step_tiles": 2,
-    "burdened_max_gap_tiles": 2,
+    "burdened_max_gap_tiles": 3,
+    "burdened_path_gap_tiles": 2,
     "free_max_step_tiles_single": 3,
-    "free_max_gap_tiles_single": 4,
+    "free_max_gap_tiles_single": 5,
+    "free_path_gap_tiles_single": 4,
     "free_max_step_tiles_double": 5,
-    "free_max_gap_tiles_double": 7
+    "free_max_gap_tiles_double": 8,
+    "free_path_gap_tiles_double": 7
   }
 }

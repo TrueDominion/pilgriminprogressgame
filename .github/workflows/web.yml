@@ -62,6 +62,17 @@ jobs:
         # First run imports resources; a single export on a fresh checkout can miss them.
         run: ~/godot/godot --headless --path game --import
 
+      - name: Movement reach test
+        run: |
+          ~/godot/godot --headless --fixed-fps 60 --path game res://tests/movement_test.tscn 2>&1 | tee movement.log
+          grep -q "RESULT: PASS" movement.log
+
+      - name: Asset pipeline test
+        run: |
+          sudo apt-get install -y -qq ffmpeg > /dev/null
+          pip install -q numpy pillow
+          python3 tools/tests/test_pipeline.py
+
       - name: Export web
         run: |
           set -euo pipefail

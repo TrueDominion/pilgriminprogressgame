@@ -10,6 +10,14 @@ func _ready() -> void:
 	get_viewport().size_changed.connect(_refresh.call_deferred)
 
 
+func _input(event: InputEvent) -> void:
+	var start: bool = event.is_action_pressed("jump") or event.is_action_pressed("action") \
+		or (event is InputEventScreenTouch and event.pressed) \
+		or (event is InputEventMouseButton and event.pressed)
+	if start:
+		get_tree().change_scene_to_file("res://scenes/test_range.tscn")
+
+
 func _refresh() -> void:
 	var vp := get_viewport().get_visible_rect().size
 	var win := DisplayServer.window_get_size()
