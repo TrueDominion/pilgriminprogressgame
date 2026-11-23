@@ -89,11 +89,11 @@ Minor NPCs (Worldly Wiseman, Interpreter, Watchful, the four Palace women, Timor
 
 ## 8. Pipeline (scripts in `/tools`, built in phase 2)
 
-Every generated asset goes through these steps, in order. The raw output and the prompt are saved to `/art-src` first, so every step can be rerun.
+Every generated asset goes through these steps, in order (`tools/process_image.py`). Order revised after the style tests, see `design/style-tests/report.md`. The raw output and the prompt are saved to `/art-src` first, so every step can be rerun.
 
-1. **Shrink:** detect the generated image's effective pixel size (AI pixel art is usually drawn at 4 to 8 real pixels per "pixel") and downscale with nearest-neighbour to the true grid.
-2. **Palette map:** map every pixel to the nearest colour in `palette.gpl` (perceptual distance, CIEDE2000). Report the percentage of pixels that moved more than a threshold, a quality signal.
-3. **Remove the background:** chroma-key the flat magenta or cyan key colour locally. This is free and gives hard pixel edges, which suits pixel art better than an AI matte. Higgsfield's background remover is the fallback only when the key fails.
+1. **Remove the background first:** chroma-key the flat key colour locally, reading the actual key from the image border (models often paint a muted magenta, not #ff00ff). Free, and gives hard pixel edges. Higgsfield's background remover is the fallback only when the key fails. Keying comes first so the key colour never survives as a palette-mapped fringe.
+2. **Shrink:** detect the generated image's art-pixel pitch, which is usually fractional (4.24 real pixels in the style tests), and sample one colour per art pixel.
+3. **Palette map:** map every pixel to the nearest colour in `palette.gpl` (CIEDE2000). Report the mean shift and the share of pixels moved more than delta E 10.
 4. **Consistency check (once per stage batch):** off-palette pixels, mixed pixel sizes, stray semi-transparent pixels, outline colour, light direction (manual), and a side-by-side contact sheet against the character's reference sheet.
 
 Animated sprites follow Higgsfield's video-to-sprite-sheet workflow (loaded and read in phase 1):
