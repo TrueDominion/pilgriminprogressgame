@@ -55,7 +55,8 @@ jobs:
           rm /tmp/tpl.tpz /tmp/godot.zip
 
       - name: Stamp build info
-        run: echo "{\"commit\": \"${GITHUB_SHA::7}\"}" > game/data/build.json
+        run: |
+          printf '{"commit": "%s"}\n' "${GITHUB_SHA::7}" > game/data/build.json
 
       - name: Import project
         # First run imports resources; a single export on a fresh checkout can miss them.
