@@ -9,7 +9,7 @@ A warm storybook told in honest pixels: chunky 16-pixel tiles, readable silhouet
 ## 2. Hard rules
 
 1. **Real pixel art.** Every pixel is the same size. No anti-aliasing, no blur, no gradients except dithered ones, no sub-pixel rotation. Engine filtering is nearest-neighbour everywhere.
-2. **One grid.** Tiles are 16 x 16. The player cell is 32 x 48 (Christian himself is about 20 x 40 inside it, burden adds 8 px of width). NPCs share the player's scale: adults 40 to 44 px tall, children not used. Bosses: Apollyon 96 x 96 cell, Giant Despair 64 x 96 cell.
+2. **One grid.** Tiles are 16 x 16. The player cell is 40 x 56 (Christian himself is about 24 x 48 inside it; the burden and staff use the extra width). NPCs share the player's scale: adults 46 to 52 px tall, children not used. Bosses: Apollyon 112 x 112 cell, Giant Despair 80 x 112 cell. **Changed 2026-11-24 from 40 px characters** after the small-sprite tests: sprites below 48 px lose faces and hands (`design/style-tests/report.md`).
 3. **One palette.** The 48 colours in `design/palette.gpl` are the only colours in the game. Anchors (night #1d1530, ink #241a38, parchment #f4ead5, gold #f0b94d, ember #c4513a, moss #6a8f4e) come from the web prototype. Any asset with an off-palette pixel fails the consistency check.
 4. **Light comes from the upper left** in every asset, so sprites and backgrounds agree.
 5. **Outlines:** sprites have a 1 px dark outline in ink #241a38 (or the darkest ramp colour of the adjacent area); backgrounds have no outlines. This keeps characters readable against busy parallax.
@@ -105,12 +105,12 @@ Animated sprites follow Higgsfield's video-to-sprite-sheet workflow (loaded and 
 5. Remove the background per frame (local chroma key).
 6. Crop every frame to one shared bounding box, anchored bottom centre.
 7. Assemble a grid sheet, no larger than 4096 px on either side; drop the duplicate last frame on loops.
-8. Shrink with nearest-neighbour to the 32 x 48 cell.
+8. Shrink to 48 px character height (mode sampling, at most about 1.8x), padded to the 40 x 56 cell.
 9. Map to the master palette.
 
-File naming (from the Higgsfield workflow): `{asset}_{action}_f{count}_{w}x{h}_g{cols}x{rows}_fps{n}_{loop|once}.png`, e.g. `christian-burden_walk_f8_32x48_g4x2_fps10_loop.png`.
+File naming (from the Higgsfield workflow): `{asset}_{action}_f{count}_{w}x{h}_g{cols}x{rows}_fps{n}_{loop|once}.png`, e.g. `christian-burden_walk_f8_40x56_g3x3_fps10_loop.png`.
 
-**Honest expectation on 32 x 48 sprites:** video-derived frames shrunk to this size often shimmer, and hands, faces and feet lose definition. I expect most animations to need a cleanup pass: fixing 1 to 3 pixels per frame for outline consistency and planting the feet. Budget about 30 to 60 minutes of human pixel work per animation, or accept slightly rougher motion. This is the largest quality risk in the project (see `design/risks.md`, R1).
+**Honest expectation on 48 px sprites:** video-derived frames shrunk to this size often shimmer, and hands, faces and feet lose definition. I expect most animations to need a cleanup pass: fixing 1 to 3 pixels per frame for outline consistency and planting the feet. Budget about 30 to 60 minutes of human pixel work per animation, or accept slightly rougher motion. This is the largest quality risk in the project (see `design/risks.md`, R1).
 
 ## 9. UI art
 

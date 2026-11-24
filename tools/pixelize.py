@@ -8,7 +8,7 @@ sprite cells once the subject is cropped).
 Usage:
   python3 tools/pixelize.py IN.png OUT.png                 # auto-detect grid
   python3 tools/pixelize.py IN.png OUT.png --scale 6       # force block size
-  python3 tools/pixelize.py IN.png OUT.png --target 32x48  # exact size
+  python3 tools/pixelize.py IN.png OUT.png --target 40x56  # exact size
 """
 import argparse
 

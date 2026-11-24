@@ -4,7 +4,7 @@ Status: phase 1. Reviewed at every gate. Likelihood and impact: H, M, L.
 
 | # | Risk | L | I | Mitigation | Owner | Review |
 |---|---|---|---|---|---|---|
-| R1 | **AI pixel art is not real pixel art.** Video-derived 32 x 48 sprites shimmer; tiles do not tile; style drifts between batches. | H | H | Strict style formula and reference sheets; palette mapping and consistency checks in /tools; 8 to 12 frames max; decide on human cleanup after Stage 1 evidence (schedule.md). Accept that some human pixel work is likely. | Claude (pipeline), Matthew (cleanup decision) | Phase 2 gate |
+| R1 | **AI pixel art is not real pixel art.** Video-derived 48 px sprites shimmer; tiles do not tile; style drifts between batches. | H | H | Strict style formula and reference sheets; palette mapping and consistency checks in /tools; 8 to 12 frames max; decide on human cleanup after Stage 1 evidence (schedule.md). Accept that some human pixel work is likely. | Claude (pipeline), Matthew (cleanup decision) | Phase 2 gate |
 | R2 | Credit overrun (animation rerolls run above 1.5x). | M | M | Re-quote every batch, 100-credit approval rule, report actuals vs estimate after Stage 1, 20% contingency, cut levers in budget.md. | Claude | Every batch |
 | R3 | GitHub Pages cannot publish from this **private** repository on a free GitHub plan. | H | M | Upgrade the account to GitHub Pro (lowest plan with Pages on private repos). Note: the Pages site itself is public to anyone with the URL. | Matthew | Now |
 | R4 | No `main` branch exists yet, so there is no base for pull requests or the Pages deploy. | H | L | You approve creating `main` from the phase 0 commit (one-time). | Matthew | Now |

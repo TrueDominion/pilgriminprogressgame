@@ -12,7 +12,7 @@ Paid, native iOS game. Web builds for playtesting.
 | Engine | Godot 4.7.2-stable, GDScript, Compatibility renderer (all targets) |
 | Targets | iOS (primary), Web (playtests), macOS (optional) |
 | View | 480x270 minimum, whole-number scaling, nearest-neighbour, expands to fill the screen (cap 720x416) |
-| Grid | 16x16 tiles, ~32x48 player cell |
+| Grid | 16x16 tiles, 40x56 player cell (characters 48 px tall) |
 
 ## Layout
 

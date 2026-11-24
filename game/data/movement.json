@@ -3,8 +3,8 @@
   "version": 1,
   "tile": 16,
   "hitbox": {
-    "burdened": { "w": 14, "h": 30 },
-    "free":     { "w": 12, "h": 30 }
+    "burdened": { "w": 14, "h": 36 },
+    "free":     { "w": 12, "h": 36 }
   },
   "burdened": {
     "run_speed": 78,

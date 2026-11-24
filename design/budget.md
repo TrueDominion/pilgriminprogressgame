@@ -62,7 +62,7 @@ Phase 2 (the Stage 1 vertical slice plus shared UI, props and core SFX) is estim
 
 Animation is half the budget. The levers, in order of value:
 
-1. **480p instead of 720p for sprite videos** (already applied): saves about 1,000 credits. 480p is far more resolution than a 32 x 48 sprite can use.
+1. **480p instead of 720p for sprite videos** (already applied): saves about 1,000 credits. 480p is far more resolution than a 48 px sprite can use.
 2. **Local chroma key instead of AI background removal** (already applied): saves one paid call per frame, roughly 500 frames.
 3. **Procedural idle for 20 minor NPCs** (already applied): saves about 360 credits.
 4. If we need to cut further: merge Christian's free and armoured sets by giving him the armour at the start of stage 5 and drawing set B only for the stage 4 descent (saves about 100). I do not recommend this yet: the free-but-unarmed climb is a good beat.
