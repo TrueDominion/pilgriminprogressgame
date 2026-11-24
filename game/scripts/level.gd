@@ -358,13 +358,23 @@ func _add_npc(npc: Dictionary, flags: Dictionary) -> void:
 	body.position = pos
 	body.name = str(npc["id"])
 	_world.add_child(body)
-	if npc.has("sprite") and ResourceLoader.exists(npc["sprite"]):
+	var sprite_path: String = npc.get("sprite", "res://assets/sprites/npc/%s.png" % npc["id"])
+	if ResourceLoader.exists(sprite_path):
 		var spr := Sprite2D.new()
-		spr.texture = load(npc["sprite"])
+		spr.texture = load(sprite_path)
 		spr.centered = false
-		spr.flip_h = true
+		# every NPC turns to face Christian, who arrives from the left
+		spr.flip_h = str(npc.get("faces", "left")) == "right"
 		spr.position = Vector2(-spr.texture.get_width() / 2.0, -spr.texture.get_height())
+		spr.name = "Sprite"
+		spr.set_meta("faces", str(npc.get("faces", "left")))
 		body.add_child(spr)
+		# gentle idle: a 1 px bob, offset per character so they do not move in step
+		var t := create_tween().set_loops()
+		t.tween_interval(0.6 + fmod(float(npc["x"]) * 0.37, 0.8))
+		t.tween_property(spr, "position:y", spr.position.y + 1, 0.0)
+		t.tween_interval(0.9)
+		t.tween_property(spr, "position:y", spr.position.y, 0.0)
 	else:
 		var c := Color(str(npc["colour"]))
 		_rect_poly(Rect2(-7, -44, 14, 44), Color("241a38"), body)
@@ -439,7 +449,13 @@ func _update_follower(delta: float) -> void:
 	if _follower == null or not _follower.get_meta("following", false):
 		return
 	var target := player.global_position + Vector2(-22 * player.facing, 0)
+	var before := _follower.global_position.x
 	_follower.global_position.x = move_toward(_follower.global_position.x, target.x, 140.0 * delta)
+	var spr := _follower.get_node_or_null("Sprite") as Sprite2D
+	if spr and absf(_follower.global_position.x - before) > 0.1:
+		var moving_right := _follower.global_position.x > before
+		var drawn_right: bool = spr.get_meta("faces", "left") == "right"
+		spr.flip_h = moving_right != drawn_right
 	if player.is_on_floor():
 		_follower.global_position.y = move_toward(_follower.global_position.y, target.y, 200.0 * delta)
 
