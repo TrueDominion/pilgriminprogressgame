@@ -1,4 +1,7 @@
 {
-  "_doc": "Which generated take each music track uses (audio-src/music/<track>-<take>.m4a). Owner picks by ear; change the letter and run python3 tools/build_audio.py.",
-  "music": {"title": "a", "stage1": "a"}
+  "_doc": "Which generated take each music track uses (audio-src/music/<track>-<take>.m4a). Owner picks by ear; change the letter and run python3 tools/build_audio.py. Owner chose 2026-11-24: title A, stage1 B.",
+  "music": {
+    "title": "a",
+    "stage1": "b"
+  }
 }
