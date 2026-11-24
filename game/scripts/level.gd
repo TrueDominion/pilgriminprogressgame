@@ -1,0 +1,469 @@
+extends Node2D
+## Builds and runs a stage from res://data/levels/<id>.json (greybox geometry, NPCs,
+## signs, checkpoints, Scrolls, Light, exit). All text is translation keys.
+## Saving: SaveSystem holds the active slot; checkpoints and pickups write to it.
+
+const TILE := 16
+const PLAYER_SCENE := preload("res://scenes/player.tscn")
+const LEVEL_DIR := "res://data/levels/"
+
+@export var level_id := "stage1"
+
+var def: Dictionary
+var player: Player
+var light_count := 0
+var _checkpoint_pos := Vector2.ZERO
+var _checkpoint_id := ""
+var _fading := false
+var _busy := false               # a scripted scene is running
+var _hidden := {}                # id -> Array[Node2D]
+var _interactables: Array = []   # [{pos, kind, data}]
+var _focus: Dictionary = {}      # the interactable in range, if any
+var _follower: Node2D
+var _playtime_start := 0.0
+
+@onready var _camera: Camera2D = $Camera
+@onready var _world: Node2D = $World
+@onready var _hud_stats: Label = %HudStats
+@onready var _prompt: Label = %Prompt
+@onready var _fade: ColorRect = %Fade
+@onready var _card: Label = %StageCard
+
+
+func _ready() -> void:
+	def = JSON.parse_string(FileAccess.get_file_as_string(LEVEL_DIR + level_id + ".json"))
+	if SaveSystem.data.is_empty():
+		SaveSystem.select(0)
+	_build()
+	_spawn_player()
+	_update_hud()
+	_playtime_start = Time.get_ticks_msec() / 1000.0
+	if str(SaveSystem.data.get("checkpoint", "")) == "" and not SaveSystem.data.get("flags", {}).get(level_id + "_intro", false):
+		_run_intro()
+	else:
+		_show_card()
+
+
+# ------------------------------------------------------------------ building
+
+func _tile_pos(tx: float, h: float) -> Vector2:
+	return Vector2(tx * TILE, -h * TILE)
+
+
+func _rect_poly(r: Rect2, colour: Color, parent: Node = _world) -> Polygon2D:
+	var p := Polygon2D.new()
+	p.polygon = PackedVector2Array([r.position, Vector2(r.end.x, r.position.y), r.end, Vector2(r.position.x, r.end.y)])
+	p.color = colour
+	parent.add_child(p)
+	return p
+
+
+func _solid(x0: float, x1: float, h: float) -> void:
+	var rect := Rect2(x0 * TILE, -h * TILE, (x1 - x0) * TILE, (h + 12) * TILE)
+	var body := StaticBody2D.new()
+	var shape := CollisionShape2D.new()
+	var rs := RectangleShape2D.new()
+	rs.size = rect.size
+	shape.shape = rs
+	shape.position = rect.get_center()
+	body.add_child(shape)
+	_world.add_child(body)
+	_rect_poly(rect, Color("4a3020"))
+	_rect_poly(Rect2(rect.position, Vector2(rect.size.x, 3)), Color("6c677d"))
+
+
+func _platform(x0: float, x1: float, h: float, parent: Node = _world, colour := Color("8a5a34")) -> Node2D:
+	var body := StaticBody2D.new()
+	var shape := CollisionShape2D.new()
+	var rs := RectangleShape2D.new()
+	rs.size = Vector2((x1 - x0) * TILE, 4)
+	shape.shape = rs
+	shape.one_way_collision = true
+	shape.position = Vector2((x0 + x1) * TILE / 2.0, -h * TILE + 2)
+	body.add_child(shape)
+	parent.add_child(body)
+	_rect_poly(Rect2(x0 * TILE, -h * TILE, (x1 - x0) * TILE, 4), colour, body)
+	return body
+
+
+func _label(text: String, pos: Vector2, colour := Color("c9b48a")) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_size_override("font_size", 8)
+	l.add_theme_color_override("font_color", colour)
+	l.position = pos
+	_world.add_child(l)
+	return l
+
+
+func _area(pos: Vector2, size: Vector2, on_enter: Callable) -> Area2D:
+	var a := Area2D.new()
+	var s := CollisionShape2D.new()
+	var rs := RectangleShape2D.new()
+	rs.size = size
+	s.shape = rs
+	a.add_child(s)
+	a.position = pos
+	a.body_entered.connect(func(b: Node) -> void: if b is Player: on_enter.call())
+	_world.add_child(a)
+	return a
+
+
+func _build() -> void:
+	_build_backdrop()
+	for d: Dictionary in def.get("decor", []):
+		var r := Rect2(d["x"] * TILE, -d["top"] * TILE, (d["x1"] - d["x"]) * TILE, (d["top"] - d["h"]) * TILE)
+		_rect_poly(r, Color("352a52"))
+	for s: Array in def["solids"]:
+		_solid(s[0], s[1], s[2])
+	for p: Array in def.get("platforms", []):
+		_platform(p[0], p[1], p[2])
+	for hd: Dictionary in def.get("hidden", []):
+		var nodes: Array = []
+		for p: Array in hd["platforms"]:
+			var n := _platform(p[0], p[1], p[2], _world, Color("f0b94d"))
+			n.process_mode = Node.PROCESS_MODE_DISABLED
+			n.visible = false
+			nodes.append(n)
+		_hidden[hd["id"]] = nodes
+	var saved_light: Array = SaveSystem.data.get("light", [])
+	var saved_scrolls: Array = SaveSystem.data.get("scrolls", [])
+	var flags: Dictionary = SaveSystem.data.get("flags", {})
+	# Light motes along parabolic arcs
+	var arc_i := 0
+	for arc: Array in def.get("light_arcs", []):
+		var n: int = arc[3]
+		for i in n:
+			var id := "%s_l%d_%d" % [level_id, arc_i, i]
+			if id in saved_light:
+				light_count += 1
+				continue
+			var t := (i + 0.5) / float(n)
+			var x: float = lerpf(arc[0], arc[1], t)
+			var lift := 1.2 + 1.2 * sin(t * PI)
+			_add_light(id, _tile_pos(x, arc[2] + lift))
+		arc_i += 1
+	for s: Dictionary in def.get("scrolls", []):
+		if s["id"] in saved_scrolls:
+			continue
+		_add_scroll(s["id"], _tile_pos(s["x"] + 0.5, s["h"] + 1))
+	for c: Dictionary in def.get("checkpoints", []):
+		_add_checkpoint(c)
+	for npc: Dictionary in def.get("npcs", []):
+		_add_npc(npc, flags)
+	if _follower and flags.get(level_id + "_obstinate", false):
+		_follower.set_meta("following", true)
+	for sg: Dictionary in def.get("signs", []):
+		_add_sign(sg)
+	var ex: Dictionary = def["exit"]
+	_rect_poly(Rect2(ex["x"] * TILE, -ex["h"] * TILE - 48, 6, 48), Color("f0b94d"))
+	_area(_tile_pos(ex["x"], ex["h"]) + Vector2(0, -24), Vector2(16, 48), _on_exit)
+	var b: Array = def["bounds"]
+	_camera.limit_left = int(b[0] * TILE)
+	_camera.limit_right = int(b[1] * TILE)
+	_camera.limit_bottom = 6 * TILE
+
+
+func _build_backdrop() -> void:
+	# Placeholder parallax until the Stage 1 layers are generated: red smoke sky,
+	# a far city skyline and the shining light on the horizon.
+	var sky := CanvasLayer.new()
+	sky.layer = -10
+	add_child(sky)
+	var grad := ColorRect.new()
+	grad.set_anchors_preset(Control.PRESET_FULL_RECT)
+	grad.color = Color("1d1530")
+	sky.add_child(grad)
+	var band := ColorRect.new()
+	band.anchor_right = 1.0
+	band.anchor_top = 0.45
+	band.anchor_bottom = 0.75
+	band.color = Color("431817")
+	sky.add_child(band)
+	var far := Parallax2D.new()
+	far.scroll_scale = Vector2(0.25, 0.1)
+	far.repeat_size = Vector2(640, 0)
+	far.repeat_times = 3
+	add_child(far)
+	move_child(far, 0)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7
+	var x := 0.0
+	while x < 640.0:
+		var w := rng.randf_range(18, 40)
+		var h := rng.randf_range(30, 90)
+		_rect_poly(Rect2(x, -h - 20, w, h + 200), Color("241a38"), far)
+		if rng.randf() < 0.4:
+			_rect_poly(Rect2(x + w * 0.4, -h - 34, 6, 14), Color("241a38"), far)
+		x += w + rng.randf_range(0, 6)
+	var light := Parallax2D.new()
+	light.scroll_scale = Vector2(0.05, 0.05)
+	add_child(light)
+	move_child(light, 0)
+	var glow := Polygon2D.new()
+	glow.polygon = PackedVector2Array([Vector2(0, -6), Vector2(6, 0), Vector2(0, 6), Vector2(-6, 0)])
+	glow.color = Color("f9d77e")
+	glow.position = Vector2(600, -150)
+	light.add_child(glow)
+
+
+func _add_light(id: String, pos: Vector2) -> void:
+	var holder := Node2D.new()
+	holder.position = pos
+	_world.add_child(holder)
+	var gem := Polygon2D.new()
+	gem.polygon = PackedVector2Array([Vector2(0, -3), Vector2(3, 0), Vector2(0, 3), Vector2(-3, 0)])
+	gem.color = Color("f0b94d")
+	holder.add_child(gem)
+	var a := _area(pos, Vector2(10, 10), func() -> void:
+		if not is_instance_valid(holder):
+			return
+		holder.queue_free()
+		light_count += 1
+		SaveSystem.data["light"].append(id)
+		_update_hud())
+	holder.tree_exited.connect(func() -> void: if is_instance_valid(a): a.queue_free())
+
+
+func _add_scroll(id: String, pos: Vector2) -> void:
+	var holder := Node2D.new()
+	holder.position = pos
+	_world.add_child(holder)
+	_rect_poly(Rect2(-4, -5, 8, 10), Color("f4ead5"), holder)
+	_rect_poly(Rect2(-5, -5, 10, 2), Color("a8691e"), holder)
+	_rect_poly(Rect2(-5, 3, 10, 2), Color("a8691e"), holder)
+	var a := _area(pos, Vector2(14, 14), func() -> void:
+		if not is_instance_valid(holder):
+			return
+		holder.queue_free()
+		SaveSystem.data["scrolls"].append(id)
+		SaveSystem.save()
+		_update_hud()
+		_toast(tr("HUD_SCROLL_FOUND")))
+	holder.tree_exited.connect(func() -> void: if is_instance_valid(a): a.queue_free())
+
+
+func _add_checkpoint(c: Dictionary) -> void:
+	var pos := _tile_pos(c["x"] + 0.5, c["h"])
+	var post := _rect_poly(Rect2(pos.x - 1, pos.y - 24, 2, 24), Color("85704f"))
+	var lamp := _rect_poly(Rect2(pos.x - 3, pos.y - 30, 6, 6), Color("6c677d"))
+	if str(SaveSystem.data.get("checkpoint", "")) == c["id"]:
+		lamp.color = Color("f0b94d")
+	_area(pos + Vector2(0, -16), Vector2(16, 32), func() -> void:
+		if _checkpoint_id == c["id"]:
+			return
+		_checkpoint_id = c["id"]
+		_checkpoint_pos = pos
+		lamp.color = Color("f0b94d")
+		SaveSystem.data["checkpoint"] = c["id"]
+		_save_progress()
+		_toast(tr("CHECKPOINT")))
+	post.name = "Checkpoint_" + str(c["id"])
+
+
+func _add_npc(npc: Dictionary, flags: Dictionary) -> void:
+	var pos := _tile_pos(npc["x"] + 0.5, npc["h"])
+	var body := Node2D.new()
+	body.position = pos
+	body.name = str(npc["id"])
+	_world.add_child(body)
+	if npc.has("sprite") and ResourceLoader.exists(npc["sprite"]):
+		var spr := Sprite2D.new()
+		spr.texture = load(npc["sprite"])
+		spr.centered = false
+		spr.flip_h = true
+		spr.position = Vector2(-spr.texture.get_width() / 2.0, -spr.texture.get_height())
+		body.add_child(spr)
+	else:
+		var c := Color(str(npc["colour"]))
+		_rect_poly(Rect2(-7, -44, 14, 44), Color("241a38"), body)
+		_rect_poly(Rect2(-6, -43, 12, 42), c, body)
+		_rect_poly(Rect2(-4, -42, 8, 8), Color("e3d3b0"), body)
+	var name_key := "NPC_" + str(npc["id"]).to_upper()
+	var tag := Label.new()
+	tag.text = tr(name_key) if tr(name_key) != name_key else ""
+	tag.add_theme_font_size_override("font_size", 8)
+	tag.add_theme_color_override("font_color", Color("c9b48a"))
+	tag.position = Vector2(-20, -60)
+	body.add_child(tag)
+	if npc.get("follows", false):
+		_follower = body
+	if npc.has("lines") and npc.has("trigger_x"):
+		var flag := "%s_%s" % [level_id, npc["id"]]
+		if flags.get(flag, false):
+			if npc.get("follows", false):
+				body.set_meta("following", true)
+			return
+		_area(_tile_pos(npc["trigger_x"], npc["h"]) + Vector2(0, -48), Vector2(16, 128), func() -> void:
+			if SaveSystem.data["flags"].get(flag, false) or _busy:
+				return
+			SaveSystem.data["flags"][flag] = true
+			_play_lines(npc["lines"])
+			if npc["id"] == "obstinate":
+				_follower.set_meta("following", true))
+
+
+func _add_sign(sg: Dictionary) -> void:
+	var pos := _tile_pos(sg["x"] + 0.5, sg["h"])
+	_rect_poly(Rect2(pos.x - 1, pos.y - 20, 2, 20), Color("85704f"))
+	_rect_poly(Rect2(pos.x - 8, pos.y - 26, 16, 9), Color("c9b48a"))
+	_interactables.append({"pos": pos, "kind": "read", "data": sg})
+
+
+# ------------------------------------------------------------------ play
+
+func _spawn_player() -> void:
+	player = PLAYER_SCENE.instantiate()
+	player.burdened = true
+	_world.add_child(player)
+	var sp: Array = def["spawn"]
+	_checkpoint_pos = _tile_pos(sp[0], sp[1])
+	var saved_cp := str(SaveSystem.data.get("checkpoint", ""))
+	for c: Dictionary in def.get("checkpoints", []):
+		if c["id"] == saved_cp:
+			_checkpoint_pos = _tile_pos(c["x"] + 0.5, c["h"])
+			_checkpoint_id = saved_cp
+	player.respawn_at(_checkpoint_pos)
+	player.failed.connect(func(_r: String) -> void: _respawn())
+	_camera.global_position = player.global_position + Vector2(0, -40)
+	_camera.reset_smoothing()
+
+
+func _physics_process(delta: float) -> void:
+	if player == null:
+		return
+	player.frozen = _busy or Dialogue.active or _fading
+	if player.global_position.y > def.get("fall_limit", 10) * TILE and not _fading:
+		_respawn()
+	_camera.global_position = (player.global_position + Vector2(0, -40)).round()
+	_update_follower(delta)
+	_update_focus()
+	if not _focus.is_empty() and not player.frozen and Input.is_action_just_pressed("action"):
+		_interact(_focus)
+
+
+func _update_follower(delta: float) -> void:
+	if _follower == null or not _follower.get_meta("following", false):
+		return
+	var target := player.global_position + Vector2(-22 * player.facing, 0)
+	_follower.global_position.x = move_toward(_follower.global_position.x, target.x, 140.0 * delta)
+	if player.is_on_floor():
+		_follower.global_position.y = move_toward(_follower.global_position.y, target.y, 200.0 * delta)
+
+
+func _update_focus() -> void:
+	_focus = {}
+	for it: Dictionary in _interactables:
+		if player.global_position.distance_to(it["pos"]) < 22.0:
+			_focus = it
+			break
+	_prompt.visible = not _focus.is_empty() and not Dialogue.active
+	if _prompt.visible:
+		var key := "HINT_READ" if _focus["kind"] == "read" else "HINT_TALK"
+		var btn: String = {"keys": "E", "pad": "X", "touch": tr("TOUCH_ACT")}[InputSetup.last_device]
+		_prompt.text = "%s  [%s]" % [tr(key), btn]
+
+
+func _interact(it: Dictionary) -> void:
+	var sg: Dictionary = it["data"]
+	if it["kind"] == "read":
+		_busy = true
+		await Dialogue.say(sg["lines"])
+		_busy = false
+		if sg.has("reveals"):
+			_reveal(sg["reveals"])
+
+
+func _reveal(id: String) -> void:
+	for n: Node2D in _hidden.get(id, []):
+		n.visible = true
+		n.process_mode = Node.PROCESS_MODE_INHERIT
+	await get_tree().create_timer(float(def.get("reveal_seconds", 8))).timeout
+	for n: Node2D in _hidden.get(id, []):
+		var t := create_tween()
+		t.tween_property(n, "modulate:a", 0.2, 0.15).set_trans(Tween.TRANS_LINEAR)
+		t.tween_property(n, "modulate:a", 1.0, 0.15)
+		t.set_loops(3)
+	await get_tree().create_timer(0.9).timeout
+	for n: Node2D in _hidden.get(id, []):
+		n.visible = false
+		n.process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func _play_lines(lines: Array) -> void:
+	_busy = true
+	await Dialogue.say(lines)
+	_busy = false
+	_save_progress()
+
+
+func _run_intro() -> void:
+	_busy = true
+	await get_tree().create_timer(0.4).timeout
+	await Dialogue.say(def["intro"])
+	var ch: Dictionary = def["intro_choice"]
+	while true:
+		var pick: int = await Dialogue.choose(ch["prompt"], ch["options"])
+		if pick == 1:
+			break
+		await Dialogue.say(ch["stay_lines"])
+	SaveSystem.data["flags"][level_id + "_intro"] = true
+	_save_progress()
+	_busy = false
+	_show_card()
+
+
+func _on_exit() -> void:
+	if _busy:
+		return
+	_busy = true
+	await Dialogue.say(def["exit"]["lines"])
+	SaveSystem.data["flags"][level_id + "_complete"] = true
+	SaveSystem.data["checkpoint"] = ""
+	_save_progress()
+	var t := create_tween()
+	t.tween_property(_fade, "color:a", 1.0, 0.8)
+	await t.finished
+	get_tree().change_scene_to_file("res://scenes/title.tscn")
+
+
+func _respawn() -> void:
+	if _fading:
+		return
+	_fading = true
+	var t := create_tween()
+	t.tween_property(_fade, "color:a", 1.0, 0.3)
+	t.tween_callback(func() -> void: player.respawn_at(_checkpoint_pos))
+	t.tween_property(_fade, "color:a", 0.0, 0.3)
+	t.tween_callback(func() -> void: _fading = false)
+
+
+func _save_progress() -> void:
+	var now := Time.get_ticks_msec() / 1000.0
+	SaveSystem.data["playtime_s"] = float(SaveSystem.data.get("playtime_s", 0.0)) + now - _playtime_start
+	_playtime_start = now
+	SaveSystem.data["stage"] = level_id
+	SaveSystem.save()
+
+
+# ------------------------------------------------------------------ HUD
+
+func _update_hud() -> void:
+	var total_scrolls: int = def.get("scrolls", []).size()
+	var got := 0
+	for s: Dictionary in def.get("scrolls", []):
+		if s["id"] in SaveSystem.data.get("scrolls", []):
+			got += 1
+	_hud_stats.text = "%s %d   %s %d/%d" % [tr("HUD_LIGHT"), light_count, tr("HUD_SCROLLS"), got, total_scrolls]
+
+
+func _toast(text: String) -> void:
+	_card.text = text
+	_card.modulate.a = 1.0
+	var t := create_tween()
+	t.tween_interval(1.2)
+	t.tween_property(_card, "modulate:a", 0.0, 0.5)
+
+
+func _show_card() -> void:
+	_toast(tr(def["title_key"]))

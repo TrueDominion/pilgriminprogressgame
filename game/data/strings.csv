@@ -14,3 +14,24 @@ RANGE_MUD,Mud: keep moving
 TOUCH_JUMP,Jump
 TOUCH_ACT,Act
 TOUCH_BURDEN,B
+HUD_LIGHT,Light
+HUD_SCROLLS,Scrolls
+HUD_SCROLL_FOUND,A Scroll! Added to the codex.
+NPC_WIFE,His wife
+NPC_TOWNSFOLK_A,Neighbour
+NPC_TOWNSFOLK_B,Neighbour
+NPC_OBSTINATE,Obstinate
+NPC_PLIABLE,Pliable
+NPC_EVANGELIST,Evangelist
+TITLE_NAME,Pilgrim in Progress
+TITLE_SUB,after John Bunyan · 1678
+TITLE_CONTINUE,Continue
+TITLE_BEGIN,Begin the Journey
+TITLE_CHOOSE,Choose your pilgrim
+TITLE_SLOT,Pilgrim %d
+TITLE_EMPTY,Empty · begin a new journey
+TITLE_SLOT_INFO,"%s · Light %d · Scrolls %d"
+TITLE_SLOT_DONE,Stage 1 complete
+TITLE_ERASE,Hold to erase
+TITLE_BACK,Back
+TITLE_TEST_RANGE,Movement test range

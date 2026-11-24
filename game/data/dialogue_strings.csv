@@ -1,0 +1,37 @@
+keys,en
+S1_HOME_01,"In the City of Destruction, a man sat reading a Book. The more he read, the heavier his heart grew."
+S1_HOME_02,This Book says our city will be burned with fire from heaven. What shall I do to be saved?
+S1_HOME_03,And this burden on my back grows heavier every day.
+S1_FAMILY_01,"You are tired, that is all. Sleep, and you will feel better in the morning."
+S1_CHOICE_PROMPT,"Stay with them, or go?"
+S1_CHOICE_STAY,Stay and hope the city improves
+S1_CHOICE_GO,Leave and find the way
+S1_DREAM_01,"He dreamed of red smoke over the rooftops. When he woke, the burden was heavier still."
+S1_SIGN_01,Flee from the wrath to come.
+S1_TOWN_01,There goes the man with the Book again.
+S1_TOWN_02,"He has gone soft in the head, poor fellow."
+S1_OBSTINATE_01,"Neighbour, where are you going? Come back with us!"
+S1_CHRISTIAN_02,I am going to an inheritance that cannot fade away. Come with me.
+S1_OBSTINATE_02,Tush! Away with your Book. Will you come back with us or no?
+S1_CHRISTIAN_03,"No, not I. I have laid my hand to the plough."
+S1_OBSTINATE_03,"Come, Pliable, let us go home. I will not keep company with such a fool."
+S1_PLIABLE_01,"Wait. If what he says is true, things are better where he is going. I will go with him."
+S1_OBSTINATE_04,Then you are both fools. I am going home.
+S1_PLIABLE_02,Tell me more of the place we are going. Is it truly so good?
+S1_CHRISTIAN_04,"There is a kingdom there that will never end, and crowns of glory for those who reach it."
+S1_EVANGELIST_01,Why are you crying?
+S1_CHRISTIAN_05,"Sir, I read that I am condemned to die and after that to come to judgement. I am not ready."
+S1_EVANGELIST_02,Then why do you stand still?
+S1_CHRISTIAN_06,Because I do not know which way to go.
+S1_EVANGELIST_03,Do you see yonder wicket gate?
+S1_CHRISTIAN_07,No.
+S1_EVANGELIST_04,Do you see yonder shining light?
+S1_CHRISTIAN_08,I think I do.
+S1_EVANGELIST_05,"Keep that light in your eye, and go straight toward it. There you will find the gate. Knock, and you will be told what to do."
+S1_EVANGELIST_SIGN,Read the Book when you are unsure of the way. It will show you what you cannot see.
+S1_END_01,"So he began to run, crying, 'Life, life, eternal life!'"
+HINT_READ,Read
+HINT_TALK,Talk
+HINT_NEXT,Next
+CHECKPOINT,Waystation
+STAGE1_TITLE,The City of Destruction
