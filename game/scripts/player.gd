@@ -178,8 +178,8 @@ func _update_sprite(on_floor: bool) -> void:
 	if not on_floor:
 		want = "jump" if velocity.y < 0.0 else "fall"
 	elif absf(velocity.x) > 5.0:
-		want = "walk"
-		speed = absf(velocity.x) / m.run_speed
+		want = "wade" if _mud_areas > 0 and _sprite.sprite_frames.has_animation("wade") else "walk"
+		speed = absf(velocity.x) / (m.run_speed * (m.mud_move_multiplier if want == "wade" else 1.0))
 	else:
 		want = "idle"
 	_play(want, speed)

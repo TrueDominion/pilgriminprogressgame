@@ -77,7 +77,7 @@ def main() -> None:
     p.add_argument("--ref-height", type=float, default=0.0,
                    help="subject height in source pixels that maps to --char-height; use the same value for every sheet of one character so all share one pixel size (default: this video's median)")
     p.add_argument("--pose-only", action="store_true",
-                   help="anchor every frame by its own feet: removes travel the engine already does (jump, fall)")
+                   help="anchor every frame by its own feet and centre: removes travel the engine already does (jump, fall, drift)")
     a = p.parse_args()
 
     src = Path(a.src)
@@ -108,19 +108,18 @@ def main() -> None:
             raise SystemExit("A frame is empty after keying: check the key colour")
         boxes.append((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
     if a.pose_only:
-        # shift every frame so its feet sit on the same line, then take the union box
+        # move every frame so its feet sit at the same point (bottom and horizontal centre),
+        # removing travel the engine already does (jump arcs, drift in a wading loop)
         base = max(b[3] for b in boxes)
-        shifted = []
+        cx = int(round(np.median([(b[0] + b[2]) / 2 for b in boxes])))
+        shifted, nb = [], []
         for img, b in zip(imgs, boxes):
             dy = base - b[3]
-            out = np.zeros_like(img)
-            if dy > 0:
-                out[dy:] = img[:-dy]
-            else:
-                out = img.copy()
+            dx = cx - int(round((b[0] + b[2]) / 2))
+            out = np.roll(np.roll(img, dy, axis=0), dx, axis=1)
             shifted.append(out)
-        imgs = shifted
-        boxes = [(b[0], b[1] + base - b[3], b[2], base) for b in boxes]
+            nb.append((b[0] + dx, b[1] + dy, b[2] + dx, b[3] + dy))
+        imgs, boxes = shifted, nb
     x0 = min(b[0] for b in boxes); y0 = min(b[1] for b in boxes)
     x1 = max(b[2] for b in boxes); y1 = max(b[3] for b in boxes)
     median_h = float(np.median([b[3] - b[1] for b in boxes]))
