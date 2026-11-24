@@ -10,7 +10,7 @@ Follows Higgsfield's video-to-sprite-sheet workflow with pixel-art settings
 
 Usage:
   python3 tools/frames_to_sheet.py anim.mp4 --asset christian-burden --action walk \
-      --frames 8 --cell 32x48 --char-height 40 --fps 10 --loop --out game/assets/sprites/
+      --frames 8 --cell 40x56 --char-height 48 --fps 10 --loop --out game/assets/sprites/
 """
 from __future__ import annotations
 
@@ -66,8 +66,8 @@ def main() -> None:
     p.add_argument("--asset", required=True)
     p.add_argument("--action", required=True)
     p.add_argument("--frames", type=int, default=8)
-    p.add_argument("--cell", default="32x48")
-    p.add_argument("--char-height", type=int, default=40, help="target height of the subject in pixels")
+    p.add_argument("--cell", default="40x56")
+    p.add_argument("--char-height", type=int, default=48, help="target height of the subject in pixels")
     p.add_argument("--fps", type=int, default=10)
     p.add_argument("--loop", action="store_true")
     p.add_argument("--key", choices=list(KEY_COLOURS) + ["auto"], default="auto")

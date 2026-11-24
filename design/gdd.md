@@ -44,7 +44,7 @@ All values live in `game/data/movement.json`. Units are pixels and seconds; 1 ti
 | Double jump | No | Yes, +40 px (2.5 tiles) | The signature reward |
 | Heavy landing | Falls over 3 tiles cause 0.25 s stagger (no damage) | None | Every big drop reminds you of the load |
 | Mud sink speed | 14 px/s | 6 px/s | Standing still in the Slough is dangerous |
-| Hitbox | 14 x 30 | 12 x 30 | The burden makes you wider |
+| Hitbox | 14 x 36 | 12 x 36 | The burden makes you wider (Christian is 48 px tall, 3 tiles) |
 
 Shared: coyote time 0.10 s, jump buffer 0.12 s, variable jump height (releasing Jump early cuts upward speed), 4 px ledge nudge so near-miss corners do not stop the player.
 
