@@ -244,8 +244,8 @@ STL-s8-escape,cutscene still,image,480x270,8,Stage 8 still: escape. [FORMULA] + 
 STL-s9-river,cutscene still,image,480x270,9,Stage 9 still: river. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
 STL-s9-gate-opens,cutscene still,image,480x270,9,Stage 9 still: gate opens. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
 STL-s9-credits-road,cutscene still,image,480x270,9,Stage 9 still: credits road. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
-MUS-title,music,audio (loop),90s,all,"Loopable instrumental, title (brief in design/audio-brief.md)",sonilo_music,"title-a/title-b: 0e77e2f6, c3f3426d",,"generated: 2 takes, take a in game (owner to choose)",game/assets/audio/music/title.ogg,"no (tools/build_audio.py: loop crossfade, -18 LUFS)",17,11.26,2
-MUS-stage1,music,audio (loop),90s,1,"Loopable instrumental, stage1 (brief in design/audio-brief.md)",sonilo_music,"stage1-a/stage1-b: 81351b79, c50aa831",,"generated: 2 takes, take a in game (owner to choose)",game/assets/audio/music/stage1.ogg,"no (tools/build_audio.py: loop crossfade, -18 LUFS)",17,11.26,2
+MUS-title,music,audio (loop),90s,all,"Loopable instrumental, title (brief in design/audio-brief.md)",sonilo_music,"title-a/title-b: 0e77e2f6, c3f3426d",,"generated: take A chosen by owner, in game",game/assets/audio/music/title.ogg,"no (tools/build_audio.py: loop crossfade, -18 LUFS)",17,11.26,2
+MUS-stage1,music,audio (loop),90s,1,"Loopable instrumental, stage1 (brief in design/audio-brief.md)",sonilo_music,"stage1-a/stage1-b: 81351b79, c50aa831",,"generated: take B chosen by owner, in game",game/assets/audio/music/stage1.ogg,"no (tools/build_audio.py: loop crossfade, -18 LUFS)",17,11.26,2
 MUS-stage2,music,audio (loop),90s,2,"Loopable instrumental, stage2 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
 MUS-stage3,music,audio (loop),90s,3,"Loopable instrumental, stage3 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
 MUS-stage4-house,music,audio (loop),90s,4,"Loopable instrumental, stage4 house (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
