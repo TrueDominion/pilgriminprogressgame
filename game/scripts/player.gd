@@ -43,13 +43,16 @@ var _in_jump := false
 @onready var _shape: CollisionShape2D = $Shape
 var _sprite: AnimatedSprite2D
 var _sprite_sets := {}   # "burdened" / "free" -> SpriteFrames (empty until art exists)
+var _one_shot := ""      # a one-shot animation (land, read, interact, hurt) that must finish
 
 
 func _ready() -> void:
 	sets = MovementData.load_all()
 	_sprite_sets["free"] = SpriteSheets.load_folder("res://assets/sprites/christian")
+	_sprite_sets["burdened"] = SpriteSheets.load_folder("res://assets/sprites/christian-burden")
 	_sprite = AnimatedSprite2D.new()
-	_sprite.centered = false
+	_sprite.centered = true
+	_sprite.animation_finished.connect(func() -> void: _one_shot = "")
 	add_child(_sprite)
 	_apply_set()
 
@@ -151,6 +154,10 @@ func _physics_process(delta: float) -> void:
 			stat_jump_length_px = absf(global_position.x - stat_jump_start.x)
 			_in_jump = false
 		landed.emit(fall, heavy)
+		if _sprite.visible and _sprite.sprite_frames.has_animation("land") and fall > 8.0:
+			_one_shot = "land"
+			_sprite.speed_scale = 1.0
+			_sprite.play("land")
 	if now_on_floor:
 		_air_peak_y = global_position.y
 	_was_on_floor = now_on_floor
@@ -161,18 +168,47 @@ func _physics_process(delta: float) -> void:
 func _update_sprite(on_floor: bool) -> void:
 	if not _sprite.visible:
 		return
-	# Cell is 40x56, anchored bottom-centre on the feet.
+	# Cells are anchored bottom-centre on the feet; every cell is 56 px tall.
 	_sprite.flip_h = facing < 0
-	_sprite.position = Vector2(-20, -56 + sink_depth)
-	if on_floor and absf(velocity.x) > 5.0:
-		_sprite.speed_scale = absf(velocity.x) / m.run_speed
-		if _sprite.animation != "walk" or not _sprite.is_playing():
-			_sprite.play("walk")
+	_sprite.position = Vector2(0, -28 + sink_depth)
+	if _one_shot != "":
+		return
+	var want: String
+	var speed := 1.0
+	if not on_floor:
+		want = "jump" if velocity.y < 0.0 else "fall"
+	elif absf(velocity.x) > 5.0:
+		want = "wade" if _mud_areas > 0 and _sprite.sprite_frames.has_animation("wade") else "walk"
+		speed = absf(velocity.x) / (m.run_speed * (m.mud_move_multiplier if want == "wade" else 1.0))
 	else:
-		# until idle / jump sheets exist, hold the contact frame
+		want = "idle"
+	_play(want, speed)
+
+
+func _play(anim: String, speed := 1.0) -> void:
+	var frames := _sprite.sprite_frames
+	if not frames.has_animation(anim):
+		# fall back to the first frame of the walk until the full set exists
 		_sprite.animation = "walk"
 		_sprite.frame = 0
 		_sprite.pause()
+		return
+	_sprite.speed_scale = speed
+	if _sprite.animation != anim or not _sprite.is_playing():
+		# one-shot animations (jump, fall) hold their last frame once finished
+		if _sprite.animation == anim and not frames.get_animation_loop(anim):
+			return
+		_sprite.play(anim)
+
+
+## Plays a one-shot action animation (read, interact, hurt) and waits for it.
+func play_action(anim: String) -> void:
+	if not _sprite.visible or not _sprite.sprite_frames.has_animation(anim):
+		return
+	_one_shot = anim
+	_sprite.speed_scale = 1.0
+	_sprite.play(anim)
+	await _sprite.animation_finished
 
 
 func _start_jump(vy: float, kind: String) -> void:

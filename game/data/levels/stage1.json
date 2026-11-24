@@ -1,0 +1,58 @@
+{
+  "_doc": "Stage 1 greybox, from design/levels/stage1.md. Units are tiles (16 px). x = left edge, h = height of the top surface above the base line. solids: [x0, x1, h] blocks that extend down to the bottom. platforms: one-way ledges [x0, x1, h]. hidden: platforms revealed for reveal_seconds by reading a sign. Critical-path jumps respect gdd.md 4.3 (burdened: step 2, gap 2).",
+  "id": "stage1",
+  "title_key": "STAGE1_TITLE",
+  "next": "",
+  "bounds": [0, 232],
+  "spawn": [3, 0],
+  "reveal_seconds": 8,
+  "intro": ["S1_HOME_01", "S1_HOME_02", "S1_HOME_03", "S1_FAMILY_01"],
+  "intro_choice": {"prompt": "S1_CHOICE_PROMPT", "options": ["S1_CHOICE_STAY", "S1_CHOICE_GO"], "stay_lines": ["S1_DREAM_01"]},
+  "solids": [
+    [-4, 0, 14], [0, 30, 0], [6, 7, 1], [8, 10, 2],
+    [30, 46, 1], [38, 40, 3], [46, 60, 0], [52, 54, 2],
+    [60, 100, 0], [70, 73, 2], [80, 83, 2], [86, 88, 2],
+    [100, 124, 0], [106, 109, 2], [113, 114, 3],
+    [126, 140, 0], [140, 150, 1], [150, 158, 0], [158, 166, 2], [166, 190, 0],
+    [190, 230, 0], [230, 234, 14]
+  ],
+  "platforms": [[10, 13, 4], [88, 96, 4], [109, 118, 4]],
+  "hidden": [
+    {"id": "evangelist_ledge", "platforms": [[200, 203, 2], [204, 208, 4]]}
+  ],
+  "decor": [
+    {"x": 0, "x1": 16, "h": 0, "top": 7, "kind": "house"},
+    {"x": 98, "x1": 102, "h": 0, "top": 9, "kind": "gate"}
+  ],
+  "npcs": [
+    {"id": "wife", "x": 4, "h": 0, "colour": "c9b48a", "speaker": "family"},
+    {"id": "townsfolk_a", "x": 35, "h": 1, "colour": "a8906a", "trigger_x": 32, "lines": ["S1_TOWN_01"]},
+    {"id": "townsfolk_b", "x": 57, "h": 0, "colour": "85704f", "trigger_x": 54, "lines": ["S1_TOWN_02"]},
+    {"id": "obstinate", "x": 113, "h": 0, "colour": "c4513a", "trigger_x": 103,
+      "lines": ["S1_OBSTINATE_01", "S1_CHRISTIAN_02", "S1_OBSTINATE_02", "S1_CHRISTIAN_03", "S1_OBSTINATE_03", "S1_PLIABLE_01", "S1_OBSTINATE_04"]},
+    {"id": "pliable", "x": 120, "h": 0, "colour": "f9d77e", "trigger_x": 148, "lines": ["S1_PLIABLE_02", "S1_CHRISTIAN_04"], "follows": true},
+    {"id": "evangelist", "x": 195, "h": 0, "colour": "355e8c", "sprite": "res://assets/sprites/npc/evangelist.png", "trigger_x": 188,
+      "lines": ["S1_EVANGELIST_01", "S1_CHRISTIAN_05", "S1_EVANGELIST_02", "S1_CHRISTIAN_06", "S1_EVANGELIST_03", "S1_CHRISTIAN_07", "S1_EVANGELIST_04", "S1_CHRISTIAN_08", "S1_EVANGELIST_05"]}
+  ],
+  "signs": [
+    {"id": "flee", "x": 66, "h": 0, "lines": ["S1_SIGN_01"]},
+    {"id": "evangelist_sign", "x": 198, "h": 0, "lines": ["S1_EVANGELIST_SIGN"], "reveals": "evangelist_ledge"}
+  ],
+  "checkpoints": [
+    {"id": "A", "x": 64, "h": 0},
+    {"id": "B", "x": 130, "h": 0},
+    {"id": "C", "x": 186, "h": 0}
+  ],
+  "scrolls": [
+    {"id": "s1_shelf", "x": 11, "h": 4},
+    {"id": "s1_awning", "x": 92, "h": 4},
+    {"id": "s1_ledge", "x": 206, "h": 4}
+  ],
+  "light_arcs": [
+    [12, 28, 0, 6], [30, 37, 1, 4], [38, 40, 3, 2], [44, 50, 0, 3], [52, 54, 2, 2],
+    [66, 72, 0, 4], [72, 80, 2, 4], [83, 87, 0, 3], [96, 104, 0, 4], [109, 118, 4, 5],
+    [126, 140, 0, 6], [140, 150, 1, 5], [158, 166, 2, 4], [168, 186, 0, 7], [210, 222, 0, 5]
+  ],
+  "exit": {"x": 224, "h": 0, "lines": ["S1_END_01"]},
+  "fall_limit": 10
+}

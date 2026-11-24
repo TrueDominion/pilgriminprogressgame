@@ -58,6 +58,11 @@ jobs:
         run: |
           printf '{"commit": "%s"}\n' "${GITHUB_SHA::7}" > game/data/build.json
 
+      - name: Sync content into the game
+        run: |
+          python3 tools/sync_content.py
+          git diff --exit-code game/data/dialogue_strings.csv game/data/dialogue_speakers.json || (echo "Run tools/sync_content.py and commit the result"; exit 1)
+
       - name: Import project
         # First run imports resources; a single export on a fresh checkout can miss them.
         run: ~/godot/godot --headless --path game --import
@@ -66,6 +71,11 @@ jobs:
         run: |
           ~/godot/godot --headless --fixed-fps 60 --path game res://tests/movement_test.tscn 2>&1 | tee movement.log
           grep -q "RESULT: PASS" movement.log
+
+      - name: Stage 1 bot playthrough
+        run: |
+          ~/godot/godot --headless --fixed-fps 60 --path game res://tests/stage1_playthrough.tscn 2>&1 | tee stage1.log
+          grep -q "RESULT: PASS" stage1.log
 
       - name: Asset pipeline test
         run: |

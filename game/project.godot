@@ -8,7 +8,7 @@ config_version=5
 config/name="Pilgrim in Progress"
 config/description="A pixel-art pilgrimage after John Bunyan's The Pilgrim's Progress."
 config/version="0.0.1"
-run/main_scene="res://scenes/boot.tscn"
+run/main_scene="res://scenes/title.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 boot_splash/bg_color=Color(0.113725, 0.0823529, 0.188235, 1)
 boot_splash/show_image=false
@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 Build="*res://scripts/build_info.gd"
 ScreenFit="*res://scripts/screen_fit.gd"
 InputSetup="*res://scripts/input_setup.gd"
+SaveSystem="*res://scripts/save_system.gd"
+Dialogue="*res://scripts/dialogue.gd"
 
 [display]
 
@@ -41,7 +43,7 @@ theme/default_font_subpixel_positioning=0
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://data/strings.en.translation")
+locale/translations=PackedStringArray("res://data/strings.en.translation", "res://data/dialogue_strings.en.translation")
 
 [input_devices]
 
