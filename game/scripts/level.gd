@@ -368,6 +368,7 @@ func _interact(it: Dictionary) -> void:
 	var sg: Dictionary = it["data"]
 	if it["kind"] == "read":
 		_busy = true
+		await player.play_action("read")
 		await Dialogue.say(sg["lines"])
 		_busy = false
 		if sg.has("reveals"):

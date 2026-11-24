@@ -72,6 +72,12 @@ def main() -> None:
     p.add_argument("--loop", action="store_true")
     p.add_argument("--key", choices=list(KEY_COLOURS) + ["auto"], default="auto")
     p.add_argument("--out", default=".")
+    p.add_argument("--start", type=float, default=0.0, help="first frame to use, as a fraction of the video (0-1)")
+    p.add_argument("--end", type=float, default=1.0, help="last frame to use, as a fraction of the video (0-1)")
+    p.add_argument("--ref-height", type=float, default=0.0,
+                   help="subject height in source pixels that maps to --char-height; use the same value for every sheet of one character so all share one pixel size (default: this video's median)")
+    p.add_argument("--pose-only", action="store_true",
+                   help="anchor every frame by its own feet: removes travel the engine already does (jump, fall)")
     a = p.parse_args()
 
     src = Path(a.src)
@@ -79,7 +85,9 @@ def main() -> None:
         frames = extract_frames(src, Path(tmp)) if src.is_file() else sorted(src.glob("*.png"))
         if len(frames) < 2:
             raise SystemExit("Need at least 2 frames")
-        picked = select_even(frames, a.frames)
+        lo = int(round(a.start * (len(frames) - 1)))
+        hi = int(round(a.end * (len(frames) - 1)))
+        picked = select_even(frames[lo:hi + 1], a.frames)
         imgs = []
         key = KEY_COLOURS.get(a.key) or auto_key_colour(load_rgba(picked[0]))
         if key is None:
@@ -99,10 +107,24 @@ def main() -> None:
         if not len(xs):
             raise SystemExit("A frame is empty after keying: check the key colour")
         boxes.append((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
+    if a.pose_only:
+        # shift every frame so its feet sit on the same line, then take the union box
+        base = max(b[3] for b in boxes)
+        shifted = []
+        for img, b in zip(imgs, boxes):
+            dy = base - b[3]
+            out = np.zeros_like(img)
+            if dy > 0:
+                out[dy:] = img[:-dy]
+            else:
+                out = img.copy()
+            shifted.append(out)
+        imgs = shifted
+        boxes = [(b[0], b[1] + base - b[3], b[2], base) for b in boxes]
     x0 = min(b[0] for b in boxes); y0 = min(b[1] for b in boxes)
     x1 = max(b[2] for b in boxes); y1 = max(b[3] for b in boxes)
     median_h = float(np.median([b[3] - b[1] for b in boxes]))
-    f = a.char_height / median_h
+    f = a.char_height / (a.ref_height or median_h)
     out_w, out_h = max(1, round((x1 - x0) * f)), max(1, round((y1 - y0) * f))
 
     cw, ch = (int(v) for v in a.cell.lower().split("x"))
@@ -133,7 +155,7 @@ def main() -> None:
     name = f"{a.asset}_{a.action}_f{n}_{cw}x{ch}_g{cols}x{rows}_fps{a.fps}_{'loop' if a.loop else 'once'}.png"
     dst = Path(a.out) / name
     save_rgba(sheet, dst)
-    print(f"{dst}: {n} frames, subject {out_w}x{out_h}, mean palette shift {np.mean(stats):.1f}")
+    print(f"{dst}: {n} frames, subject {out_w}x{out_h}, source height {median_h:.0f}px, mean palette shift {np.mean(stats):.1f}")
 
 
 if __name__ == "__main__":
