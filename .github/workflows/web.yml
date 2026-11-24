@@ -1,7 +1,8 @@
 name: Web build
 
-# Builds the Godot web export on every push and pull request.
-# Deploys to GitHub Pages only from main.
+# Builds and tests the Godot web export on every push and pull request.
+# The build is kept as a downloadable artifact (web-build) for local playtests.
+# No GitHub Pages deploy: Pages on a private repo needs a paid plan (owner decision 2026-11-24).
 
 on:
   push:
@@ -92,23 +93,10 @@ jobs:
           test -f build/web/index.wasm
           test -f build/web/index.pck
           if grep -E "^(ERROR|SCRIPT ERROR)" export.log; then echo "Export logged errors"; exit 1; fi
-          touch build/web/.nojekyll
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload web build
+        uses: actions/upload-artifact@v4
         with:
+          name: web-build
           path: build/web
-
-  deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    needs: build
-    runs-on: ubuntu-24.04
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          retention-days: 14

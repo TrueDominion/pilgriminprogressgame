@@ -4,7 +4,7 @@ Status: phase 1 estimate. Assumes I work in sessions you start, and that you rev
 
 | Phase | Scope | Estimate (my working sessions) | Calendar target | Gate |
 |---|---|---|---|---|
-| 0 Setup | Repo, Godot, CI | done | 2026-11-23 | Web build passes (done in CI; Pages deploy waits on `main` and a Pages-capable plan) |
+| 0 Setup | Repo, Godot, CI | done | 2026-11-23 | Web build passes (done in CI; no Pages deploy: owner chose not to pay for GitHub Pro, 2026-11-24; playtests use the web-build artifact and TestFlight) |
 | 1 Plan | This document set | done | 2026-11-23 | **Your approval** |
 | 2 Vertical slice | Stage 1 finished: controller, burden, sprite set, tiles, parallax, all three input methods, dialogue, checkpoints, saves, music, SFX, TestFlight instructions | 8 to 12 sessions | by 2026-12-21 | Quality bar and re-projected budget |
 | 3 Production | Stages 2 to 9, one PR each; Apollyon its own milestone | 3 to 5 sessions per stage, 30 to 40 total | 2027-01-04 to 2027-03-28 | Per-stage playtest notes |
