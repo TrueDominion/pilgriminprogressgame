@@ -1,0 +1,12 @@
+# Stage 1 audio prompts (2026-11-24)
+
+Music: sonilo_music, 90 s, 5.63 credits each. Built by tools/build_audio.py (3 s loop crossfade, -18 LUFS, OGG q3). Take used: design/audio-choices.json.
+| File | Job | Prompt summary |
+|---|---|---|
+| title-a | 0e77e2f6 | Recorder and lute over string drone, English folk-hymn melody, D major, 72 bpm, hopeful, no drums |
+| title-b | c3f3426d | Harp and wooden flute over soft organ, folk-hymn melody, G major, 70 bpm, a long road and a distant light |
+| stage1-a | 81351b79 | Cello/viola ostinato, sorrowful oboe, D minor, frame drum like a heavy footstep, 76 bpm, burden with a thread of hope |
+| stage1-b | c50aa831 | Pizzicato bass, hurdy-gurdy drone, recorder tune in A minor lifting toward hope, 80 bpm |
+
+SFX: mirelo_text_to_audio, 1-2 s, 0.25-0.5 credits each. Built by tools/build_audio.py (silence trim, peak -3 dBFS, mono OGG q4).
+jump, jump_burdened, land, land_heavy, step_stone, step_grass, step_mud, light, scroll, checkpoint, book, dialogue, menu_move, menu_select, respawn. Each prompt asked for one isolated, dry sound (no music).

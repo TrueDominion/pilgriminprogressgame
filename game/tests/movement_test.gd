@@ -29,6 +29,7 @@ var _world: Node2D
 
 
 func _ready() -> void:
+	Audio.enabled = false
 	var failures := 0
 	for c: Array in CASES:
 		var ok := await _run_case(c[1], c[2], c[3], c[4])

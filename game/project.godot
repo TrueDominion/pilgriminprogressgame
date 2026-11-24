@@ -21,6 +21,7 @@ ScreenFit="*res://scripts/screen_fit.gd"
 InputSetup="*res://scripts/input_setup.gd"
 SaveSystem="*res://scripts/save_system.gd"
 Dialogue="*res://scripts/dialogue.gd"
+Audio="*res://scripts/audio.gd"
 
 [display]
 

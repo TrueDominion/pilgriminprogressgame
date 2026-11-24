@@ -10,6 +10,7 @@ var _level: Node
 
 
 func _ready() -> void:
+	Audio.enabled = false
 	SaveSystem.current_slot = 2
 	SaveSystem.erase(2)
 	SaveSystem.data = SaveSystem.empty_state()
