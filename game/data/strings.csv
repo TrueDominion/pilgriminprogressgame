@@ -1,0 +1,16 @@
+keys,en
+BOOT_PRESS_START,Press Jump or tap to begin
+RANGE_TITLE,Movement test range
+RANGE_HELP_KEYS,Move: A D or arrows · Jump: Space · Burden on/off: B
+RANGE_HELP_PAD,Move: stick · Jump: A · Burden on/off: Y
+RANGE_HELP_TOUCH,Move: left stick · Jump: right button · Burden: B button
+RANGE_MODE_BURDENED,Burdened
+RANGE_MODE_FREE,Free
+RANGE_STATS,"Speed %d px/s · last jump %.1f tiles high, %.1f tiles long"
+RANGE_SINK,Sinking %d / %d
+RANGE_STEP,%d tile step
+RANGE_GAP,%d tile gap
+RANGE_MUD,Mud: keep moving
+TOUCH_JUMP,Jump
+TOUCH_ACT,Act
+TOUCH_BURDEN,B

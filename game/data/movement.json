@@ -1,0 +1,77 @@
+{
+  "_doc": "Frozen in phase 1 (design/gdd.md section 4). Units: pixels, seconds, at 60 physics ticks. 1 tile = 16 px. Change one value at a time and log it in design/tuning-log.md.",
+  "version": 1,
+  "tile": 16,
+  "hitbox": {
+    "burdened": { "w": 14, "h": 30 },
+    "free":     { "w": 12, "h": 30 }
+  },
+  "burdened": {
+    "run_speed": 78,
+    "ground_accel": 500,
+    "ground_decel": 700,
+    "air_accel": 380,
+    "jump_height": 40,
+    "rise_gravity": 994,
+    "fall_gravity": 1740,
+    "max_fall_speed": 400,
+    "jump_cut_multiplier": 0.5,
+    "double_jump": false,
+    "heavy_landing_fall_px": 48,
+    "heavy_landing_recovery_s": 0.25,
+    "mud_sink_speed": 14,
+    "mud_move_multiplier": 0.55
+  },
+  "free": {
+    "run_speed": 120,
+    "ground_accel": 900,
+    "ground_decel": 1200,
+    "air_accel": 700,
+    "jump_height": 56,
+    "rise_gravity": 864,
+    "fall_gravity": 1382,
+    "max_fall_speed": 360,
+    "jump_cut_multiplier": 0.45,
+    "double_jump": true,
+    "double_jump_height": 40,
+    "heavy_landing_fall_px": 9999,
+    "heavy_landing_recovery_s": 0.0,
+    "mud_sink_speed": 6,
+    "mud_move_multiplier": 0.8
+  },
+  "shared": {
+    "coyote_time_s": 0.10,
+    "jump_buffer_s": 0.12,
+    "ledge_nudge_px": 4,
+    "interact_range_px": 20
+  },
+  "hope": {
+    "base": 3,
+    "with_helmet": 4,
+    "invulnerable_s": 1.0,
+    "knockback_px": 24,
+    "respawn_fade_s": 0.6
+  },
+  "combat": {
+    "sword_reach_px": 22,
+    "sword_startup_frames": 3,
+    "sword_active_frames": 4,
+    "sword_cooldown_s": 0.35,
+    "sword_damage": 1,
+    "shield_move_multiplier": 0.6,
+    "shield_arc_deg": 120,
+    "deflect_speed_multiplier": 1.25
+  },
+  "derived_for_level_design": {
+    "_doc": "Measured by tests/movement_test.tscn with the real controller (includes hitbox width and coyote time). 'max' = clearable with a well-timed jump; 'path' = the limit for jumps the critical path requires (max minus 1 tile for gaps). Re-run the test after any movement change.",
+    "burdened_max_step_tiles": 2,
+    "burdened_max_gap_tiles": 3,
+    "burdened_path_gap_tiles": 2,
+    "free_max_step_tiles_single": 3,
+    "free_max_gap_tiles_single": 5,
+    "free_path_gap_tiles_single": 4,
+    "free_max_step_tiles_double": 5,
+    "free_max_gap_tiles_double": 8,
+    "free_path_gap_tiles_double": 7
+  }
+}
