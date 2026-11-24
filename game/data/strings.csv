@@ -35,3 +35,9 @@ TITLE_SLOT_DONE,Stage 1 complete
 TITLE_ERASE,Hold to erase
 TITLE_BACK,Back
 TITLE_TEST_RANGE,Movement test range
+PAUSE_TITLE,Paused
+PAUSE_RESUME,Resume
+PAUSE_MUSIC,Music
+PAUSE_EFFECTS,Effects
+PAUSE_QUIT,Return to title
+PAUSE_QUIT_CONFIRM,Return? Progress since the last waystation is lost
