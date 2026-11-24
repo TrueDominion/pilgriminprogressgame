@@ -58,7 +58,42 @@ func _rect_poly(r: Rect2, colour: Color, parent: Node = _world) -> Polygon2D:
 	return p
 
 
-func _solid(x0: float, x1: float, h: float) -> void:
+func _tex(name: String) -> Texture2D:
+	var path := "res://assets/env/%s/%s.png" % [level_id, name]
+	return load(path) if ResourceLoader.exists(path) else null
+
+
+func _tex_poly(r: Rect2, tex: Texture2D, parent: Node = _world, fallback := Color("4a3020")) -> Polygon2D:
+	var p := _rect_poly(r, Color.WHITE if tex else fallback, parent)
+	if tex:
+		p.texture = tex
+		p.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		p.uv = p.polygon   # world-aligned, so neighbouring blocks continue the same texture
+	return p
+
+
+func _sprite(name: String, bottom_centre: Vector2, parent: Node = _world) -> Sprite2D:
+	var tex := _tex(name)
+	if tex == null:
+		return null
+	var spr := Sprite2D.new()
+	spr.texture = tex
+	spr.centered = false
+	spr.position = (bottom_centre - Vector2(tex.get_width() / 2.0, tex.get_height())).round()
+	parent.add_child(spr)
+	return spr
+
+
+func _ground_h(x0: float, x1: float) -> float:
+	## Height of the plain ground under a prop block (for placing crates and carts on it).
+	var best := 0.0
+	for s: Array in def["solids"]:
+		if s.size() < 4 and s[0] < x1 and s[1] > x0:
+			best = maxf(best, s[2])
+	return best
+
+
+func _solid(x0: float, x1: float, h: float, kind := "") -> void:
 	var rect := Rect2(x0 * TILE, -h * TILE, (x1 - x0) * TILE, (h + 12) * TILE)
 	var body := StaticBody2D.new()
 	var shape := CollisionShape2D.new()
@@ -68,8 +103,24 @@ func _solid(x0: float, x1: float, h: float) -> void:
 	shape.position = rect.get_center()
 	body.add_child(shape)
 	_world.add_child(body)
-	_rect_poly(rect, Color("4a3020"))
-	_rect_poly(Rect2(rect.position, Vector2(rect.size.x, 3)), Color("6c677d"))
+	match kind:
+		"invisible":
+			return
+		"wall":
+			_tex_poly(rect, _tex("tex_stone_wall"))
+		"crates":
+			var base := _ground_h(x0, x1)
+			var r := Rect2(x0 * TILE, -h * TILE, (x1 - x0) * TILE, (h - base) * TILE)
+			_rect_poly(r, Color("241a38"))
+			_tex_poly(r.grow(-1), _tex("tex_planks"))
+			_rect_poly(Rect2(r.position + Vector2(1, 1), Vector2(r.size.x - 2, 1)), Color("c9b48a"))
+		"cart":
+			var base := _ground_h(x0, x1)
+			_sprite("prop_cart", Vector2((x0 + x1) * TILE / 2.0, -base * TILE))
+		_:
+			var field: bool = x0 >= float(def.get("field_from", 99999))
+			_tex_poly(Rect2(rect.position + Vector2(0, 12), rect.size - Vector2(0, 12)), _tex("tex_field" if field else "tex_earth"))
+			_tex_poly(Rect2(rect.position, Vector2(rect.size.x, 16)), _tex("tex_grass_top" if field else "tex_street_top"), _world, Color("6c677d"))
 
 
 func _platform(x0: float, x1: float, h: float, parent: Node = _world, colour := Color("8a5a34")) -> Node2D:
@@ -112,10 +163,22 @@ func _area(pos: Vector2, size: Vector2, on_enter: Callable) -> Area2D:
 func _build() -> void:
 	_build_backdrop()
 	for d: Dictionary in def.get("decor", []):
-		var r := Rect2(d["x"] * TILE, -d["top"] * TILE, (d["x1"] - d["x"]) * TILE, (d["top"] - d["h"]) * TILE)
-		_rect_poly(r, Color("352a52"))
+		match str(d["kind"]):
+			"house":
+				var r := Rect2(d["x"] * TILE, -d["top"] * TILE, (d["x1"] - d["x"]) * TILE, (d["top"] - d["h"]) * TILE)
+				var wall := _tex_poly(r, _tex("tex_timber"), _world, Color("352a52"))
+				wall.modulate = Color(0.75, 0.7, 0.85)
+			_:
+				_sprite("prop_" + str(d["kind"]), _tile_pos(d["x"], d["h"]))
+	for pr: Dictionary in def.get("props", []):
+		_sprite("prop_" + str(pr["prop"]), _tile_pos(pr["x"], pr["h"]))
+	# plain ground first, then crates and carts drawn on top of it
 	for s: Array in def["solids"]:
-		_solid(s[0], s[1], s[2])
+		if s.size() < 4 or s[3] == "wall":
+			_solid(s[0], s[1], s[2], s[3] if s.size() > 3 else "")
+	for s: Array in def["solids"]:
+		if s.size() > 3 and s[3] != "wall":
+			_solid(s[0], s[1], s[2], s[3])
 	for p: Array in def.get("platforms", []):
 		_platform(p[0], p[1], p[2])
 	for hd: Dictionary in def.get("hidden", []):
@@ -164,47 +227,62 @@ func _build() -> void:
 	_camera.limit_bottom = 6 * TILE
 
 
+var _town_layers: Array[Parallax2D] = []
+var _field_layers: Array[Parallax2D] = []
+
+
+func _layer(name: String, scroll: Vector2, bottom_y: float) -> Parallax2D:
+	var tex := _tex("layer_" + name)
+	var px := Parallax2D.new()
+	px.scroll_scale = scroll
+	add_child(px)
+	move_child(px, 0)
+	if tex == null:
+		return px
+	px.repeat_size = Vector2(tex.get_width(), 0)
+	px.repeat_times = 4
+	var spr := Sprite2D.new()
+	spr.texture = tex
+	spr.centered = false
+	spr.position = Vector2(0, bottom_y - tex.get_height())
+	px.add_child(spr)
+	return px
+
+
 func _build_backdrop() -> void:
-	# Placeholder parallax until the Stage 1 layers are generated: red smoke sky,
-	# a far city skyline and the shining light on the horizon.
+	# Parallax: sky, distant city, street houses, near walls (back to front). Layers are
+	# mirrored copies, so they repeat without a seam. The town layers fade out past the gate.
 	var sky := CanvasLayer.new()
 	sky.layer = -10
 	add_child(sky)
-	var grad := ColorRect.new()
-	grad.set_anchors_preset(Control.PRESET_FULL_RECT)
-	grad.color = Color("1d1530")
-	sky.add_child(grad)
-	var band := ColorRect.new()
-	band.anchor_right = 1.0
-	band.anchor_top = 0.45
-	band.anchor_bottom = 0.75
-	band.color = Color("431817")
-	sky.add_child(band)
-	var far := Parallax2D.new()
-	far.scroll_scale = Vector2(0.25, 0.1)
-	far.repeat_size = Vector2(640, 0)
-	far.repeat_times = 3
-	add_child(far)
-	move_child(far, 0)
-	var rng := RandomNumberGenerator.new()
-	rng.seed = 7
-	var x := 0.0
-	while x < 640.0:
-		var w := rng.randf_range(18, 40)
-		var h := rng.randf_range(30, 90)
-		_rect_poly(Rect2(x, -h - 20, w, h + 200), Color("241a38"), far)
-		if rng.randf() < 0.4:
-			_rect_poly(Rect2(x + w * 0.4, -h - 34, 6, 14), Color("241a38"), far)
-		x += w + rng.randf_range(0, 6)
+	var fill := ColorRect.new()
+	fill.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fill.color = Color("1d1530")
+	sky.add_child(fill)
+	# added back to front with move_child(0), so add the nearest first
+	_town_layers.append(_layer("near", Vector2(0.75, 1.0), 6))
+	_town_layers.append(_layer("mid", Vector2(0.45, 1.0), 2))
+	_field_layers.append(_layer("fields", Vector2(0.45, 1.0), 4))
+	_layer("far", Vector2(0.2, 0.7), -60)
 	var light := Parallax2D.new()
-	light.scroll_scale = Vector2(0.05, 0.05)
+	light.scroll_scale = Vector2(0.05, 0.5)
 	add_child(light)
 	move_child(light, 0)
 	var glow := Polygon2D.new()
-	glow.polygon = PackedVector2Array([Vector2(0, -6), Vector2(6, 0), Vector2(0, 6), Vector2(-6, 0)])
-	glow.color = Color("f9d77e")
-	glow.position = Vector2(600, -150)
+	glow.polygon = PackedVector2Array([Vector2(0, -4), Vector2(4, 0), Vector2(0, 4), Vector2(-4, 0)])
+	glow.color = Color("fff2c2")
+	glow.position = Vector2(520, -120)
 	light.add_child(glow)
+	_layer("sky", Vector2(0.05, 0.5), -40)
+
+
+func _update_town_fade() -> void:
+	var gate_x := float(def.get("field_from", 99999)) * TILE
+	var t := clampf((_camera.global_position.x - (gate_x - 400.0)) / 400.0, 0.0, 1.0)
+	for l in _town_layers:
+		l.modulate.a = 1.0 - t
+	for l in _field_layers:
+		l.modulate.a = t
 
 
 func _add_light(id: String, pos: Vector2) -> void:
@@ -245,20 +323,33 @@ func _add_scroll(id: String, pos: Vector2) -> void:
 
 func _add_checkpoint(c: Dictionary) -> void:
 	var pos := _tile_pos(c["x"] + 0.5, c["h"])
-	var post := _rect_poly(Rect2(pos.x - 1, pos.y - 24, 2, 24), Color("85704f"))
-	var lamp := _rect_poly(Rect2(pos.x - 3, pos.y - 30, 6, 6), Color("6c677d"))
+	var lantern := _sprite("prop_lantern", pos)
+	var lamp := Polygon2D.new()   # the glow, shown once the waystation is lit
+	var pts := PackedVector2Array()
+	for i in 12:
+		pts.append(Vector2(cos(i * TAU / 12), sin(i * TAU / 12)) * 9)
+	lamp.polygon = pts
+	lamp.color = Color(0.94, 0.73, 0.3, 0.35)
+	lamp.position = pos + Vector2(-2, -31)
+	lamp.visible = false
+	_world.add_child(lamp)
 	if str(SaveSystem.data.get("checkpoint", "")) == c["id"]:
-		lamp.color = Color("f0b94d")
+		lamp.visible = true
+		if lantern:
+			lantern.modulate = Color(1.25, 1.1, 0.8)
 	_area(pos + Vector2(0, -16), Vector2(16, 32), func() -> void:
 		if _checkpoint_id == c["id"]:
 			return
 		_checkpoint_id = c["id"]
 		_checkpoint_pos = pos
-		lamp.color = Color("f0b94d")
+		lamp.visible = true
+		if lantern:
+			lantern.modulate = Color(1.25, 1.1, 0.8)
 		SaveSystem.data["checkpoint"] = c["id"]
 		_save_progress()
 		_toast(tr("CHECKPOINT")))
-	post.name = "Checkpoint_" + str(c["id"])
+	if lantern:
+		lantern.name = "Checkpoint_" + str(c["id"])
 
 
 func _add_npc(npc: Dictionary, flags: Dictionary) -> void:
@@ -305,8 +396,9 @@ func _add_npc(npc: Dictionary, flags: Dictionary) -> void:
 
 func _add_sign(sg: Dictionary) -> void:
 	var pos := _tile_pos(sg["x"] + 0.5, sg["h"])
-	_rect_poly(Rect2(pos.x - 1, pos.y - 20, 2, 20), Color("85704f"))
-	_rect_poly(Rect2(pos.x - 8, pos.y - 26, 16, 9), Color("c9b48a"))
+	if _sprite("prop_signpost", pos) == null:
+		_rect_poly(Rect2(pos.x - 1, pos.y - 20, 2, 20), Color("85704f"))
+		_rect_poly(Rect2(pos.x - 8, pos.y - 26, 16, 9), Color("c9b48a"))
 	_interactables.append({"pos": pos, "kind": "read", "data": sg})
 
 
@@ -337,6 +429,7 @@ func _physics_process(delta: float) -> void:
 		_respawn()
 	_camera.global_position = (player.global_position + Vector2(0, -40)).round()
 	_update_follower(delta)
+	_update_town_fade()
 	_update_focus()
 	if not _focus.is_empty() and not player.frozen and Input.is_action_just_pressed("action"):
 		_interact(_focus)
