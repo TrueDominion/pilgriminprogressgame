@@ -42,7 +42,7 @@ godot --headless --path game --export-release "Web" ../build/web/index.html
 ## CI
 
 `.github/workflows/web.yml` builds the web export on every push and pull request,
-and deploys to GitHub Pages from `main` only.
+and keeps the build as a downloadable `web-build` artifact for 14 days (no Pages deploy).
 
 ## Rules
 
