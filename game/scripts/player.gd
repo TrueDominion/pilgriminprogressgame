@@ -41,10 +41,16 @@ var stat_jump_length_px := 0.0
 var _in_jump := false
 
 @onready var _shape: CollisionShape2D = $Shape
+var _sprite: AnimatedSprite2D
+var _sprite_sets := {}   # "burdened" / "free" -> SpriteFrames (empty until art exists)
 
 
 func _ready() -> void:
 	sets = MovementData.load_all()
+	_sprite_sets["free"] = SpriteSheets.load_folder("res://assets/sprites/christian")
+	_sprite = AnimatedSprite2D.new()
+	_sprite.centered = false
+	add_child(_sprite)
 	_apply_set()
 
 
@@ -54,6 +60,12 @@ func _apply_set() -> void:
 	rect.size = m.hitbox
 	_shape.shape = rect
 	_shape.position = Vector2(0, -m.hitbox.y / 2.0)
+	var frames: SpriteFrames = _sprite_sets.get("burdened" if burdened else "free")
+	if _sprite and frames and frames.has_animation("walk"):
+		_sprite.sprite_frames = frames
+		_sprite.visible = true
+	elif _sprite:
+		_sprite.visible = false
 	queue_redraw()
 
 
@@ -142,7 +154,25 @@ func _physics_process(delta: float) -> void:
 	if now_on_floor:
 		_air_peak_y = global_position.y
 	_was_on_floor = now_on_floor
+	_update_sprite(now_on_floor)
 	queue_redraw()
+
+
+func _update_sprite(on_floor: bool) -> void:
+	if not _sprite.visible:
+		return
+	# Cell is 40x56, anchored bottom-centre on the feet.
+	_sprite.flip_h = facing < 0
+	_sprite.position = Vector2(-20, -56 + sink_depth)
+	if on_floor and absf(velocity.x) > 5.0:
+		_sprite.speed_scale = absf(velocity.x) / m.run_speed
+		if _sprite.animation != "walk" or not _sprite.is_playing():
+			_sprite.play("walk")
+	else:
+		# until idle / jump sheets exist, hold the contact frame
+		_sprite.animation = "walk"
+		_sprite.frame = 0
+		_sprite.pause()
 
 
 func _start_jump(vy: float, kind: String) -> void:
@@ -178,6 +208,8 @@ func respawn_at(pos: Vector2) -> void:
 
 
 func _draw() -> void:
+	if _sprite and _sprite.visible:
+		return
 	# Placeholder figure on the palette: body, head, and the burden.
 	var ink := Color("241a38")
 	var cloth := Color("85704f") if burdened else Color("f4ead5")

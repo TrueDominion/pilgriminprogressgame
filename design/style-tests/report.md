@@ -64,3 +64,31 @@ Images: `sprite-tests-raw.jpg` (as generated), `sprite-tests-true-size-4x.png` (
 1. **Raise the character height from 40 to 48 px** (adults 46 to 52 px; sprite cell 40 x 56 to fit the burden and the staff). The 16 px tile, the 480 x 270 view and every movement value stay as they are. The hitbox grows from 30 to 36 px tall to match the taller body; jump reach is set by the feet, so the measured step and gap limits do not change (the reach test re-confirms this in CI). Christian becomes 3 tiles tall, so the burdened jump (2.5 tiles) is lower than his own height, which suits the Burden.
 2. **Key poses from nano_banana (tiny-sprite prompt)**, not flux_2. Generate at 50 to 90 px, then shrink to 48 px (at most about 1.8x), then palette-map. Expect a light pixel touch-up on faces and hands.
 3. **Animation stays on the video pipeline.** Drawing a walk cycle directly failed. The remaining unknown is whether the video model keeps the blocky pixels when it animates a tiny sprite. **Next test: one 4-second walk video from sprite 03 (12 credits)** before the 180-credit Christian batch.
+
+---
+
+# Walk video test (CON-anim-01)
+
+Date: 2026-11-24. Spent: 12 credits (estimate 12). Balance after: 867.5.
+Images: `walk-video-frames.png` (raw video frames), `walk-sheet-4x.png` (finished sheet, 11 frames at 4x), `walk-in-game.png` (in the web build).
+
+## Verdict: the animation pipeline works
+
+| Check | Result |
+|---|---|
+| Pixel style kept through the video | Yes: blocky pixels, same colours |
+| Same character in every frame | Yes |
+| Facing locked, camera locked | Yes |
+| Loop closes (start = end frame) | Yes |
+| Legs alternate, reads as a walk at 48 px | Yes, though the stride is short |
+| Automated checks (palette, alpha, scale) | Pass |
+| Defects | Light flicker on face and beard between frames; stride too small for a 120 px/s run |
+
+The sheet is in the game now as Christian's free walk (placeholder until the final set).
+
+## Recommendations for the Christian batch
+
+1. Ask for a longer stride ("long confident strides, knees lifting") on walk and run.
+2. Burdened key pose first: test 01 (burdened) was too crude. Generate 2 burdened key poses (4 credits), pick the better one, then animate.
+3. 8 to 12 frames per loop. Expect a light hand cleanup on faces (about 15 minutes per sheet), the human pass from risk R1.
+4. Re-quote: 9 burdened animations at 12 credits each plus key poses and up to 1.5x rerolls: about 170 credits.
