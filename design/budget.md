@@ -1,5 +1,7 @@
 # Credit Budget (full game)
 
+> **Re-projected 2026-11-24 from phase 2 actuals: about 1,680 credits for the core game (was about 2,980); about 950 to buy. See `design/phase2-gate.md`.** The tables below are the original phase 1 estimate.
+
 Status: phase 1 estimate for approval. Quotes taken from Higgsfield's cost-estimate tools on 2026-11-23; prices can change, so every batch is re-quoted before it runs.
 
 ## Bottom line
