@@ -56,14 +56,15 @@
     {"x": 98.5, "h": 0, "kind": "gate"}
   ],
   "npcs": [
-    {"id": "wife", "x": 4, "h": 0, "colour": "c9b48a", "speaker": "family"},
+    {"id": "wife", "x": 4, "h": 0, "colour": "c9b48a", "speaker": "family", "faces": "right"},
     {
       "id": "townsfolk_a",
       "x": 35,
       "h": 1,
       "colour": "a8906a",
       "trigger_x": 32,
-      "lines": ["S1_TOWN_01"]
+      "lines": ["S1_TOWN_01"],
+      "faces": "left"
     },
     {
       "id": "townsfolk_b",
@@ -71,7 +72,8 @@
       "h": 0,
       "colour": "85704f",
       "trigger_x": 54,
-      "lines": ["S1_TOWN_02"]
+      "lines": ["S1_TOWN_02"],
+      "faces": "right"
     },
     {
       "id": "obstinate",
@@ -79,7 +81,8 @@
       "h": 0,
       "colour": "c4513a",
       "trigger_x": 103,
-      "lines": ["S1_OBSTINATE_01", "S1_CHRISTIAN_02", "S1_OBSTINATE_02", "S1_CHRISTIAN_03", "S1_OBSTINATE_03", "S1_PLIABLE_01", "S1_OBSTINATE_04"]
+      "lines": ["S1_OBSTINATE_01", "S1_CHRISTIAN_02", "S1_OBSTINATE_02", "S1_CHRISTIAN_03", "S1_OBSTINATE_03", "S1_PLIABLE_01", "S1_OBSTINATE_04"],
+      "faces": "left"
     },
     {
       "id": "pliable",
@@ -88,16 +91,17 @@
       "colour": "f9d77e",
       "trigger_x": 148,
       "lines": ["S1_PLIABLE_02", "S1_CHRISTIAN_04"],
-      "follows": true
+      "follows": true,
+      "faces": "right"
     },
     {
       "id": "evangelist",
       "x": 195,
       "h": 0,
       "colour": "355e8c",
-      "sprite": "res://assets/sprites/npc/evangelist.png",
       "trigger_x": 188,
-      "lines": ["S1_EVANGELIST_01", "S1_CHRISTIAN_05", "S1_EVANGELIST_02", "S1_CHRISTIAN_06", "S1_EVANGELIST_03", "S1_CHRISTIAN_07", "S1_EVANGELIST_04", "S1_CHRISTIAN_08", "S1_EVANGELIST_05"]
+      "lines": ["S1_EVANGELIST_01", "S1_CHRISTIAN_05", "S1_EVANGELIST_02", "S1_CHRISTIAN_06", "S1_EVANGELIST_03", "S1_CHRISTIAN_07", "S1_EVANGELIST_04", "S1_CHRISTIAN_08", "S1_EVANGELIST_05"],
+      "faces": "right"
     }
   ],
   "signs": [
