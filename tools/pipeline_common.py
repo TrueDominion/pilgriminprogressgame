@@ -167,7 +167,7 @@ def _coherence(profile: np.ndarray, pitch: float) -> tuple[float, float]:
     return float(abs(z)), float((np.angle(z) / (2 * np.pi) * pitch) % pitch)
 
 
-def detect_pixel_pitch(rgba: np.ndarray, lo: float = 2.0, hi: float = 16.0, step: float = 0.01,
+def detect_pixel_pitch(rgba: np.ndarray, lo: float = 2.0, hi: float = 40.0, step: float = 0.01,
                        min_coherence: float = 0.3) -> tuple[float, float, float]:
     """Estimate the (possibly fractional) size of one art pixel and the grid offset.
 

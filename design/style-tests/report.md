@@ -39,3 +39,28 @@ Note: I requested `nano_banana_pro`; Higgsfield's job records say `nano_banana_2
 1. Owner decision: approve about 10 credits for small-sprite tests (finding 1).
 2. If small sprites work, run the Christian animation batch (about 180 credits) for approval.
 3. Tilesets: build Stage 1's tileset from generated texture swatches plus manual assembly in phase 2. This is the human pixel work flagged in risk R1.
+
+---
+
+# Small-sprite tests (CON-sprite-01 to 05)
+
+Date: 2026-11-24. Spent: 9 credits (estimate 9). Balance after: 879.5.
+Images: `sprite-tests-raw.jpg` (as generated), `sprite-tests-true-size-4x.png` (after the pipeline, true pixels shown at 4x), `sprite-tests-downscale-4x.png` (shrunk to candidate game sizes).
+
+## Verdict
+
+**Finding 1 is solved, with a size change.** Prompted as a tiny sprite, the model draws genuine low-resolution pixel art that survives the pipeline cleanly. It does not hit an exact size: asked for 40 px tall, it drew 30, 59 and 85. The good results (Christian without the burden at 59 px, Evangelist at 85 px) stay readable when shrunk to **48 px**, and start to break down at 40 px.
+
+| # | Result | True size |
+|---|---|---|
+| 01 Christian burdened | Clean but crude; head and sack lose definition | 26 x 30 |
+| 02 Walk cycle drawn directly | Failed: overlapping high-res figures, not usable frames | n/a |
+| 03 Christian free | Clean, readable, on model | 31 x 59 |
+| 04 Evangelist | Excellent | 41 x 85 |
+| 05 flux_2 | Failed: drawn at high resolution on a gradient background | n/a |
+
+## Recommendation (owner decision)
+
+1. **Raise the character height from 40 to 48 px** (adults 46 to 52 px; sprite cell 40 x 56 to fit the burden and the staff). The 16 px tile, the 480 x 270 view and every movement value stay as they are. The hitbox grows from 30 to 36 px tall to match the taller body; jump reach is set by the feet, so the measured step and gap limits do not change (the reach test re-confirms this in CI). Christian becomes 3 tiles tall, so the burdened jump (2.5 tiles) is lower than his own height, which suits the Burden.
+2. **Key poses from nano_banana (tiny-sprite prompt)**, not flux_2. Generate at 50 to 90 px, then shrink to 48 px (at most about 1.8x), then palette-map. Expect a light pixel touch-up on faces and hands.
+3. **Animation stays on the video pipeline.** Drawing a walk cycle directly failed. The remaining unknown is whether the video model keeps the blocky pixels when it animates a tiny sprite. **Next test: one 4-second walk video from sprite 03 (12 credits)** before the 180-credit Christian batch.
