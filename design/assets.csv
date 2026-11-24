@@ -244,8 +244,8 @@ STL-s8-escape,cutscene still,image,480x270,8,Stage 8 still: escape. [FORMULA] + 
 STL-s9-river,cutscene still,image,480x270,9,Stage 9 still: river. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
 STL-s9-gate-opens,cutscene still,image,480x270,9,Stage 9 still: gate opens. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
 STL-s9-credits-road,cutscene still,image,480x270,9,Stage 9 still: credits road. [FORMULA] + still line,nano_banana_pro,,relevant CHR sheets,planned,,,6,,3
-MUS-title,music,audio (loop),90s,all,"Loopable instrumental, title (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,2
-MUS-stage1,music,audio (loop),90s,1,"Loopable instrumental, stage1 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,2
+MUS-title,music,audio (loop),90s,all,"Loopable instrumental, title (brief in design/audio-brief.md)",sonilo_music,"title-a/title-b: 0e77e2f6, c3f3426d",,"generated: 2 takes, take a in game (owner to choose)",game/assets/audio/music/title.ogg,"no (tools/build_audio.py: loop crossfade, -18 LUFS)",17,11.26,2
+MUS-stage1,music,audio (loop),90s,1,"Loopable instrumental, stage1 (brief in design/audio-brief.md)",sonilo_music,"stage1-a/stage1-b: 81351b79, c50aa831",,"generated: 2 takes, take a in game (owner to choose)",game/assets/audio/music/stage1.ogg,"no (tools/build_audio.py: loop crossfade, -18 LUFS)",17,11.26,2
 MUS-stage2,music,audio (loop),90s,2,"Loopable instrumental, stage2 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
 MUS-stage3,music,audio (loop),90s,3,"Loopable instrumental, stage3 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
 MUS-stage4-house,music,audio (loop),90s,4,"Loopable instrumental, stage4 house (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
@@ -257,24 +257,24 @@ MUS-stage7-fair,music,audio (loop),90s,7,"Loopable instrumental, stage7 fair (br
 MUS-stage8-castle,music,audio (loop),90s,8,"Loopable instrumental, stage8 castle (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
 MUS-stage9,music,audio (loop),90s,9,"Loopable instrumental, stage9 (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
 MUS-finale-credits,music,audio (loop),120s,9,"Loopable instrumental, finale credits (brief in design/audio-brief.md)",sonilo_music,,,planned,,,17,,3
-SFX-jump,sound effect,audio,0.3-4s,various,One isolated sound: jump,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-jump-burdened,sound effect,audio,0.3-4s,various,One isolated sound: jump burdened,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-jump,sound effect,audio,0.3-4s,various,One isolated sound: jump,mirelo_text_to_audio,13aa3e5e,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-jump-burdened,sound effect,audio,0.3-4s,various,One isolated sound: jump burdened,mirelo_text_to_audio,1d6321c3,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
 SFX-double-jump,sound effect,audio,0.3-4s,various,One isolated sound: double jump,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-land,sound effect,audio,0.3-4s,various,One isolated sound: land,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-land-heavy,sound effect,audio,0.3-4s,various,One isolated sound: land heavy,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-footstep-stone,sound effect,audio,0.3-4s,various,One isolated sound: footstep stone,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-footstep-grass,sound effect,audio,0.3-4s,various,One isolated sound: footstep grass,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-footstep-mud,sound effect,audio,0.3-4s,various,One isolated sound: footstep mud,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-collect-light,sound effect,audio,0.3-4s,various,One isolated sound: collect light,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-collect-scroll,sound effect,audio,0.3-4s,various,One isolated sound: collect scroll,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-land,sound effect,audio,0.3-4s,various,One isolated sound: land,mirelo_text_to_audio,29e7a99c,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-land-heavy,sound effect,audio,0.3-4s,various,One isolated sound: land heavy,mirelo_text_to_audio,beaab2cb,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-footstep-stone,sound effect,audio,0.3-4s,various,One isolated sound: footstep stone,mirelo_text_to_audio,5ef12509,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-footstep-grass,sound effect,audio,0.3-4s,various,One isolated sound: footstep grass,mirelo_text_to_audio,e68a070a,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-footstep-mud,sound effect,audio,0.3-4s,various,One isolated sound: footstep mud,mirelo_text_to_audio,e341cde4,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-collect-light,sound effect,audio,0.3-4s,various,One isolated sound: collect light,mirelo_text_to_audio,5193b423,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-collect-scroll,sound effect,audio,0.3-4s,various,One isolated sound: collect scroll,mirelo_text_to_audio,c615673b,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
 SFX-hurt,sound effect,audio,0.3-4s,various,One isolated sound: hurt,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-respawn-fade,sound effect,audio,0.3-4s,various,One isolated sound: respawn fade,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-checkpoint,sound effect,audio,0.3-4s,various,One isolated sound: checkpoint,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-menu-move,sound effect,audio,0.3-4s,various,One isolated sound: menu move,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-menu-select,sound effect,audio,0.3-4s,various,One isolated sound: menu select,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-respawn-fade,sound effect,audio,0.3-4s,various,One isolated sound: respawn fade,mirelo_text_to_audio,b984d427,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-checkpoint,sound effect,audio,0.3-4s,various,One isolated sound: checkpoint,mirelo_text_to_audio,4c72896e,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-menu-move,sound effect,audio,0.3-4s,various,One isolated sound: menu move,mirelo_text_to_audio,f7246e05,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-menu-select,sound effect,audio,0.3-4s,various,One isolated sound: menu select,mirelo_text_to_audio,e29f5e08,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
 SFX-menu-back,sound effect,audio,0.3-4s,various,One isolated sound: menu back,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-dialogue-blip,sound effect,audio,0.3-4s,various,One isolated sound: dialogue blip,mirelo_text_to_audio,,,planned,,,1,,2
-SFX-book-read,sound effect,audio,0.3-4s,various,One isolated sound: book read,mirelo_text_to_audio,,,planned,,,1,,2
+SFX-dialogue-blip,sound effect,audio,0.3-4s,various,One isolated sound: dialogue blip,mirelo_text_to_audio,7ab6be40,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
+SFX-book-read,sound effect,audio,0.3-4s,various,One isolated sound: book read,mirelo_text_to_audio,952e36a5,,generated: in game,,"no (tools/build_audio.py: trim, peak -3 dBFS)",1,0.25-0.5,2
 SFX-door-open,sound effect,audio,0.3-4s,various,One isolated sound: door open,mirelo_text_to_audio,,,planned,,,1,,2
 SFX-knock,sound effect,audio,0.3-4s,various,One isolated sound: knock,mirelo_text_to_audio,,,planned,,,1,,2
 SFX-mud-sink,sound effect,audio,0.3-4s,various,One isolated sound: mud sink,mirelo_text_to_audio,,,planned,,,1,,3

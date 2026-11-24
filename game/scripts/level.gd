@@ -38,6 +38,7 @@ func _ready() -> void:
 	_spawn_player()
 	_update_hud()
 	_playtime_start = Time.get_ticks_msec() / 1000.0
+	Audio.music(level_id)
 	if str(SaveSystem.data.get("checkpoint", "")) == "" and not SaveSystem.data.get("flags", {}).get(level_id + "_intro", false):
 		_run_intro()
 	else:
@@ -298,6 +299,7 @@ func _add_light(id: String, pos: Vector2) -> void:
 			return
 		holder.queue_free()
 		light_count += 1
+		Audio.sfx("light", -4.0, 0.06)
 		SaveSystem.data["light"].append(id)
 		_update_hud())
 	holder.tree_exited.connect(func() -> void: if is_instance_valid(a): a.queue_free())
@@ -315,6 +317,7 @@ func _add_scroll(id: String, pos: Vector2) -> void:
 			return
 		holder.queue_free()
 		SaveSystem.data["scrolls"].append(id)
+		Audio.sfx("scroll")
 		SaveSystem.save()
 		_update_hud()
 		_toast(tr("HUD_SCROLL_FOUND")))
@@ -346,6 +349,7 @@ func _add_checkpoint(c: Dictionary) -> void:
 		if lantern:
 			lantern.modulate = Color(1.25, 1.1, 0.8)
 		SaveSystem.data["checkpoint"] = c["id"]
+		Audio.sfx("checkpoint")
 		_save_progress()
 		_toast(tr("CHECKPOINT")))
 	if lantern:
@@ -439,6 +443,7 @@ func _physics_process(delta: float) -> void:
 		_respawn()
 	_camera.global_position = (player.global_position + Vector2(0, -40)).round()
 	_update_follower(delta)
+	player.surface = "grass" if player.global_position.x >= float(def.get("field_from", 99999)) * TILE else "stone"
 	_update_town_fade()
 	_update_focus()
 	if not _focus.is_empty() and not player.frozen and Input.is_action_just_pressed("action"):
@@ -477,6 +482,7 @@ func _interact(it: Dictionary) -> void:
 	var sg: Dictionary = it["data"]
 	if it["kind"] == "read":
 		_busy = true
+		Audio.sfx("book")
 		await player.play_action("read")
 		await Dialogue.say(sg["lines"])
 		_busy = false
@@ -541,6 +547,7 @@ func _respawn() -> void:
 	if _fading:
 		return
 	_fading = true
+	Audio.sfx("respawn", -2.0)
 	var t := create_tween()
 	t.tween_property(_fade, "color:a", 1.0, 0.3)
 	t.tween_callback(func() -> void: player.respawn_at(_checkpoint_pos))

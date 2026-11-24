@@ -102,6 +102,7 @@ func _show_line(key: String) -> void:
 	_name.add_theme_color_override("font_color", SPEAKER_COLOURS.get(who, Color("241a38")).darkened(0.35))
 	_text.text = tr(key)
 	_text.visible_ratio = 0.0
+	Audio.sfx("dialogue", -6.0, 0.05)
 	line_shown.emit(key)
 
 
@@ -156,7 +157,10 @@ func choose(prompt_key: String, option_keys: Array) -> int:
 		b.add_theme_font_size_override("font_size", 8)
 		b.custom_minimum_size = Vector2(0, 24)
 		b.focus_mode = Control.FOCUS_ALL
-		b.pressed.connect(func() -> void: picked[0] = i)
+		b.pressed.connect(func() -> void:
+			Audio.sfx("menu_select")
+			picked[0] = i)
+		b.focus_entered.connect(func() -> void: Audio.sfx("menu_move", -6.0))
 		_choices.add_child(b)
 		buttons.append(b)
 	buttons[0].grab_focus()

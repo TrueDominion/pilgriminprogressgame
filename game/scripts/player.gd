@@ -43,7 +43,9 @@ var _in_jump := false
 @onready var _shape: CollisionShape2D = $Shape
 var _sprite: AnimatedSprite2D
 var _sprite_sets := {}   # "burdened" / "free" -> SpriteFrames (empty until art exists)
-var _one_shot := ""      # a one-shot animation (land, read, interact, hurt) that must finish
+var _one_shot := ""
+var surface := "stone"   # set by the level: stone, grass (mud is detected here)
+var _step_timer := 0.0      # a one-shot animation (land, read, interact, hurt) that must finish
 
 
 func _ready() -> void:
@@ -154,6 +156,8 @@ func _physics_process(delta: float) -> void:
 			stat_jump_length_px = absf(global_position.x - stat_jump_start.x)
 			_in_jump = false
 		landed.emit(fall, heavy)
+		if fall > 8.0:
+			Audio.sfx("land_heavy" if heavy or burdened else "land", -2.0, 0.05)
 		if _sprite.visible and _sprite.sprite_frames.has_animation("land") and fall > 8.0:
 			_one_shot = "land"
 			_sprite.speed_scale = 1.0
@@ -161,6 +165,14 @@ func _physics_process(delta: float) -> void:
 	if now_on_floor:
 		_air_peak_y = global_position.y
 	_was_on_floor = now_on_floor
+	if now_on_floor and absf(velocity.x) > 10.0 and not frozen:
+		_step_timer -= delta
+		if _step_timer <= 0.0:
+			_step_timer = (0.42 if burdened else 0.3) * (1.4 if _mud_areas > 0 else 1.0)
+			var step := "step_mud" if _mud_areas > 0 else ("step_grass" if surface == "grass" else "step_stone")
+			Audio.sfx(step, -8.0, 0.1)
+	else:
+		_step_timer = 0.0
 	_update_sprite(now_on_floor)
 	queue_redraw()
 
@@ -221,6 +233,10 @@ func _start_jump(vy: float, kind: String) -> void:
 		stat_jump_height_px = 0.0
 		_in_jump = true
 	jumped.emit(kind)
+	if kind == "double":
+		Audio.sfx("jump", 0.0, 0.08)
+	else:
+		Audio.sfx("jump_burdened" if burdened else "jump", 0.0, 0.05)
 
 
 ## Called by mud Area2D nodes.

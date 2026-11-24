@@ -15,6 +15,8 @@ var _hold := {}   # slot -> seconds held on erase
 
 
 func _ready() -> void:
+	Audio.music("title")
+	get_viewport().gui_focus_changed.connect(func(_c: Control) -> void: Audio.sfx("menu_move", -6.0))
 	%Name.text = tr("TITLE_NAME")
 	%Sub.text = tr("TITLE_SUB")
 	_info.text = Build.label()
@@ -92,6 +94,7 @@ func _process(delta: float) -> void:
 
 
 func _start(slot: int) -> void:
+	Audio.sfx("menu_select")
 	SaveSystem.select(slot)
 	if SaveSystem.data.get("flags", {}).get("stage1_complete", false):
 		# Stage 1 is the whole vertical slice for now: replay from the start.
