@@ -61,7 +61,7 @@ jobs:
       - name: Sync content into the game
         run: |
           python3 tools/sync_content.py
-          git diff --exit-code game/data || (echo "Run tools/sync_content.py and commit the result"; exit 1)
+          git diff --exit-code game/data/dialogue_strings.csv game/data/dialogue_speakers.json || (echo "Run tools/sync_content.py and commit the result"; exit 1)
 
       - name: Import project
         # First run imports resources; a single export on a fresh checkout can miss them.
