@@ -1,7 +1,7 @@
 # Stage 1: City of Destruction
 
 **Source:** Bunyan, Part I, opening (the man in rags with the Book and the burden; Evangelist; Obstinate and Pliable).
-**Target playtime:** 3 to 4 minutes. **Length:** about 220 tiles (3,520 px). **Movement set:** burdened.
+**Target playtime:** 3 to 4 minutes. **Length:** 272 tiles (4,352 px) after the back lanes were added on 2026-11-25. **Movement set:** burdened.
 **Teaches:** walk, jump, talk, read. **Reward:** The Book (given at the start), Evangelist met.
 
 ## Beat map
@@ -11,6 +11,7 @@
 | 1 | Christian's house (interior, 1 screen) | Low | Wake, read the Book (Action prompt). Burden appears on the back. Family dialogue: "Stay." First choice: stay or go. "Stay" plays a short dream of the city burning, then returns to the choice. |
 | 2 | Streets | Low | Walk tutorial. 1-tile kerbs, then 2-tile crates. Townsfolk mock (ambient lines). |
 | 3 | Market square | Rising | Jump tutorial over carts. First signpost (Read): "Flee from the wrath to come." Checkpoint A. |
+| 3b | Back lanes (added 2026-11-25) | Rising | Kerbs, crates and a cart to jump; an optional rooftop run (crates to planks at 4 and 6 tiles) carries extra Light. Adds play between the market and the gate, where the stage was mostly dialogue. |
 | 4 | City gate and walls | Rising | Obstinate and Pliable chase and block the way. Obstinate stands in the path and argues (dialogue); Christian must climb around him over stacked barrels. Pliable decides to come along. |
 | 5 | The fields | Breather | Open fields, wind, Light motes in arcs that teach jump timing. Checkpoint B. |
 | 6 | Evangelist | Low | Evangelist points: "Do you see yonder shining light?" The light is visible on the far horizon (parallax layer). Hidden-platform tutorial: reading his signpost reveals a ledge to the first Scroll's alcove. Checkpoint C. |
@@ -28,7 +29,7 @@ No damage sources in stage 1. The only failure is falling into the moat off the 
 
 ## Checkpoints
 
-A: market square (about 70 tiles in). B: fields (140). C: Evangelist (190).
+A: market square (tile 64). B: fields (170). C: Evangelist (226).
 
 ## Scrolls (3)
 
@@ -38,9 +39,11 @@ A: market square (about 70 tiles in). B: fields (140). C: Evangelist (190).
 
 ## Light
 
-About 60 motes. Arcs over every jump teach timing.
+About 70 motes (71 counted by the bot run). Arcs over every jump teach timing.
 
 ## Notes and risks
+
+- Playtime, measured 2026-11-25: the bot crosses the stage in 67 s of movement with dialogue skipped. A first-time player also reads 30 lines (about 1,600 characters, roughly 2 minutes), so a first play is about 3 minutes. Reading is still about 60% of it; later stages should carry fewer lines per minute of play.
 
 - The stay-or-go choice must not feel like a trick. "Stay" is a vision, not a failure.
 - Keep the burning-city imagery to smoke and red sky. No fire on people.

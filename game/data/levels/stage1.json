@@ -1,9 +1,9 @@
 {
-  "_doc": "Stage 1 greybox, from design/levels/stage1.md. Units are tiles (16 px). x = left edge, h = height of the top surface above the base line. solids: [x0, x1, h] blocks that extend down to the bottom. platforms: one-way ledges [x0, x1, h]. hidden: platforms revealed for reveal_seconds by reading a sign. Critical-path jumps respect gdd.md 4.3 (burdened: step 2, gap 2). A 4th solid element names its look: wall, crates, cart, invisible; otherwise ground. field_from: tile x where the city street gives way to fields.",
+  "_doc": "Stage 1 greybox, from design/levels/stage1.md. Units are tiles (16 px). x = left edge, h = height of the top surface above the base line. solids: [x0, x1, h] blocks that extend down to the bottom. platforms: one-way ledges [x0, x1, h]. hidden: platforms revealed for reveal_seconds by reading a sign. Critical-path jumps respect gdd.md 4.3 (burdened: step 2, gap 2). A 4th solid element names its look: wall, crates, cart, invisible; otherwise ground. field_from: tile x where the city street gives way to fields. Back lanes (tiles 100 to 140, added 2026-11-25): kerbs, crates and a cart, with an optional rooftop run for Light.",
   "id": "stage1",
   "title_key": "STAGE1_TITLE",
   "next": "",
-  "bounds": [0, 232],
+  "bounds": [0, 272],
   "spawn": [3, 0],
   "reveal_seconds": 8,
   "intro": ["S1_HOME_01", "S1_HOME_02", "S1_HOME_03", "S1_FAMILY_01"],
@@ -25,35 +25,43 @@
     [70, 73, 2, "cart"],
     [80, 83, 2, "cart"],
     [86, 88, 2, "crates"],
-    [100, 124, 0],
-    [106, 109, 2, "crates"],
-    [113, 114, 3, "invisible"],
-    [126, 140, 0],
-    [140, 150, 1],
-    [150, 158, 0],
-    [158, 166, 2],
-    [166, 190, 0],
-    [190, 230, 0],
-    [230, 234, 14, "wall"]
+    [100, 140, 0],
+    [104, 113, 1],
+    [107, 110, 2, "crates"],
+    [116, 119, 2, "cart"],
+    [122, 124, 1],
+    [126, 128, 2, "crates"],
+    [140, 164, 0],
+    [146, 149, 2, "crates"],
+    [153, 154, 3, "invisible"],
+    [166, 180, 0],
+    [180, 190, 1],
+    [190, 198, 0],
+    [198, 206, 2],
+    [206, 230, 0],
+    [230, 270, 0],
+    [270, 274, 14, "wall"]
   ],
   "platforms": [
     [10, 13, 4],
     [88, 96, 4],
-    [109, 118, 4]
+    [128, 133, 4],
+    [134, 138, 6],
+    [149, 158, 4]
   ],
   "hidden": [
     {
       "id": "evangelist_ledge",
       "platforms": [
-        [200, 203, 2],
-        [204, 208, 4]
+        [240, 243, 2],
+        [244, 248, 4]
       ]
     }
   ],
   "decor": [
     {"x": 0, "x1": 13, "h": 0, "top": 7, "kind": "house"},
     {"x": 13.2, "h": 0, "kind": "door"},
-    {"x": 98.5, "h": 0, "kind": "gate"}
+    {"x": 138.5, "h": 0, "kind": "gate"}
   ],
   "npcs": [
     {"id": "wife", "x": 4, "h": 0, "colour": "c9b48a", "speaker": "family", "faces": "right"},
@@ -77,29 +85,29 @@
     },
     {
       "id": "obstinate",
-      "x": 113,
+      "x": 153,
       "h": 0,
       "colour": "c4513a",
-      "trigger_x": 103,
+      "trigger_x": 143,
       "lines": ["S1_OBSTINATE_01", "S1_CHRISTIAN_02", "S1_OBSTINATE_02", "S1_CHRISTIAN_03", "S1_OBSTINATE_03", "S1_PLIABLE_01", "S1_OBSTINATE_04"],
       "faces": "left"
     },
     {
       "id": "pliable",
-      "x": 120,
+      "x": 160,
       "h": 0,
       "colour": "f9d77e",
-      "trigger_x": 148,
+      "trigger_x": 188,
       "lines": ["S1_PLIABLE_02", "S1_CHRISTIAN_04"],
       "follows": true,
       "faces": "right"
     },
     {
       "id": "evangelist",
-      "x": 195,
+      "x": 235,
       "h": 0,
       "colour": "355e8c",
-      "trigger_x": 188,
+      "trigger_x": 228,
       "lines": ["S1_EVANGELIST_01", "S1_CHRISTIAN_05", "S1_EVANGELIST_02", "S1_CHRISTIAN_06", "S1_EVANGELIST_03", "S1_CHRISTIAN_07", "S1_EVANGELIST_04", "S1_CHRISTIAN_08", "S1_EVANGELIST_05"],
       "faces": "right"
     }
@@ -113,7 +121,7 @@
     },
     {
       "id": "evangelist_sign",
-      "x": 198,
+      "x": 238,
       "h": 0,
       "lines": ["S1_EVANGELIST_SIGN"],
       "reveals": "evangelist_ledge"
@@ -121,13 +129,13 @@
   ],
   "checkpoints": [
     {"id": "A", "x": 64, "h": 0},
-    {"id": "B", "x": 130, "h": 0},
-    {"id": "C", "x": 186, "h": 0}
+    {"id": "B", "x": 170, "h": 0},
+    {"id": "C", "x": 226, "h": 0}
   ],
   "scrolls": [
     {"id": "s1_shelf", "x": 11, "h": 4},
     {"id": "s1_awning", "x": 92, "h": 4},
-    {"id": "s1_ledge", "x": 206, "h": 4}
+    {"id": "s1_ledge", "x": 246, "h": 4}
   ],
   "light_arcs": [
     [12, 28, 0, 6],
@@ -139,20 +147,24 @@
     [72, 80, 2, 4],
     [83, 87, 0, 3],
     [96, 104, 0, 4],
-    [109, 118, 4, 5],
-    [126, 140, 0, 6],
-    [140, 150, 1, 5],
-    [158, 166, 2, 4],
-    [168, 186, 0, 7],
-    [210, 222, 0, 5]
+    [104, 113, 1, 4],
+    [116, 119, 2, 2],
+    [128, 133, 4, 3],
+    [134, 138, 6, 3],
+    [149, 158, 4, 5],
+    [166, 180, 0, 6],
+    [180, 190, 1, 5],
+    [198, 206, 2, 4],
+    [208, 226, 0, 7],
+    [250, 262, 0, 5]
   ],
   "exit": {
-    "x": 224,
+    "x": 264,
     "h": 0,
     "lines": ["S1_END_01"]
   },
   "fall_limit": 10,
-  "field_from": 124,
+  "field_from": 164,
   "props": [
     {"prop": "barrel", "x": 19, "h": 0},
     {"prop": "barrel", "x": 20.2, "h": 0},
@@ -160,6 +172,8 @@
     {"prop": "stall", "x": 75, "h": 0},
     {"prop": "barrel", "x": 84, "h": 0},
     {"prop": "barrel", "x": 97, "h": 0},
-    {"prop": "barrel", "x": 202, "h": 0}
+    {"prop": "barrel", "x": 114.5, "h": 0},
+    {"prop": "barrel", "x": 124.8, "h": 0},
+    {"prop": "barrel", "x": 242, "h": 0}
   ]
 }
