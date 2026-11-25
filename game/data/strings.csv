@@ -23,6 +23,7 @@ NPC_TOWNSFOLK_B,Neighbour
 NPC_OBSTINATE,Obstinate
 NPC_PLIABLE,Pliable
 NPC_EVANGELIST,Evangelist
+NPC_HELP,Help
 TITLE_NAME,Pilgrim in Progress
 TITLE_SUB,after John Bunyan · 1678
 TITLE_CONTINUE,Continue
@@ -31,7 +32,7 @@ TITLE_CHOOSE,Choose your pilgrim
 TITLE_SLOT,Pilgrim %d
 TITLE_EMPTY,Empty · begin a new journey
 TITLE_SLOT_INFO,"%s · Light %d · Scrolls %d"
-TITLE_SLOT_DONE,Stage 1 complete
+TITLE_SLOT_DONE,"%s, complete"
 TITLE_ERASE,Hold to erase
 TITLE_BACK,Back
 TITLE_TEST_RANGE,Movement test range
@@ -41,3 +42,11 @@ PAUSE_MUSIC,Music
 PAUSE_EFFECTS,Effects
 PAUSE_QUIT,Return to title
 PAUSE_QUIT_CONFIRM,Return? Progress since the last waystation is lost
+SPEAKER_CHRISTIAN,Christian
+SPEAKER_EVANGELIST,Evangelist
+SPEAKER_OBSTINATE,Obstinate
+SPEAKER_PLIABLE,Pliable
+SPEAKER_FAMILY,His wife
+SPEAKER_TOWNSFOLK,Townsfolk
+SPEAKER_SIGN,Signpost
+SPEAKER_HELP,Help

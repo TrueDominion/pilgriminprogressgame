@@ -73,10 +73,13 @@ jobs:
           ~/godot/godot --headless --fixed-fps 60 --path game res://tests/movement_test.tscn 2>&1 | tee movement.log
           grep -q "RESULT: PASS" movement.log
 
-      - name: Stage 1 bot playthrough
+      - name: Stage bot playthroughs
         run: |
-          ~/godot/godot --headless --fixed-fps 60 --path game res://tests/stage1_playthrough.tscn 2>&1 | tee stage1.log
-          grep -q "RESULT: PASS" stage1.log
+          set -euo pipefail
+          for level in stage1 stage2; do
+            ~/godot/godot --headless --fixed-fps 60 --path game res://tests/stage_playthrough.tscn -- --level=$level 2>&1 | tee $level.log
+            grep -q "RESULT: PASS" $level.log
+          done
 
       - name: Asset pipeline test
         run: |

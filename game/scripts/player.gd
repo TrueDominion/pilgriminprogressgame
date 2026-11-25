@@ -33,6 +33,7 @@ var _stagger := 0.0
 var _mud_areas := 0
 var sink_depth := 0.0            # px sunk into mud; drawn as an offset
 var frozen := false              # cutscenes and fades
+var no_fail := false             # scripted sinking (Help's rescue): stop short of failure
 
 # last-jump stats for the test range readout
 var stat_jump_start := Vector2.ZERO
@@ -114,7 +115,9 @@ func _physics_process(delta: float) -> void:
 			sink_depth += m.mud_sink_speed * delta
 		else:
 			sink_depth = maxf(sink_depth - 6.0 * delta, 0.0)
-		if sink_depth >= 30.0:
+		if no_fail:
+			sink_depth = minf(sink_depth, 26.0)
+		elif sink_depth >= 30.0:
 			sink_depth = 0.0
 			failed.emit("sank")
 			return

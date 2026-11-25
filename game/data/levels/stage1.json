@@ -2,7 +2,7 @@
   "_doc": "Stage 1 greybox, from design/levels/stage1.md. Units are tiles (16 px). x = left edge, h = height of the top surface above the base line. solids: [x0, x1, h] blocks that extend down to the bottom. platforms: one-way ledges [x0, x1, h]. hidden: platforms revealed for reveal_seconds by reading a sign. Critical-path jumps respect gdd.md 4.3 (burdened: step 2, gap 2). A 4th solid element names its look: wall, crates, cart, invisible; otherwise ground. field_from: tile x where the city street gives way to fields. Back lanes (tiles 100 to 140, added 2026-11-25): kerbs, crates and a cart, with an optional rooftop run for Light.",
   "id": "stage1",
   "title_key": "STAGE1_TITLE",
-  "next": "",
+  "next": "stage2",
   "bounds": [0, 272],
   "spawn": [3, 0],
   "reveal_seconds": 8,

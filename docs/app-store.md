@@ -9,7 +9,7 @@ Status 2026-11-24: owner has an Apple Developer account (enrolled as an individu
 | Item | Recommendation | Why |
 |---|---|---|
 | Apple Developer Program | Enrol as an **organisation**, not an individual | An individual account shows your legal name as the seller and, for EU sales, publishes your personal address, phone and email under the Digital Services Act trader rules. An organisation needs a legal entity and a D-U-N-S number (free, takes days to weeks). **verify** |
-| Bundle ID | `com.matthewmeza.pilgrim` (proposed 2026-11-24) | Cannot be changed after the first upload. Neutral enough to keep if the app moves to an organisation account later (app transfer keeps the bundle ID). **verify** |
+| Bundle ID | `com.matthewmeza.pilgrim` (confirmed by owner 2026-11-25) | Cannot be changed after the first upload. Neutral enough to keep if the app moves to an organisation account later (app transfer keeps the bundle ID). **verify** |
 | App name | "Pilgrim in Progress" | A web search found no app with this exact name; similar titles exist ("The Pilgrim's Progress" on Steam, Amanita Design's "Pilgrims" on iOS). Reserve it by creating the App Store Connect record early in phase 2. Run a USPTO trademark search before spending on marketing. |
 | EU distribution | Include the EU only once the seller entity is set | See above. |
 

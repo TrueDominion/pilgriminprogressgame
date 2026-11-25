@@ -1,3 +1,4 @@
+class_name Level
 extends Node2D
 ## Builds and runs a stage from res://data/levels/<id>.json (greybox geometry, NPCs,
 ## signs, checkpoints, Scrolls, Light, exit). All text is translation keys.
@@ -8,6 +9,8 @@ const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const LEVEL_DIR := "res://data/levels/"
 
 @export var level_id := "stage1"
+## Set before changing to the stage scene to load another stage (title, stage exits).
+static var requested_id := ""
 
 var def: Dictionary
 var player: Player
@@ -21,6 +24,7 @@ var _interactables: Array = []   # [{pos, kind, data}]
 var _focus: Dictionary = {}      # the interactable in range, if any
 var _follower: Node2D
 var _playtime_start := 0.0
+var _gloom: CanvasModulate
 
 @onready var _camera: Camera2D = $Camera
 @onready var _world: Node2D = $World
@@ -31,6 +35,8 @@ var _playtime_start := 0.0
 
 
 func _ready() -> void:
+	if requested_id != "":
+		level_id = requested_id
 	def = JSON.parse_string(FileAccess.get_file_as_string(LEVEL_DIR + level_id + ".json"))
 	if SaveSystem.data.is_empty():
 		SaveSystem.select(0)
@@ -38,8 +44,8 @@ func _ready() -> void:
 	_spawn_player()
 	_update_hud()
 	_playtime_start = Time.get_ticks_msec() / 1000.0
-	Audio.music(level_id)
-	if str(SaveSystem.data.get("checkpoint", "")) == "" and not SaveSystem.data.get("flags", {}).get(level_id + "_intro", false):
+	Audio.music(str(def.get("music", level_id)))
+	if def.has("intro") and str(SaveSystem.data.get("checkpoint", "")) == "" and not SaveSystem.data.get("flags", {}).get(level_id + "_intro", false):
 		_run_intro()
 	else:
 		_show_card()
@@ -60,7 +66,8 @@ func _rect_poly(r: Rect2, colour: Color, parent: Node = _world) -> Polygon2D:
 
 
 func _tex(name: String) -> Texture2D:
-	var path := "res://assets/env/%s/%s.png" % [level_id, name]
+	# "env" lets a greybox stage borrow another stage's art until its own exists
+	var path := "res://assets/env/%s/%s.png" % [def.get("env", level_id), name]
 	return load(path) if ResourceLoader.exists(path) else null
 
 
@@ -156,7 +163,8 @@ func _area(pos: Vector2, size: Vector2, on_enter: Callable) -> Area2D:
 	s.shape = rs
 	a.add_child(s)
 	a.position = pos
-	a.body_entered.connect(func(b: Node) -> void: if b is Player: on_enter.call())
+	if on_enter.is_valid():
+		a.body_entered.connect(func(b: Node) -> void: if b is Player: on_enter.call())
 	_world.add_child(a)
 	return a
 
@@ -182,6 +190,13 @@ func _build() -> void:
 			_solid(s[0], s[1], s[2], s[3])
 	for p: Array in def.get("platforms", []):
 		_platform(p[0], p[1], p[2])
+	for m: Array in def.get("mud", []):
+		_add_mud(m[0], m[1], m[2])
+	for m: Array in def.get("deep_mud", []):
+		_mud_surface(m[0], m[1], -0.4, Color("2a1d16"))
+	if def.has("gloom"):
+		_gloom = CanvasModulate.new()
+		add_child(_gloom)
 	for hd: Dictionary in def.get("hidden", []):
 		var nodes: Array = []
 		for p: Array in hd["platforms"]:
@@ -210,6 +225,8 @@ func _build() -> void:
 	for s: Dictionary in def.get("scrolls", []):
 		if s["id"] in saved_scrolls:
 			continue
+		if s.has("requires_flag") and not flags.get(s["requires_flag"], false):
+			continue
 		_add_scroll(s["id"], _tile_pos(s["x"] + 0.5, s["h"] + 1))
 	for c: Dictionary in def.get("checkpoints", []):
 		_add_checkpoint(c)
@@ -219,6 +236,8 @@ func _build() -> void:
 		_follower.set_meta("following", true)
 	for sg: Dictionary in def.get("signs", []):
 		_add_sign(sg)
+	for ev: Dictionary in def.get("events", []):
+		_add_event(ev, flags)
 	var ex: Dictionary = def["exit"]
 	_rect_poly(Rect2(ex["x"] * TILE, -ex["h"] * TILE - 48, 6, 48), Color("f0b94d"))
 	_area(_tile_pos(ex["x"], ex["h"]) + Vector2(0, -24), Vector2(16, 48), _on_exit)
@@ -393,6 +412,12 @@ func _add_npc(npc: Dictionary, flags: Dictionary) -> void:
 	body.add_child(tag)
 	if npc.get("follows", false):
 		_follower = body
+		if npc.get("following", false) and not flags.get("%s_%s_left" % [level_id, npc["id"]], false):
+			body.set_meta("following", true)
+		elif flags.get("%s_%s_left" % [level_id, npc["id"]], false):
+			body.visible = false
+	if npc.has("appears_on") and not flags.get("%s_%s" % [level_id, npc["appears_on"]], false):
+		body.visible = false
 	if npc.has("lines") and npc.has("trigger_x"):
 		var flag := "%s_%s" % [level_id, npc["id"]]
 		if flags.get(flag, false):
@@ -415,6 +440,89 @@ func _add_sign(sg: Dictionary) -> void:
 		_rect_poly(Rect2(pos.x - 8, pos.y - 26, 16, 9), Color("c9b48a"))
 	_interactables.append({"pos": pos, "kind": "read", "data": sg})
 
+
+
+func _add_mud(x0: float, x1: float, h: float) -> void:
+	## Sinking mud on top of ground of height h (gdd.md 4.4): the Area tells the player.
+	var area := _area(Vector2((x0 + x1) * TILE / 2.0, -h * TILE - 4), Vector2((x1 - x0) * TILE, 12), Callable())
+	area.body_entered.connect(func(b: Node) -> void:
+		if b is Player:
+			b.enter_mud())
+	area.body_exited.connect(func(b: Node) -> void:
+		if b is Player:
+			b.exit_mud())
+	_mud_surface(x0, x1, h, Color("4a3320"))
+
+
+func _mud_surface(x0: float, x1: float, h: float, colour: Color) -> void:
+	## Shallow mud is a dark band over the ground top; deep mire (h < 0) fills the pit.
+	var top := -h * TILE - 3
+	var depth := 12.0 * TILE if h < 0 else 9.0
+	_rect_poly(Rect2(x0 * TILE, top, (x1 - x0) * TILE, depth), colour)
+	_rect_poly(Rect2(x0 * TILE, top, (x1 - x0) * TILE, 1), colour.lightened(0.3))
+	# a few bubbles so it reads as mire, not a shadow
+	for i in int((x1 - x0) / 3.0):
+		var bx := (x0 + 1.0 + i * 3.0 + fmod(i * 1.7, 1.5)) * TILE
+		_rect_poly(Rect2(bx, top + 3 + (i % 2) * 2, 2, 2), colour.lightened(0.18))
+
+
+func _add_event(ev: Dictionary, flags: Dictionary) -> void:
+	## A one-time scripted moment, triggered by walking past tile x.
+	var flag := "%s_%s" % [level_id, ev["id"]]
+	if flags.get(flag, false):
+		return
+	_area(_tile_pos(ev["x"], ev.get("h", 0)) + Vector2(0, -48), Vector2(16, 160), func() -> void:
+		if SaveSystem.data["flags"].get(flag, false) or _busy:
+			return
+		SaveSystem.data["flags"][flag] = true
+		_run_event(ev))
+
+
+func _run_event(ev: Dictionary) -> void:
+	_busy = true
+	player.no_fail = true   # Christian is frozen in place; standing in mud must not fail him
+	match str(ev.get("action", "")):
+		"rescue":
+			# Christian sinks whatever the player does; a helper appears and pulls him out
+			player.no_fail = true
+			await get_tree().create_timer(float(ev.get("sink_s", 2.2))).timeout
+			var helper := _world.get_node_or_null(str(ev["helper"])) as Node2D
+			if helper:
+				helper.visible = true
+	await Dialogue.say(ev.get("lines", []))
+	match str(ev.get("action", "")):
+		"follower_leaves":
+			if _follower:
+				_follower.set_meta("following", false)
+				SaveSystem.data["flags"]["%s_%s_left" % [level_id, _follower.name]] = true
+				var spr := _follower.get_node_or_null("Sprite") as Sprite2D
+				if spr:
+					spr.flip_h = spr.get_meta("faces", "left") == "right"
+				var t := create_tween()
+				t.tween_property(_follower, "position:x", _follower.position.x - 220.0, 2.4)
+				t.parallel().tween_property(_follower, "modulate:a", 0.0, 2.4)
+				t.tween_callback(func() -> void: _follower.visible = false)
+		"rescue":
+			var to: Array = ev["to"]
+			var t := create_tween()
+			t.tween_property(_fade, "color:a", 1.0, 0.4)
+			await t.finished
+			player.no_fail = false
+			player.respawn_at(_tile_pos(to[0], to[1]))
+			_camera.global_position = player.global_position + Vector2(0, -40)
+			_camera.reset_smoothing()
+			t = create_tween()
+			t.tween_property(_fade, "color:a", 0.0, 0.4)
+	# Scrolls that wait for this moment (for example, behind where a companion turned back)
+	var flags: Dictionary = SaveSystem.data["flags"]
+	for sc: Dictionary in def.get("scrolls", []):
+		if sc.get("requires_flag", "") == "%s_%s" % [level_id, ev["id"]] and not sc["id"] in SaveSystem.data.get("scrolls", []):
+			_add_scroll(sc["id"], _tile_pos(sc["x"] + 0.5, sc["h"] + 1))
+	if ev.has("after_lines"):
+		await Dialogue.say(ev["after_lines"])
+	player.no_fail = false
+	_busy = false
+	_save_progress()
 
 # ------------------------------------------------------------------ play
 
@@ -445,9 +553,21 @@ func _physics_process(delta: float) -> void:
 	_update_follower(delta)
 	player.surface = "grass" if player.global_position.x >= float(def.get("field_from", 99999)) * TILE else "stone"
 	_update_town_fade()
+	_update_gloom()
 	_update_focus()
 	if not _focus.is_empty() and not player.frozen and Input.is_action_just_pressed("action"):
 		_interact(_focus)
+
+
+func _update_gloom() -> void:
+	## Darkens the world through a stretch of the stage (def "gloom": [x0, x1, strength]).
+	if _gloom == null:
+		return
+	var g: Array = def["gloom"]
+	var x := player.global_position.x / TILE
+	var ramp := 12.0
+	var t := clampf(minf((x - g[0]) / ramp, (g[1] - x) / ramp), 0.0, 1.0)
+	_gloom.color = Color.WHITE.lerp(Color(0.55, 0.55, 0.68), t * float(g[2]))
 
 
 func _update_follower(delta: float) -> void:
@@ -517,8 +637,8 @@ func _run_intro() -> void:
 	_busy = true
 	await get_tree().create_timer(0.4).timeout
 	await Dialogue.say(def["intro"])
-	var ch: Dictionary = def["intro_choice"]
-	while true:
+	var ch: Dictionary = def.get("intro_choice", {})
+	while not ch.is_empty():
 		var pick: int = await Dialogue.choose(ch["prompt"], ch["options"])
 		if pick == 1:
 			break
@@ -537,10 +657,18 @@ func _on_exit() -> void:
 	SaveSystem.data["flags"][level_id + "_complete"] = true
 	SaveSystem.data["checkpoint"] = ""
 	_save_progress()
+	var next := str(def.get("next", ""))
+	if next != "":
+		SaveSystem.data["stage"] = next
+		SaveSystem.save()
 	var t := create_tween()
 	t.tween_property(_fade, "color:a", 1.0, 0.8)
 	await t.finished
-	get_tree().change_scene_to_file("res://scenes/title.tscn")
+	if next != "":
+		requested_id = next
+		get_tree().change_scene_to_file("res://scenes/stage.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/title.tscn")
 
 
 func _respawn() -> void:

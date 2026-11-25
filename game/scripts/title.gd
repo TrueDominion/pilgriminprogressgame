@@ -3,7 +3,7 @@ extends Control
 ## Continue resumes the most recent slot; otherwise the slot list opens.
 ## Every control works with touch, gamepad (focus) and keyboard.
 
-const STAGE_SCENE := "res://scenes/stage1.tscn"
+const STAGE_SCENE := "res://scenes/stage.tscn"
 const RANGE_SCENE := "res://scenes/test_range.tscn"
 
 @onready var _main: VBoxContainer = %Main
@@ -55,7 +55,10 @@ func _show_slots() -> void:
 		if d.is_empty():
 			b.text = "%s · %s" % [tr("TITLE_SLOT") % (slot + 1), tr("TITLE_EMPTY")]
 		else:
-			var where := tr("TITLE_SLOT_DONE") if d.get("flags", {}).get("stage1_complete", false) else tr("STAGE1_TITLE")
+			var stage := str(d.get("stage", "stage1"))
+			var where := tr(stage.to_upper() + "_TITLE")
+			if d.get("flags", {}).get(stage + "_complete", false):
+				where = tr("TITLE_SLOT_DONE") % where
 			b.text = "%s · %s" % [tr("TITLE_SLOT") % (slot + 1), tr("TITLE_SLOT_INFO") % [where, d.get("light", []).size(), d.get("scrolls", []).size()]]
 		b.pressed.connect(func() -> void: _start(slot))
 		row.add_child(b)
@@ -96,10 +99,12 @@ func _process(delta: float) -> void:
 func _start(slot: int) -> void:
 	Audio.sfx("menu_select")
 	SaveSystem.select(slot)
-	if SaveSystem.data.get("flags", {}).get("stage1_complete", false):
-		# Stage 1 is the whole vertical slice for now: replay from the start.
+	var stage := str(SaveSystem.data.get("stage", "stage1"))
+	if SaveSystem.data.get("flags", {}).get(stage + "_complete", false):
+		# The last stage built so far is finished: replay it from its start.
 		SaveSystem.data["checkpoint"] = ""
-		SaveSystem.data["flags"].erase("stage1_complete")
+		SaveSystem.data["flags"].erase(stage + "_complete")
+	Level.requested_id = stage
 	get_tree().change_scene_to_file(STAGE_SCENE)
 
 

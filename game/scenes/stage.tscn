@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/touch_controls.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/pause_menu.gd" id="3"]
 
-[node name="Stage1" type="Node2D"]
+[node name="Stage" type="Node2D"]
 script = ExtResource("1")
 level_id = "stage1"
 

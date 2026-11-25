@@ -35,3 +35,18 @@ HINT_TALK,Talk
 HINT_NEXT,Next
 CHECKPOINT,Waystation
 STAGE1_TITLE,The City of Destruction
+STAGE2_TITLE,The Slough of Despond
+S2_INTRO_01,"Christian and Pliable went on together across the plain, talking of the country ahead."
+S2_INTRO_02,"Come, let us mend our pace. I long to see those crowns and robes."
+S2_MUD_SIGN,"Keep moving in the mire, or it will hold you fast."
+S2_FALL_01,"Being heedless, they both fell suddenly into the bog. Christian, because of the burden on his back, began to sink."
+S2_PLIABLE_01,Is this the happiness you have told me of all this while?
+S2_PLIABLE_02,"If I get out again with my life, you shall have the brave country alone for me."
+S2_PLIABLE_03,"With that, Pliable struggled out of the mire on the side nearest his own house, and Christian saw him no more."
+S2_STEPS_SIGN_1,"By order of the Lawgiver, good and firm steps are set through the very midst of this slough."
+S2_STEPS_SIGN_2,Do not look at the mire. Look for the steps.
+S2_HELP_01,What are you doing there?
+S2_CHRISTIAN_01,"Sir, I was told to go this way to the gate. Fear followed me so hard that I fled the nearest way, and fell in."
+S2_HELP_02,But why did you not look for the steps? Give me your hand.
+S2_HELP_03,"This slough cannot be mended. When a man wakes to his sin, his fears and doubts run down and settle here. That is why it is called Despond."
+S2_END_01,"So Help set him upon sound ground, and bid him go on his way."

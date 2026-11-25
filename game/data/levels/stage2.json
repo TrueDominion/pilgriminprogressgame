@@ -1,0 +1,72 @@
+{
+  "_doc": "Stage 2 greybox, from design/levels/stage2.md. Same units and rules as stage1.json. mud: [x0, x1, h] sinking mud on ground of height h. deep_mud: [x0, x1] pits drawn as deep mire (falling in fails). events: one-time scripted moments at tile x. gloom: [x0, x1, strength] darkens the Despond. The first crossing has 1-tile gaps (teaching), the second 2-tile gaps. env and music borrow Stage 1's art and track until Stage 2's exist.",
+  "id": "stage2",
+  "title_key": "STAGE2_TITLE",
+  "next": "",
+  "env": "stage1",
+  "music": "stage1",
+  "bounds": [0, 244],
+  "spawn": [3, 0],
+  "reveal_seconds": 8,
+  "fall_limit": 10,
+  "field_from": 0,
+  "gloom": [96, 200, 1.0],
+  "intro": ["S2_INTRO_01", "S2_INTRO_02"],
+  "solids": [
+    [-4, 0, 14, "invisible"],
+    [0, 148, 0],
+    [48, 50, 1], [56, 58, 1], [64, 66, 1], [72, 74, 1], [80, 82, 1],
+    [111, 114, 1], [123, 126, 1],
+    [161, 170, 0],
+    [188, 244, 0],
+    [244, 248, 14, "invisible"]
+  ],
+  "mud": [
+    [10, 14, 0], [20, 26, 0], [32, 36, 0],
+    [42, 48, 0], [50, 56, 0], [58, 64, 0], [66, 72, 0], [74, 80, 0], [82, 88, 0],
+    [90, 97, 0],
+    [102, 111, 0], [114, 123, 0], [126, 138, 0],
+    [198, 208, 0]
+  ],
+  "deep_mud": [[148, 161], [170, 188]],
+  "platforms": [
+    [59, 62, 4],
+    [83, 86, 3]
+  ],
+  "hidden": [
+    {"id": "steps1", "platforms": [[149, 151, 0], [152, 154, 0], [155, 157, 0], [158, 160, 0]]},
+    {"id": "steps2", "platforms": [[172, 174, 0], [176, 178, 0], [180, 182, 0], [184, 186, 0], [178, 180, 3]]}
+  ],
+  "npcs": [
+    {"id": "pliable", "x": 1, "h": 0, "colour": "f9d77e", "follows": true, "following": true, "faces": "right"},
+    {"id": "help", "x": 210, "h": 0, "colour": "6f8f4e", "appears_on": "help_rescue", "faces": "left"}
+  ],
+  "events": [
+    {"id": "pliable_turns", "x": 92, "lines": ["S2_FALL_01", "S2_PLIABLE_01", "S2_PLIABLE_02", "S2_PLIABLE_03"], "action": "follower_leaves"},
+    {"id": "help_rescue", "x": 201, "lines": ["S2_HELP_01", "S2_CHRISTIAN_01", "S2_HELP_02"], "action": "rescue", "helper": "help", "to": [211, 0], "after_lines": ["S2_HELP_03"]}
+  ],
+  "signs": [
+    {"id": "mud", "x": 7, "h": 0, "lines": ["S2_MUD_SIGN"]},
+    {"id": "steps1", "x": 146, "h": 0, "lines": ["S2_STEPS_SIGN_1"], "reveals": "steps1"},
+    {"id": "steps2", "x": 167, "h": 0, "lines": ["S2_STEPS_SIGN_2"], "reveals": "steps2"}
+  ],
+  "checkpoints": [
+    {"id": "A", "x": 39, "h": 0},
+    {"id": "B", "x": 141, "h": 0},
+    {"id": "C", "x": 189, "h": 0}
+  ],
+  "scrolls": [
+    {"id": "s2_tree", "x": 60, "h": 4},
+    {"id": "s2_stone", "x": 178, "h": 3},
+    {"id": "s2_behind", "x": 84, "h": 3, "requires_flag": "stage2_pliable_turns"}
+  ],
+  "light_arcs": [
+    [4, 10, 0, 3], [14, 20, 0, 3], [26, 32, 0, 3],
+    [48, 50, 1, 2], [56, 58, 1, 2], [64, 66, 1, 2], [72, 74, 1, 2], [80, 82, 1, 2],
+    [111, 114, 1, 2], [123, 126, 1, 2],
+    [148, 161, 0, 5], [170, 188, 0, 6],
+    [212, 236, 0, 6]
+  ],
+  "exit": {"x": 238, "h": 0, "lines": ["S2_END_01"]},
+  "props": []
+}

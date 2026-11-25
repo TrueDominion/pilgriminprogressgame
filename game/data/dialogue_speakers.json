@@ -34,5 +34,20 @@
  "S1_SIGN_01": "sign",
  "S1_TOWN_01": "townsfolk",
  "S1_TOWN_02": "townsfolk",
- "STAGE1_TITLE": "ui"
+ "S2_CHRISTIAN_01": "christian",
+ "S2_END_01": "narrator",
+ "S2_FALL_01": "narrator",
+ "S2_HELP_01": "help",
+ "S2_HELP_02": "help",
+ "S2_HELP_03": "help",
+ "S2_INTRO_01": "narrator",
+ "S2_INTRO_02": "pliable",
+ "S2_MUD_SIGN": "sign",
+ "S2_PLIABLE_01": "pliable",
+ "S2_PLIABLE_02": "pliable",
+ "S2_PLIABLE_03": "narrator",
+ "S2_STEPS_SIGN_1": "sign",
+ "S2_STEPS_SIGN_2": "sign",
+ "STAGE1_TITLE": "ui",
+ "STAGE2_TITLE": "ui"
 }
