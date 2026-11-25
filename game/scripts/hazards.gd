@@ -18,6 +18,7 @@ var _arrow_t: Array[float] = []
 var _arrows: Array[Node2D] = []
 var _glint: Polygon2D
 var hits := 0                       # for the bot test's report
+var _thud_ready := true              # one arrow thud per volley, not five at once
 
 
 func setup(lvl: Level) -> void:
@@ -110,7 +111,7 @@ func _rock_falls(x: float, ground_y: float, shadow: Polygon2D) -> void:
 		if p and absf(p.global_position.x - x) < 14.0 and p.global_position.y > ground_y - 44.0:
 			hits += 1
 			p.hurt(x)
-		Audio.sfx("land_heavy", -4.0, 0.1)
+		Audio.sfx("rockfall", -3.0, 0.1)
 		shadow.queue_free())
 	t.tween_property(rock, "modulate:a", 0.0, 0.6)
 	t.tween_callback(rock.queue_free)
@@ -119,6 +120,7 @@ func _rock_falls(x: float, ground_y: float, shadow: Polygon2D) -> void:
 # ------------------------------------------------------------------ arrows
 
 func _volley(px: float, ground_y: float) -> void:
+	_thud_ready = true
 	for o: float in ARROW_OFFSETS:
 		var target := Vector2(px + o + randf_range(-6, 6), ground_y)
 		var arrow := Node2D.new()
@@ -155,6 +157,9 @@ func _move_arrows(delta: float) -> void:
 			arrow.queue_free()
 		else:
 			# stuck in the ground or in cover; fades out
+			if _thud_ready:
+				_thud_ready = false
+				Audio.sfx("arrow", -4.0, 0.08)
 			arrow.global_position = hit["position"]
 			var t := create_tween()
 			t.tween_interval(0.8)

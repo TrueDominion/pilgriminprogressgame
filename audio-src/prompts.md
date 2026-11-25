@@ -19,3 +19,12 @@ jump, jump_burdened, land, land_heavy, step_stone, step_grass, step_mud, light, 
 | stage2-b | f7eea322 | Muted hurdy-gurdy drone, low recorder melody in D dorian, soft frame drum like slow wading steps, 70 bpm, small rising hope near the end |
 
 SFX (mirelo_text_to_audio): mud_squelch_a 4fd3195e and mud_squelch_b fa067f18 (stepping into mud, one picked at random), mud_bubble 2475d7cc (while sinking, louder and higher as he sinks), mud_pull 9d32518a (Help pulls him out).
+
+# Stage 3 audio prompts (2026-11-25)
+
+| File | Job | Prompt summary |
+|---|---|---|
+| stage3-a | 83e09eed | Steady low-string walking pulse, lute and recorder in G dorian, soft frame drum undercurrent, 84 bpm, resolute and hopeful |
+| stage3-b | 9e93c3df | Hurdy-gurdy drone, plucked viol bass ostinato, tin whistle in D minor rising to D major, light tabor, 88 bpm, courage under pressure |
+
+SFX (mirelo_text_to_audio): hurt 26daab7f (soft knock-back thud, no voice), knock ac8f3091 (three knocks on a wooden door), arrow dc3fa820 (whistle and thud, once per volley), rockfall a94c7378 (rock crashing on stony ground).

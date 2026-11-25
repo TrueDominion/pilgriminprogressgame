@@ -283,7 +283,7 @@ func hurt(from_x: float) -> void:
 		away = -float(facing)
 	velocity = Vector2(away * 150.0, -140.0)
 	_stagger = 0.25
-	Audio.sfx("land_heavy", 0.0, 0.05)
+	Audio.sfx("hurt", 0.0, 0.05)
 	if _sprite and _sprite.visible and _sprite.sprite_frames.has_animation("hurt"):
 		_one_shot = "hurt"
 		_sprite.speed_scale = 1.0

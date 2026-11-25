@@ -132,9 +132,13 @@ func _solid(x0: float, x1: float, h: float, kind := "") -> void:
 			var base := _ground_h(x0, x1)
 			var r := Rect2(x0 * TILE, -h * TILE, (x1 - x0) * TILE, (h - base) * TILE)
 			var fill := Color("3f5a34") if kind == "hedge" else Color("6c677d")
+			var tex := _tex("tex_hedge" if kind == "hedge" else "tex_rock")
 			_rect_poly(r, Color("241a38"))
-			_rect_poly(r.grow(-1), fill)
-			_rect_poly(Rect2(r.position + Vector2(1, 1), Vector2(r.size.x - 2, 2)), fill.lightened(0.25))
+			if tex:
+				_tex_poly(r.grow(-1), tex)
+			else:
+				_rect_poly(r.grow(-1), fill)
+				_rect_poly(Rect2(r.position + Vector2(1, 1), Vector2(r.size.x - 2, 2)), fill.lightened(0.25))
 		_:
 			var field: bool = x0 >= float(def.get("field_from", 99999))
 			_tex_poly(Rect2(rect.position + Vector2(0, 12), rect.size - Vector2(0, 12)), _tex("tex_field" if field else "tex_earth"))
@@ -199,7 +203,12 @@ func _build() -> void:
 		if s.size() > 3 and s[3] != "wall":
 			_solid(s[0], s[1], s[2], s[3])
 	for p: Array in def.get("platforms", []):
-		_platform(p[0], p[1], p[2])
+		var plat := _platform(p[0], p[1], p[2])
+		if p.size() > 3 and p[3] == "slab" and _tex("tex_rock"):
+			# a stone slab over a rock: the shelter from arrows (stage 3)
+			var slab := Rect2(p[0] * TILE, -p[2] * TILE, (p[1] - p[0]) * TILE, 6)
+			_rect_poly(slab.grow(1), Color("241a38"), plat)
+			_tex_poly(slab, _tex("tex_rock"), plat)
 	for m: Array in def.get("mud", []):
 		_add_mud(m[0], m[1], m[2])
 	for m: Array in def.get("deep_mud", []):
@@ -253,7 +262,8 @@ func _build() -> void:
 		_world.add_child(hazards)
 		hazards.setup(self)
 	var ex: Dictionary = def["exit"]
-	_rect_poly(Rect2(ex["x"] * TILE, -ex["h"] * TILE - 48, 6, 48), Color("f0b94d"))
+	if not ex.get("knock", false):
+		_rect_poly(Rect2(ex["x"] * TILE, -ex["h"] * TILE - 48, 6, 48), Color("f0b94d"))
 	if ex.get("knock", false):
 		# a gate: the stage ends when Christian knocks (Action), not by walking in
 		_interactables.append({"pos": _tile_pos(ex["x"] - 0.5, ex["h"]), "kind": "knock", "data": ex})
@@ -671,7 +681,7 @@ func _interact(it: Dictionary) -> void:
 	if it["kind"] == "knock":
 		_busy = true
 		_interactables.erase(it)
-		Audio.sfx("menu_select", 0.0, 0.0, 0.6)
+		Audio.sfx("knock")
 		var helper := _world.get_node_or_null(str(sg.get("helper", ""))) as Node2D
 		if helper:
 			helper.visible = true

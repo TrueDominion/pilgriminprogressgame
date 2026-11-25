@@ -18,3 +18,10 @@ The model ignored "facing left" for three of five; level data records each sprit
 | Sprite | Job | Subject | Key | Drawn facing |
 |---|---|---|---|---|
 | help | 9410276d | Strong, kindly labourer, rolled sleeves, green work tunic, brown breeches, boots, short beard, one hand reaching down | magenta | left |
+
+## Stage 3 (2026-11-25)
+
+| Sprite | Job | Subject | Key | Drawn facing |
+|---|---|---|---|---|
+| worldly_wiseman | 5ee1b2ae | Self-satisfied gentleman, black coat, lace collar, tall hat, gold buttons, cane, persuading gesture | magenta | right |
+| goodwill | 878f18ec | Kindly gatekeeper, grey-blue robe, rope belt, keys, grey beard, arms open in welcome | magenta | right |
