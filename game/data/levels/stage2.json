@@ -3,7 +3,7 @@
   "id": "stage2",
   "title_key": "STAGE2_TITLE",
   "next": "",
-    "bounds": [0, 244],
+  "bounds": [0, 244],
   "spawn": [3, 0],
   "reveal_seconds": 8,
   "fall_limit": 10,

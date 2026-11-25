@@ -64,4 +64,4 @@ Changes from the beat map: the despond sign "reachable only by wading" became a 
 
 Expected first play: about 2.5 minutes for a clean run, more with mud failures. Below the 4 to 5 minute target; judge in playtest before adding length.
 
-Art and audio added 2026-11-25 (24.90 credits): four parallax layers, bog ground, mud and mire textures, Help's sprite, music (take A in the game until the owner picks), and mud sounds: a squelch on stepping in, bubbles that get louder and higher as Christian sinks, and a wet pull when Help lifts him out. Still to do: visible bubbles that grow with sink depth, and breaking the mirror repeat in the dead-tree layer (phase 4).
+Art and audio added 2026-11-25 (24.90 credits): four parallax layers, bog ground, mud and mire textures, Help's sprite, music (owner chose take B), and mud sounds: a squelch on stepping in, bubbles that get louder and higher as Christian sinks, and a wet pull when Help lifts him out. Still to do: visible bubbles that grow with sink depth, and breaking the mirror repeat in the dead-tree layer (phase 4).
