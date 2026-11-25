@@ -194,11 +194,12 @@ func _build() -> void:
 	var saved_scrolls: Array = SaveSystem.data.get("scrolls", [])
 	var flags: Dictionary = SaveSystem.data.get("flags", {})
 	# Light motes along parabolic arcs
-	var arc_i := 0
 	for arc: Array in def.get("light_arcs", []):
 		var n: int = arc[3]
 		for i in n:
-			var id := "%s_l%d_%d" % [level_id, arc_i, i]
+			# id from the arc's position, not its list index, so inserting a section does not
+			# change which motes an existing save remembers
+			var id := "%s_l%d_%d_%d" % [level_id, int(arc[0]), int(arc[2]), i]
 			if id in saved_light:
 				light_count += 1
 				continue
@@ -206,7 +207,6 @@ func _build() -> void:
 			var x: float = lerpf(arc[0], arc[1], t)
 			var lift := 1.2 + 1.2 * sin(t * PI)
 			_add_light(id, _tile_pos(x, arc[2] + lift))
-		arc_i += 1
 	for s: Dictionary in def.get("scrolls", []):
 		if s["id"] in saved_scrolls:
 			continue
