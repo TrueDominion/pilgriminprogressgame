@@ -279,11 +279,18 @@ func _build_backdrop() -> void:
 	fill.set_anchors_preset(Control.PRESET_FULL_RECT)
 	fill.color = Color("1d1530")
 	sky.add_child(fill)
-	# added back to front with move_child(0), so add the nearest first
-	_town_layers.append(_layer("near", Vector2(0.75, 1.0), 6))
-	_town_layers.append(_layer("mid", Vector2(0.45, 1.0), 2))
-	_field_layers.append(_layer("fields", Vector2(0.45, 1.0), 4))
-	_layer("far", Vector2(0.2, 0.7), -60)
+	# added back to front with move_child(0), so add the nearest first. A stage can move
+	# each layer's bottom edge and tint it: "backdrop": {"near": [bottom_y, brightness], ...}
+	var bd: Dictionary = def.get("backdrop", {})
+	var near := _layer("near", Vector2(0.75, 1.0), _bd_y(bd, "near", 6))
+	_town_layers.append(near)
+	_town_layers.append(_layer("mid", Vector2(0.45, 1.0), _bd_y(bd, "mid", 2)))
+	_field_layers.append(_layer("fields", Vector2(0.45, 1.0), _bd_y(bd, "fields", 4)))
+	var far := _layer("far", Vector2(0.2, 0.7), _bd_y(bd, "far", -60))
+	for pair in [["near", near], ["far", far]]:
+		if bd.has(pair[0]) and (bd[pair[0]] as Array).size() > 1:
+			var v: float = bd[pair[0]][1]
+			(pair[1] as Parallax2D).modulate = Color(v, v, v * 1.05)   # town fade sets only alpha
 	var light := Parallax2D.new()
 	light.scroll_scale = Vector2(0.05, 0.5)
 	add_child(light)
@@ -293,7 +300,11 @@ func _build_backdrop() -> void:
 	glow.color = Color("fff2c2")
 	glow.position = Vector2(520, -120)
 	light.add_child(glow)
-	_layer("sky", Vector2(0.05, 0.5), -40)
+	_layer("sky", Vector2(0.05, 0.5), _bd_y(bd, "sky", -40))
+
+
+func _bd_y(bd: Dictionary, name: String, fallback: float) -> float:
+	return float(bd[name][0]) if bd.has(name) else fallback
 
 
 func _update_town_fade() -> void:
@@ -458,6 +469,11 @@ func _mud_surface(x0: float, x1: float, h: float, colour: Color) -> void:
 	## Shallow mud is a dark band over the ground top; deep mire (h < 0) fills the pit.
 	var top := -h * TILE - 3
 	var depth := 12.0 * TILE if h < 0 else 9.0
+	var tex := _tex("tex_water" if h < 0 else "tex_mud")
+	if tex:
+		_tex_poly(Rect2(x0 * TILE, top, (x1 - x0) * TILE, depth), tex, _world, colour)
+		_rect_poly(Rect2(x0 * TILE, top, (x1 - x0) * TILE, 1), colour.lightened(0.3))
+		return
 	_rect_poly(Rect2(x0 * TILE, top, (x1 - x0) * TILE, depth), colour)
 	_rect_poly(Rect2(x0 * TILE, top, (x1 - x0) * TILE, 1), colour.lightened(0.3))
 	# a few bubbles so it reads as mire, not a shadow
@@ -508,6 +524,7 @@ func _run_event(ev: Dictionary) -> void:
 			t.tween_property(_fade, "color:a", 1.0, 0.4)
 			await t.finished
 			player.no_fail = false
+			Audio.sfx("mud_pull", -2.0)
 			player.respawn_at(_tile_pos(to[0], to[1]))
 			_camera.global_position = player.global_position + Vector2(0, -40)
 			_camera.reset_smoothing()
@@ -551,7 +568,10 @@ func _physics_process(delta: float) -> void:
 		_respawn()
 	_camera.global_position = (player.global_position + Vector2(0, -40)).round()
 	_update_follower(delta)
-	player.surface = "grass" if player.global_position.x >= float(def.get("field_from", 99999)) * TILE else "stone"
+	if def.has("surface"):
+		player.surface = str(def["surface"])
+	else:
+		player.surface = "grass" if player.global_position.x >= float(def.get("field_from", 99999)) * TILE else "stone"
 	_update_town_fade()
 	_update_gloom()
 	_update_focus()

@@ -10,3 +10,12 @@ Music: sonilo_music, 90 s, 5.63 credits each. Built by tools/build_audio.py (3 s
 
 SFX: mirelo_text_to_audio, 1-2 s, 0.25-0.5 credits each. Built by tools/build_audio.py (silence trim, peak -3 dBFS, mono OGG q4).
 jump, jump_burdened, land, land_heavy, step_stone, step_grass, step_mud, light, scroll, checkpoint, book, dialogue, menu_move, menu_select, respawn. Each prompt asked for one isolated, dry sound (no music).
+
+# Stage 2 audio prompts (2026-11-25)
+
+| File | Job | Prompt summary |
+|---|---|---|
+| stage2-a | b81eed4d | Low cello drone, slow sorrowful solo viola, sparse plucked harp like dripping water, E minor, 66 bpm, no drums; despair but not horror |
+| stage2-b | f7eea322 | Muted hurdy-gurdy drone, low recorder melody in D dorian, soft frame drum like slow wading steps, 70 bpm, small rising hope near the end |
+
+SFX (mirelo_text_to_audio): mud_squelch_a 4fd3195e and mud_squelch_b fa067f18 (stepping into mud, one picked at random), mud_bubble 2475d7cc (while sinking, louder and higher as he sinks), mud_pull 9d32518a (Help pulls him out).

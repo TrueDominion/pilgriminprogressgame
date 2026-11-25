@@ -47,7 +47,7 @@ A: 40 tiles. B: 140 (before the steps). C: 200. Spacing is tighter than stage 1 
 
 ## Built: greybox, 2026-11-25
 
-`game/data/levels/stage2.json`, 244 tiles. It borrows Stage 1's field art and music until Stage 2's own exist (`env` and `music` in the level file).
+`game/data/levels/stage2.json`, 244 tiles.
 
 | Item | As built |
 |---|---|
@@ -64,4 +64,4 @@ Changes from the beat map: the despond sign "reachable only by wading" became a 
 
 Expected first play: about 2.5 minutes for a clean run, more with mud failures. Below the 4 to 5 minute target; judge in playtest before adding length.
 
-Still needed before art: Help's sprite (green placeholder now), Stage 2 layers and tiles, Stage 2 music, a mud squelch that rises in pitch, bubbles that grow with sink depth.
+Art and audio added 2026-11-25 (24.90 credits): four parallax layers, bog ground, mud and mire textures, Help's sprite, music (take A in the game until the owner picks), and mud sounds: a squelch on stepping in, bubbles that get louder and higher as Christian sinks, and a wet pull when Help lifts him out. Still to do: visible bubbles that grow with sink depth, and breaking the mirror repeat in the dead-tree layer (phase 4).

@@ -46,8 +46,9 @@ func _load(path: String) -> AudioStream:
 	return s
 
 
-## Plays a sound effect. pitch_jitter varies repeated sounds (footsteps) slightly.
-func sfx(name: String, volume_db := 0.0, pitch_jitter := 0.0) -> void:
+## Plays a sound effect. pitch_jitter varies repeated sounds (footsteps) slightly;
+## pitch shifts the whole sound (mud bubbles rise as Christian sinks).
+func sfx(name: String, volume_db := 0.0, pitch_jitter := 0.0, pitch := 1.0) -> void:
 	if not enabled:
 		return
 	var s := _load(SFX_DIR + name + ".ogg")
@@ -57,7 +58,7 @@ func sfx(name: String, volume_db := 0.0, pitch_jitter := 0.0) -> void:
 	_next = (_next + 1) % POOL
 	p.stream = s
 	p.volume_db = volume_db
-	p.pitch_scale = 1.0 + randf_range(-pitch_jitter, pitch_jitter)
+	p.pitch_scale = pitch + randf_range(-pitch_jitter, pitch_jitter)
 	p.play()
 
 

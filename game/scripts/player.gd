@@ -47,6 +47,7 @@ var _sprite_sets := {}   # "burdened" / "free" -> SpriteFrames (empty until art 
 var _one_shot := ""
 var surface := "stone"   # set by the level: stone, grass (mud is detected here)
 var _step_timer := 0.0      # a one-shot animation (land, read, interact, hurt) that must finish
+var _bubble_timer := 0.0    # mud bubbles while sinking, rising in pitch with depth
 
 
 func _ready() -> void:
@@ -113,6 +114,11 @@ func _physics_process(delta: float) -> void:
 	if in_mud:
 		if absf(velocity.x) < 10.0:
 			sink_depth += m.mud_sink_speed * delta
+			_bubble_timer -= delta
+			if _bubble_timer <= 0.0:
+				_bubble_timer = 0.7
+				# louder and higher as he sinks: a warning that needs no reading
+				Audio.sfx("mud_bubble", -6.0 + sink_depth * 0.1, 0.03, 0.9 + sink_depth / 40.0)
 		else:
 			sink_depth = maxf(sink_depth - 6.0 * delta, 0.0)
 		if no_fail:
@@ -245,6 +251,8 @@ func _start_jump(vy: float, kind: String) -> void:
 ## Called by mud Area2D nodes.
 func enter_mud() -> void:
 	_mud_areas += 1
+	if _mud_areas == 1:
+		Audio.sfx("mud_squelch_a" if randf() < 0.5 else "mud_squelch_b", -6.0, 0.06)
 
 
 func exit_mud() -> void:

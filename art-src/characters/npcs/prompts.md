@@ -12,3 +12,9 @@ Core: "A tiny low-resolution pixel art game sprite in exactly the same style, sc
 | townsfolk_b | a405a5fa | Older market woman, plum dress, shawl, basket | magenta | right |
 
 The model ignored "facing left" for three of five; level data records each sprite's facing ("faces") and the game flips them toward Christian.
+
+## Stage 2 (2026-11-25)
+
+| Sprite | Job | Subject | Key | Drawn facing |
+|---|---|---|---|---|
+| help | 9410276d | Strong, kindly labourer, rolled sleeves, green work tunic, brown breeches, boots, short beard, one hand reaching down | magenta | left |
