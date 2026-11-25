@@ -7,7 +7,8 @@ extends CharacterBody2D
 signal burden_changed(burdened: bool)
 signal jumped(kind: String)            # "jump" or "double"
 signal landed(fall_px: float, heavy: bool)
-signal failed(reason: String)          # sank, fell; the level handles the respawn
+signal failed(reason: String)          # sank, fell, hope; the level handles the respawn
+signal hurt_taken(hope: int)           # after a hit, with Hope left
 
 const TILE := 16.0
 
@@ -34,6 +35,9 @@ var _mud_areas := 0
 var sink_depth := 0.0            # px sunk into mud; drawn as an offset
 var frozen := false              # cutscenes and fades
 var no_fail := false             # scripted sinking (Help's rescue): stop short of failure
+var max_hope := 3                # gdd.md 5: 3 lamps, 4 with the Helmet
+var hope := 3
+var _invuln := 0.0               # seconds of invulnerability after a hit
 
 # last-jump stats for the test range readout
 var stat_jump_start := Vector2.ZERO
@@ -94,6 +98,13 @@ func _physics_process(delta: float) -> void:
 		facing = signi(int(signf(dir)))
 
 	# --- timers
+	if _invuln > 0.0:
+		_invuln = maxf(_invuln - delta, 0.0)
+		if _sprite:
+			# soft blink, never a red flash (gdd.md 5)
+			_sprite.modulate.a = 0.45 if fmod(_invuln, 0.2) > 0.1 else 1.0
+			if _invuln == 0.0:
+				_sprite.modulate.a = 1.0
 	_coyote = shared["coyote_time_s"] if on_floor else maxf(_coyote - delta, 0.0)
 	_buffer = shared["jump_buffer_s"] if jump_pressed else maxf(_buffer - delta, 0.0)
 	_stagger = maxf(_stagger - delta, 0.0)
@@ -261,7 +272,34 @@ func exit_mud() -> void:
 		sink_depth = 0.0
 
 
+## A hazard hit: 1 Hope, 1 s of invulnerability, knockback away from the source.
+## With Pilgrim's Aid on, hazards cost no Hope (the knockback and blink still show the hit).
+func hurt(from_x: float) -> void:
+	if _invuln > 0.0 or frozen:
+		return
+	_invuln = 1.0
+	var away := signf(global_position.x - from_x)
+	if away == 0.0:
+		away = -float(facing)
+	velocity = Vector2(away * 150.0, -140.0)
+	_stagger = 0.25
+	Audio.sfx("land_heavy", 0.0, 0.05)
+	if _sprite and _sprite.visible and _sprite.sprite_frames.has_animation("hurt"):
+		_one_shot = "hurt"
+		_sprite.speed_scale = 1.0
+		_sprite.play("hurt")
+	if not Settings.assist:
+		hope -= 1
+	hurt_taken.emit(hope)
+	if hope <= 0:
+		failed.emit("hope")
+
+
 func respawn_at(pos: Vector2) -> void:
+	hope = max_hope
+	_invuln = 0.0
+	if _sprite:
+		_sprite.modulate.a = 1.0
 	global_position = pos
 	velocity = Vector2.ZERO
 	sink_depth = 0.0

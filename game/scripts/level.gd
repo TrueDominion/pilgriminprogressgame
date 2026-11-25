@@ -25,6 +25,8 @@ var _focus: Dictionary = {}      # the interactable in range, if any
 var _follower: Node2D
 var _playtime_start := 0.0
 var _gloom: CanvasModulate
+var hazards: Hazards
+var _lamps: HopeLamps
 
 @onready var _camera: Camera2D = $Camera
 @onready var _world: Node2D = $World
@@ -125,6 +127,14 @@ func _solid(x0: float, x1: float, h: float, kind := "") -> void:
 		"cart":
 			var base := _ground_h(x0, x1)
 			_sprite("prop_cart", Vector2((x0 + x1) * TILE / 2.0, -base * TILE))
+		"hedge", "cover":
+			# hedges (narrow way) and rocks (cover from arrows); drawn plainly until their art exists
+			var base := _ground_h(x0, x1)
+			var r := Rect2(x0 * TILE, -h * TILE, (x1 - x0) * TILE, (h - base) * TILE)
+			var fill := Color("3f5a34") if kind == "hedge" else Color("6c677d")
+			_rect_poly(r, Color("241a38"))
+			_rect_poly(r.grow(-1), fill)
+			_rect_poly(Rect2(r.position + Vector2(1, 1), Vector2(r.size.x - 2, 2)), fill.lightened(0.25))
 		_:
 			var field: bool = x0 >= float(def.get("field_from", 99999))
 			_tex_poly(Rect2(rect.position + Vector2(0, 12), rect.size - Vector2(0, 12)), _tex("tex_field" if field else "tex_earth"))
@@ -238,9 +248,17 @@ func _build() -> void:
 		_add_sign(sg)
 	for ev: Dictionary in def.get("events", []):
 		_add_event(ev, flags)
+	if def.has("rocks") or def.has("arrows"):
+		hazards = Hazards.new()
+		_world.add_child(hazards)
+		hazards.setup(self)
 	var ex: Dictionary = def["exit"]
 	_rect_poly(Rect2(ex["x"] * TILE, -ex["h"] * TILE - 48, 6, 48), Color("f0b94d"))
-	_area(_tile_pos(ex["x"], ex["h"]) + Vector2(0, -24), Vector2(16, 48), _on_exit)
+	if ex.get("knock", false):
+		# a gate: the stage ends when Christian knocks (Action), not by walking in
+		_interactables.append({"pos": _tile_pos(ex["x"] - 0.5, ex["h"]), "kind": "knock", "data": ex})
+	else:
+		_area(_tile_pos(ex["x"], ex["h"]) + Vector2(0, -24), Vector2(16, 48), _on_exit)
 	var b: Array = def["bounds"]
 	_camera.limit_left = int(b[0] * TILE)
 	_camera.limit_right = int(b[1] * TILE)
@@ -506,6 +524,13 @@ func _run_event(ev: Dictionary) -> void:
 			if helper:
 				helper.visible = true
 	await Dialogue.say(ev.get("lines", []))
+	if ev.has("choice"):
+		# a fork in the road: each option may send Christian somewhere ("goto": [[x, h] or null])
+		var ch: Dictionary = ev["choice"]
+		var pick: int = await Dialogue.choose(ch["prompt"], ch["options"])
+		var dest: Variant = ch["goto"][pick]
+		if dest is Array:
+			await _teleport(_tile_pos(dest[0], dest[1]))
 	match str(ev.get("action", "")):
 		"follower_leaves":
 			if _follower:
@@ -518,6 +543,9 @@ func _run_event(ev: Dictionary) -> void:
 				t.tween_property(_follower, "position:x", _follower.position.x - 220.0, 2.4)
 				t.parallel().tween_property(_follower, "modulate:a", 0.0, 2.4)
 				t.tween_callback(func() -> void: _follower.visible = false)
+		"return":
+			# turned back: to the last waystation
+			await _teleport(_checkpoint_pos)
 		"rescue":
 			var to: Array = ev["to"]
 			var t := create_tween()
@@ -541,6 +569,17 @@ func _run_event(ev: Dictionary) -> void:
 	_busy = false
 	_save_progress()
 
+
+func _teleport(pos: Vector2) -> void:
+	var t := create_tween()
+	t.tween_property(_fade, "color:a", 1.0, 0.4)
+	await t.finished
+	player.respawn_at(pos)
+	_camera.global_position = player.global_position + Vector2(0, -40)
+	_camera.reset_smoothing()
+	t = create_tween()
+	t.tween_property(_fade, "color:a", 0.0, 0.4)
+
 # ------------------------------------------------------------------ play
 
 func _spawn_player() -> void:
@@ -556,6 +595,9 @@ func _spawn_player() -> void:
 			_checkpoint_id = saved_cp
 	player.respawn_at(_checkpoint_pos)
 	player.failed.connect(func(_r: String) -> void: _respawn())
+	_lamps = HopeLamps.new()
+	_lamps.player = player
+	$HUD.add_child(_lamps)
 	_camera.global_position = player.global_position + Vector2(0, -40)
 	_camera.reset_smoothing()
 
@@ -567,6 +609,12 @@ func _physics_process(delta: float) -> void:
 	if player.global_position.y > def.get("fall_limit", 10) * TILE and not _fading:
 		_respawn()
 	_camera.global_position = (player.global_position + Vector2(0, -40)).round()
+	for r: Array in def.get("camera_regions", []):
+		# separate areas (an optional detour) keep the camera inside their own walls
+		var tx := player.global_position.x / TILE
+		if tx >= r[0] and tx <= r[1]:
+			_camera.limit_left = int(r[0] * TILE)
+			_camera.limit_right = int(r[1] * TILE)
 	_update_follower(delta)
 	if def.has("surface"):
 		player.surface = str(def["surface"])
@@ -613,13 +661,24 @@ func _update_focus() -> void:
 			break
 	_prompt.visible = not _focus.is_empty() and not Dialogue.active
 	if _prompt.visible:
-		var key := "HINT_READ" if _focus["kind"] == "read" else "HINT_TALK"
+		var key: String = {"read": "HINT_READ", "knock": "HINT_KNOCK"}.get(_focus["kind"], "HINT_TALK")
 		var btn: String = {"keys": "E", "pad": "X", "touch": tr("TOUCH_ACT")}[InputSetup.last_device]
 		_prompt.text = "%s  [%s]" % [tr(key), btn]
 
 
 func _interact(it: Dictionary) -> void:
 	var sg: Dictionary = it["data"]
+	if it["kind"] == "knock":
+		_busy = true
+		_interactables.erase(it)
+		Audio.sfx("menu_select", 0.0, 0.0, 0.6)
+		var helper := _world.get_node_or_null(str(sg.get("helper", ""))) as Node2D
+		if helper:
+			helper.visible = true
+		await Dialogue.say(sg.get("knock_lines", []))
+		_busy = false
+		_on_exit()
+		return
 	if it["kind"] == "read":
 		_busy = true
 		Audio.sfx("book")
@@ -720,6 +779,27 @@ func _update_hud() -> void:
 		if s["id"] in SaveSystem.data.get("scrolls", []):
 			got += 1
 	_hud_stats.text = "%s %d   %s %d/%d" % [tr("HUD_LIGHT"), light_count, tr("HUD_SCROLLS"), got, total_scrolls]
+
+
+## Hope as small lamps under the stats, top left of the safe area (gdd.md 5).
+class HopeLamps extends Control:
+	var player: Player
+
+	func _process(_d: float) -> void:
+		var safe := Rect2(ScreenFit.safe_rect())
+		position = Vector2(maxf(34.0, safe.position.x + 12.0), safe.position.y + 26.0)
+		queue_redraw()
+
+	func _draw() -> void:
+		if player == null:
+			return
+		for i in player.max_hope:
+			var lit := i < player.hope
+			var c := Vector2(i * 12.0, 0)
+			draw_rect(Rect2(c + Vector2(-3, -4), Vector2(7, 9)), Color("241a38"))
+			draw_rect(Rect2(c + Vector2(-2, -3), Vector2(5, 7)), Color("f0b94d") if lit else Color("4a3f5c"))
+			if lit:
+				draw_rect(Rect2(c + Vector2(-1, -2), Vector2(2, 2)), Color("fff2c2"))
 
 
 func _toast(text: String) -> void:

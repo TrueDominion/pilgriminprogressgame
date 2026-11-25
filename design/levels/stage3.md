@@ -36,3 +36,25 @@ A: start of fields (30). B: narrow way (120). C: halfway through the arrow field
 
 - The detour must be clearly optional and clearly wrong in hindsight. The rumble starts the moment the player steps onto the smooth road.
 - Arrow damage: 1 Hope. 3 hits in a volley field is the expected worst case for new players.
+
+## Built: greybox, 2026-11-25
+
+`game/data/levels/stage3.json`, 284 tiles, plus the Sinai detour as a separate area (tiles 316 to 404, its own camera region). Borrows Stage 1's field art and music until Stage 3's own exist.
+
+| Item | As built |
+|---|---|
+| New systems | Hope (3 lamps, top left), hits with 1 s blink and knockback, Pilgrim's Aid toggle in the pause menu, falling rocks, arrow volleys, choices that branch, knocking at a gate |
+| Worldly Wiseman | Tile 33, after checkpoint A. Three lines, then "Which way?": the smooth road sends Christian to the detour; the narrow way carries on |
+| Sinai detour | Rocks every 1.6 s aimed where Christian will be in 1 s; a shadow grows for that second. Standing still or stepping back avoids them. Scroll 1 near the end; Evangelist (4 lines) sends him back to waystation A |
+| Narrow way | Hedges 1 to 2 tiles high, a 2-tile gap, Scroll 2 on a ledge above a hedge |
+| Arrow field | Tiles 130 to 262. A volley every 5 s with a 1.2 s glint and chime first. Nine rocks, 12 tiles apart, each with a ledge 2 tiles out over its hiding spot |
+| The gate | Knock (Action). Goodwill appears, three lines at the gate, then the stage ends |
+| Dialogue | 18 lines (`content/dialogue/stage3.csv`) |
+| Tests | Bot run 67 s, 2 arrow hits while walking blind (with Pilgrim's Aid so it never fails). `arrow_cover_test`: 0 hits behind a rock, 2 in the open. `detour_test`: smooth road, 3 rock hits, sent back to A |
+
+Changes from the beat map:
+- Each rock got a ledge. A 2-tile rock alone cannot shield a 36 px Christian from arrows coming in at 45 degrees; the cover test proved it.
+- "Goodwill pulls him through as the last volley strikes the door" is told in the closing line, not staged.
+- Pilgrim's Aid does not yet return Christian to safe ground after a fall; pits still send him to the last waystation.
+
+Still needed: art (castle on the far layer, rocks, Sinai, Worldly Wiseman and Goodwill sprites), music, a hurt sound and a knock sound.

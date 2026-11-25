@@ -1,0 +1,70 @@
+{
+  "_doc": "Stage 3 greybox, from design/levels/stage3.md. Same units as stage1.json. events may carry a choice whose options send Christian elsewhere (goto). The Sinai detour is a separate area (tiles 316 to 404) behind its own camera region; Evangelist sends him back to checkpoint A. rocks: falling rocks with a shadow warning. arrows: volleys with a glint warning; any solid is cover. Each rock has a ledge at 3 tiles reaching 2 tiles left over the hiding spot, because a 2-tile rock alone cannot shield a 36 px Christian from arrows at 45 degrees (tests/arrow_cover_test.gd). The exit is a gate: knock to finish. env and music borrow Stage 1 until Stage 3's own exist.",
+  "id": "stage3",
+  "title_key": "STAGE3_TITLE",
+  "next": "",
+  "env": "stage1",
+  "music": "stage1",
+  "bounds": [0, 404],
+  "camera_regions": [[0, 284], [316, 404]],
+  "spawn": [3, 0],
+  "reveal_seconds": 8,
+  "fall_limit": 10,
+  "field_from": 0,
+  "intro": ["S3_INTRO_01"],
+  "solids": [
+    [-4, 0, 14, "invisible"],
+    [0, 80, 0],
+    [82, 284, 0],
+    [44, 46, 1, "hedge"], [50, 53, 2, "hedge"], [58, 60, 1, "hedge"], [66, 70, 2, "hedge"],
+    [90, 92, 2, "hedge"], [104, 107, 2, "hedge"], [112, 114, 1, "hedge"],
+    [140, 142, 2, "cover"], [152, 154, 2, "cover"], [164, 166, 2, "cover"], [176, 178, 2, "cover"],
+    [188, 190, 2, "cover"], [210, 212, 2, "cover"], [222, 224, 2, "cover"], [234, 236, 2, "cover"],
+    [246, 248, 2, "cover"],
+    [284, 288, 14, "invisible"],
+    [316, 320, 14, "invisible"],
+    [320, 400, 0],
+    [400, 404, 14, "invisible"]
+  ],
+  "platforms": [
+    [94, 98, 4],
+    [214, 217, 4],
+    [138, 142, 3], [150, 154, 3], [162, 166, 3], [174, 178, 3], [186, 190, 3], [208, 212, 3], [220, 224, 3], [232, 236, 3], [244, 248, 3]
+  ],
+  "rocks": [{"x0": 326, "x1": 398, "h": 0, "every": 1.6, "warn": 1.0}],
+  "arrows": [{"x0": 130, "x1": 262, "h": 0, "every": 5.0, "warn": 1.2}],
+  "decor": [{"x": 268.5, "h": 0, "kind": "gate"}],
+  "npcs": [
+    {"id": "worldly_wiseman", "x": 36, "h": 0, "colour": "8c6fb0", "faces": "left"},
+    {"id": "evangelist", "x": 399, "h": 0, "colour": "355e8c", "appears_on": "evangelist_rebuke", "faces": "left"},
+    {"id": "goodwill", "x": 273, "h": 0, "colour": "c9b48a", "appears_on": "gate_opened", "faces": "left"}
+  ],
+  "events": [
+    {"id": "worldly_wiseman", "x": 33, "lines": ["S3_WW_01", "S3_CHRISTIAN_01", "S3_WW_02"],
+     "choice": {"prompt": "S3_CHOICE_PROMPT", "options": ["S3_CHOICE_EASY", "S3_CHOICE_NARROW"], "goto": [[322, 0], null]}},
+    {"id": "sinai", "x": 326, "lines": ["S3_SINAI_01"]},
+    {"id": "evangelist_rebuke", "x": 396, "lines": ["S3_EVANGELIST_01", "S3_EVANGELIST_02", "S3_CHRISTIAN_02", "S3_EVANGELIST_03"], "action": "return"}
+  ],
+  "signs": [
+    {"id": "narrow", "x": 41, "h": 0, "lines": ["S3_SIGN_01"]},
+    {"id": "arrows", "x": 126, "h": 0, "lines": ["S3_ARROWS_SIGN"]}
+  ],
+  "checkpoints": [
+    {"id": "A", "x": 28, "h": 0},
+    {"id": "B", "x": 120, "h": 0},
+    {"id": "C", "x": 200, "h": 0}
+  ],
+  "scrolls": [
+    {"id": "s3_sinai", "x": 392, "h": 0},
+    {"id": "s3_hedge", "x": 96, "h": 4},
+    {"id": "s3_rock", "x": 215, "h": 4}
+  ],
+  "light_arcs": [
+    [6, 26, 0, 6], [44, 46, 1, 2], [50, 53, 2, 2], [58, 60, 1, 2], [66, 70, 2, 3], [80, 82, 0, 2],
+    [90, 92, 2, 2], [104, 107, 2, 2], [140, 142, 2, 2], [164, 166, 2, 2], [188, 190, 2, 2],
+    [222, 224, 2, 2], [246, 248, 2, 2], [330, 390, 0, 6]
+  ],
+  "exit": {"x": 270, "h": 0, "knock": true, "helper": "goodwill",
+           "knock_lines": ["S3_KNOCK_01", "S3_GOODWILL_01", "S3_GOODWILL_02"], "lines": ["S3_END_01"]},
+  "props": []
+}

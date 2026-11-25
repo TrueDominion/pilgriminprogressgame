@@ -2,7 +2,7 @@
   "_doc": "Stage 2 greybox, from design/levels/stage2.md. Same units and rules as stage1.json. mud: [x0, x1, h] sinking mud on ground of height h. deep_mud: [x0, x1] pits drawn as deep mire (falling in fails). events: one-time scripted moments at tile x. gloom: [x0, x1, strength] darkens the Despond. The first crossing has 1-tile gaps (teaching), the second 2-tile gaps. surface sets the footstep sound for the whole stage.",
   "id": "stage2",
   "title_key": "STAGE2_TITLE",
-  "next": "",
+  "next": "stage3",
   "bounds": [0, 244],
   "spawn": [3, 0],
   "reveal_seconds": 8,

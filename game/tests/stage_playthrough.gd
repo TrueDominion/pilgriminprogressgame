@@ -1,7 +1,7 @@
 extends Node
 ## Bot playthrough of one stage with the burden on (issue #5). Holds right, jumps when
-## blocked or at a ledge, reads signs that reveal hidden steps, lets dialogue auto-advance
-## and chooses "go". Passes when the exit is reached. Run headless:
+## blocked or at a ledge, reads signs that reveal hidden steps, knocks at gates, lets dialogue
+## auto-advance and takes the second option of every choice ("go", "the narrow way"). Passes when the exit is reached. Run headless:
 ##   godot --headless --fixed-fps 60 --path game res://tests/stage_playthrough.tscn -- --level=stage2
 ## (no --level means stage1)
 
@@ -18,6 +18,8 @@ func _ready() -> void:
 	SaveSystem.erase(2)
 	SaveSystem.data = SaveSystem.empty_state()
 	Dialogue.autoplay_choice = 1
+	# Pilgrim's Aid: hazards cost no Hope, so the bot always finishes; hits are still counted
+	Settings.assist = true
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--level="):
 			_level_id = arg.trim_prefix("--level=")
@@ -42,7 +44,12 @@ func _ready() -> void:
 		Input.action_release("action")
 		# read a sign that reveals hidden steps, again after a respawn if the steps have faded
 		var focus: Dictionary = _level._focus
-		if not focus.is_empty() and focus["kind"] == "read" and focus["data"].has("reveals") and not p.frozen:
+		# one press, then let go: a held button never counts as a fresh press
+		if not focus.is_empty() and focus["kind"] == "knock" and not p.frozen:
+			if frame - int(_last_read.get("knock", -100000)) > 30:
+				_last_read["knock"] = frame
+				Input.action_press("action")
+		elif not focus.is_empty() and focus["kind"] == "read" and focus["data"].has("reveals") and not p.frozen:
 			var sid: String = focus["data"]["id"]
 			if frame - int(_last_read.get(sid, -100000)) > 60 * 10:
 				_last_read[sid] = frame
@@ -75,8 +82,9 @@ func _finish(ok: bool, frames: int, max_x: float, respawns: int) -> void:
 	Input.action_release("move_right")
 	Input.action_release("jump")
 	Input.action_release("action")
-	print("%s bot: %s in %.0f s of game time, furthest x %.0f tiles, respawns %d, light %d" % [
-		_level_id, "REACHED EXIT" if ok else "DID NOT FINISH", frames / 60.0, max_x / 16.0, respawns, _level.light_count])
+	print("%s bot: %s in %.0f s of game time, furthest x %.0f tiles, respawns %d, light %d, hazard hits %d" % [
+		_level_id, "REACHED EXIT" if ok else "DID NOT FINISH", frames / 60.0, max_x / 16.0, respawns, _level.light_count,
+		_level.hazards.hits if _level.hazards else 0])
 	print("RESULT: %s" % ("PASS" if ok else "FAIL"))
 	SaveSystem.erase(2)
 	get_tree().quit(0 if ok else 1)
