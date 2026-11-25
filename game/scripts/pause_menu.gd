@@ -64,6 +64,19 @@ func _build() -> void:
 		Settings.effects = v
 		Settings.apply()
 		Audio.sfx("light", -4.0)))
+	var aid := CheckButton.new()
+	aid.text = tr("PAUSE_ASSIST")
+	aid.button_pressed = Settings.assist
+	aid.add_theme_font_size_override("font_size", 8)
+	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_hover_pressed_color"]:
+		aid.add_theme_color_override(state, Color("241a38"))
+	aid.toggled.connect(func(on: bool) -> void: Settings.assist = on)
+	box.add_child(aid)
+	var aid_hint := Label.new()
+	aid_hint.text = tr("PAUSE_ASSIST_HINT")
+	aid_hint.add_theme_font_size_override("font_size", 8)
+	aid_hint.add_theme_color_override("font_color", Color("6c5a44"))
+	box.add_child(aid_hint)
 	_quit = _button(tr("PAUSE_QUIT"), 8)
 	_quit.flat = true   # ember text straight on parchment reads better than on a grey button
 	for state in ["font_color", "font_hover_color", "font_focus_color", "font_pressed_color"]:

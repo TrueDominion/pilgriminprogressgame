@@ -11,12 +11,10 @@ const SPEAKERS_PATH := "res://data/dialogue_speakers.json"
 const SPEAKER_COLOURS := {
 	"christian": Color("f0b94d"), "evangelist": Color("73aed0"), "obstinate": Color("e3765a"),
 	"pliable": Color("f9d77e"), "family": Color("c9b48a"), "townsfolk": Color("c9b48a"),
-	"narrator": Color("a8906a"), "sign": Color("a9c77a"), "ui": Color("f4ead5"),
+	"narrator": Color("a8906a"), "sign": Color("a9c77a"), "ui": Color("f4ead5"), "help": Color("9cc98a"),
 }
-const SPEAKER_NAMES := {
-	"christian": "Christian", "evangelist": "Evangelist", "obstinate": "Obstinate",
-	"pliable": "Pliable", "family": "His wife", "townsfolk": "Townsfolk", "sign": "Signpost",
-}
+## Speaker names are translation keys SPEAKER_<ID> in data/strings.csv; a speaker without
+## a key (narrator, ui) shows no name.
 
 var active := false
 ## Test hook: when >= 0, choose() returns this option and say() advances by itself.
@@ -97,7 +95,8 @@ func _input(event: InputEvent) -> void:
 
 func _show_line(key: String) -> void:
 	var who: String = _speakers.get(key, "narrator")
-	_name.text = SPEAKER_NAMES.get(who, "")
+	var name_key := "SPEAKER_" + who.to_upper()
+	_name.text = tr(name_key) if tr(name_key) != name_key else ""
 	_name.visible = _name.text != ""
 	_name.add_theme_color_override("font_color", SPEAKER_COLOURS.get(who, Color("241a38")).darkened(0.35))
 	_text.text = tr(key)

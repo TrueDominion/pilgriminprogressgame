@@ -29,7 +29,7 @@ The slice works and costs much less to make than planned. Phase 2 spent **178 cr
 | Stage 1 length | Corrected 2026-11-25: the 57 s figure was the bot, which skips dialogue. A first play is about 3 minutes, inside the target, but two thirds of it was reading | Done: 40-tile back-lanes section with an optional rooftop run (no credits); bot run 57 s to 67 s | Claude | Done |
 | Pixel cleanup | Faces flicker slightly between frames, about 15 minutes of hand cleanup per sheet | Recommendation below | Matthew to decide | Before phase 3 |
 | Parallax mirroring | Repeats are visible | Polish (phase 4): extend layers by outpainting, about 2 credits each | Claude | Phase 4 |
-| Bundle ID | Permanent after the first upload | Confirm `com.matthewmeza.pilgrim` | Matthew | Before step 1 of TestFlight |
+| Bundle ID | Permanent after the first upload | Confirmed `com.matthewmeza.pilgrim` (2026-11-25) | Matthew | Done |
 | Seller entity | Name and, for EU sales, contact details shown on the store | Individual account, EU excluded at launch, unless you form a company | Matthew | Before phase 5 |
 
 **Stage length, update 2026-11-25:** no padding needed. The stage now has a 40-tile back-lanes section (kerbs, a cart, an optional rooftop run for Light) so the opening has more play between conversations. Reading is still about 60% of a first play; the fix for later stages is fewer lines per minute of play, not longer stages.

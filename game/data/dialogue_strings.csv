@@ -35,3 +35,37 @@ HINT_TALK,Talk
 HINT_NEXT,Next
 CHECKPOINT,Waystation
 STAGE1_TITLE,The City of Destruction
+STAGE2_TITLE,The Slough of Despond
+S2_INTRO_01,"Christian and Pliable went on together across the plain, talking of the country ahead."
+S2_INTRO_02,"Come, let us mend our pace. I long to see those crowns and robes."
+S2_MUD_SIGN,"Keep moving in the mire, or it will hold you fast."
+S2_FALL_01,"Being heedless, they both fell suddenly into the bog. Christian, because of the burden on his back, began to sink."
+S2_PLIABLE_01,Is this the happiness you have told me of all this while?
+S2_PLIABLE_02,"If I get out again with my life, you shall have the brave country alone for me."
+S2_PLIABLE_03,"With that, Pliable struggled out of the mire on the side nearest his own house, and Christian saw him no more."
+S2_STEPS_SIGN_1,"By order of the Lawgiver, good and firm steps are set through the very midst of this slough."
+S2_STEPS_SIGN_2,Do not look at the mire. Look for the steps.
+S2_HELP_01,What are you doing there?
+S2_CHRISTIAN_01,"Sir, I was told to go this way to the gate. Fear followed me so hard that I fled the nearest way, and fell in."
+S2_HELP_02,But why did you not look for the steps? Give me your hand.
+S2_HELP_03,"This slough cannot be mended. When a man wakes to his sin, his fears and doubts run down and settle here. That is why it is called Despond."
+S2_END_01,"So Help set him upon sound ground, and bid him go on his way."
+STAGE3_TITLE,The Wicket Gate
+S3_INTRO_01,Christian walked on alone. Across the field a gentleman came to meet him. His name was Mr Worldly Wiseman.
+S3_WW_01,"How now, good fellow, where are you going in this burdened manner?"
+S3_CHRISTIAN_01,"A burdened manner indeed. I am going to yonder wicket gate, where I am told I shall be rid of it."
+S3_WW_02,"In the village of Morality lives a gentleman named Legality. He can take off such burdens, and the road to his house is smooth."
+S3_CHOICE_PROMPT,Which way?
+S3_CHOICE_EASY,Take the smooth road to Morality
+S3_CHOICE_NARROW,Keep to the narrow way
+S3_SINAI_01,"The hill hung over the road. Flashes of fire came out of it, and Christian was afraid it would fall on his head."
+S3_EVANGELIST_01,"What are you doing here, Christian?"
+S3_EVANGELIST_02,Did I not show you the way to the little wicket gate? Mr Legality cannot set you free from your burden.
+S3_CHRISTIAN_02,"Sir, I am sorry. May I yet go back and up to the gate?"
+S3_EVANGELIST_03,"The man at the gate will receive you, for he has goodwill for men. Only take heed that you turn not aside again."
+S3_SIGN_01,"Strait is the gate, and narrow is the way, which leadeth unto life."
+S3_ARROWS_SIGN,"Arrows fly from the castle beyond the wall. When you see the glint, shelter behind a rock."
+S3_KNOCK_01,"May I now enter here? Will he within open to sorry me, though I have been an undeserving rebel?"
+S3_GOODWILL_01,"Who is there? Where do you come from, and what would you have?"
+S3_GOODWILL_02,I am willing with all my heart. We make no objections against any.
+S3_END_01,"As Christian stepped in, Goodwill gave him a pull, for arrows fly from that castle at all who come up to this gate."

@@ -44,3 +44,24 @@ A: 40 tiles. B: 140 (before the steps). C: 200. Spacing is tighter than stage 1 
 
 - Playtest risk: timing windows for revealed stones. Start at 8 s, tune with children.
 - Pilgrim's Aid makes the mud stop sinking at chest depth.
+
+## Built: greybox, 2026-11-25
+
+`game/data/levels/stage2.json`, 244 tiles.
+
+| Item | As built |
+|---|---|
+| Checkpoints | A 39, B 141 (just before the steps), C 189 |
+| Mud | 14 patches: three single patches at the edge, mud between firm tufts, the pool where Pliable turns back, long runs in the Despond, Help's pool |
+| The steps | Crossing 1 (sign at 146): four stones with 1-tile gaps, to teach the reveal. Crossing 2 (sign at 167): four stones with 2-tile gaps, plus a higher stone holding Scroll 2 |
+| Gloom | Tiles 96 to 200 darken gradually, then lift for Help |
+| Pliable | Follows from the start; at tile 92 both fall in, he complains and walks back toward home. Scroll 3 (on a ledge above tile 84) appears only once he has gone |
+| Help | Scripted: Christian sinks in the last pool whatever the player does (no failure), Help appears, then pulls him out to firm ground at 211 |
+| Dialogue | 14 lines (`content/dialogue/stage2.csv`), about 1,100 characters, roughly 80 s to read; down from 30 lines in Stage 1 |
+| Bot run | 71 s of movement, no respawns, all 40 Light |
+
+Changes from the beat map: the despond sign "reachable only by wading" became a sign on firm ground at the edge of each crossing, because reading freezes Christian and standing in mud while reading would sink him. The edge sign is a plain mud hint.
+
+Expected first play: about 2.5 minutes for a clean run, more with mud failures. Below the 4 to 5 minute target; judge in playtest before adding length.
+
+Art and audio added 2026-11-25 (24.90 credits): four parallax layers, bog ground, mud and mire textures, Help's sprite, music (owner chose take B), and mud sounds: a squelch on stepping in, bubbles that get louder and higher as Christian sinks, and a wet pull when Help lifts him out. Still to do: visible bubbles that grow with sink depth, and breaking the mirror repeat in the dead-tree layer (phase 4).

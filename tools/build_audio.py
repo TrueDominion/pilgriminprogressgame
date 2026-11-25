@@ -7,9 +7,12 @@ without a seam, then the whole track is set to MUSIC_LUFS integrated loudness.
 SFX (audio-src/sfx/<name>.mp3): leading and trailing silence trimmed, peak normalised
 to SFX_PEAK_DB, mono. Mix levels follow Higgsfield's game-audio guidance (music well
 below effects; nothing above -3 dBFS true peak).
-Run: python3 tools/build_audio.py
+Run: python3 tools/build_audio.py            (everything)
+     python3 tools/build_audio.py stage2 mud_bubble   (only the named tracks and effects;
+     rebuilding unchanged files changes their bytes, so build only what changed)
 """
 import json
+import sys
 import subprocess
 from pathlib import Path
 
@@ -62,11 +65,16 @@ def main() -> None:
     (OUT / "music").mkdir(parents=True, exist_ok=True)
     (OUT / "sfx").mkdir(parents=True, exist_ok=True)
     choices = json.loads(CHOICES.read_text())
+    only = set(sys.argv[1:])
     for track, take in choices["music"].items():
+        if only and track not in only:
+            continue
         src = SRC / "music" / f"{track}-{take}.m4a"
         build_music(src, OUT / "music" / f"{track}.ogg")
         print(f"music {track}: take {take}")
     for src in sorted((SRC / "sfx").glob("*.mp3")):
+        if only and src.stem not in only:
+            continue
         build_sfx(src, OUT / "sfx" / f"{src.stem}.ogg")
         print(f"sfx {src.stem}")
 
