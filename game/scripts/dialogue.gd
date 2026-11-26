@@ -107,6 +107,8 @@ func _show_line(key: String) -> void:
 
 ## Shows each line in turn; returns when the last one is dismissed.
 func say(keys: Array) -> void:
+	if keys.is_empty():
+		return
 	active = true
 	_layout()
 	_panel.visible = true

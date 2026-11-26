@@ -38,3 +38,20 @@ A: door. B: foot of the walled way. C: halfway up. D: after the Cross.
 - This stage carries the game's emotional payload. It gets the most polish time and the only bespoke music sting.
 - The burden must never come off by player action. The input lock is gentle (walking still allowed) so the player is present, not watching.
 - Playtest question: do players feel the difference in the first three jumps? If not, increase the free jump height before anything else.
+
+## Built: greybox, 2026-11-26
+
+`game/data/levels/stage4.json`, 232 tiles. Borrows Stage 1's town art and music until Stage 4's own exist.
+
+| Item | As built |
+|---|---|
+| New systems | Items to take and use (Action), hidden steps that stay once a puzzle is solved (saved), blocks hanging from above (a passage runs under them), a walking-only zone, the burden coming off for good (flag `burden_off`; later stages spawn Christian free) |
+| Dusty parlour | Broom (sweeping thickens the dust), the damsel says to bring water, a jug to take, a basin to pour. Pouring settles the dust and raises three steps over a 6-tile wall. Scroll 1 on the top shelf, only reachable once the steps exist |
+| Fire room | A fire that cannot be put out; the floor drops into a passage under the wall. At its end the oil-pourer: reaching him lights a step of braziers back up to the floor. Without him the climb out is 4 tiles, too high burdened. Scroll 2 in the passage |
+| Walled way | Ten steps of 1 and 2 tiles up to the Cross (0 to 12 tiles high), checkpoints B at the foot and C halfway, the wall behind |
+| The Cross | Jumping is locked for the last 12 tiles (walking only). The burden falls, rolls into the sepulchre, three Shining Ones speak, "three leaps for joy" |
+| Three leaps | Free set from here: three 4-tile gaps, a 3-tile ledge, a 6-tile gap that needs the double jump (a sign says so first). Scroll 3 on a ledge 5 tiles up, reachable only with the double jump |
+| Dialogue | 21 lines (`content/dialogue/stage4.csv`), the most of any stage; this one carries the payload |
+| Tests | Bot run 57 s, all puzzles solved, burden off. `stage4_test`: a walker that never uses items stops at the parlour wall (tile 44.6) and in the passage (91.6) |
+
+Not yet built: the bespoke music sting at the Cross, the free Christian's full animation set (only his walk exists, so his other moves hold one frame), and art for the house, the fire, the Cross, the sepulchre and the Shining Ones.
