@@ -38,6 +38,7 @@ var no_fail := false             # scripted sinking (Help's rescue): stop short 
 var max_hope := 3                # gdd.md 5: 3 lamps, 4 with the Helmet
 var hope := 3
 var _invuln := 0.0               # seconds of invulnerability after a hit
+var no_jump := false             # gentle input lock: walking only (the approach to the Cross)
 
 # last-jump stats for the test range readout
 var stat_jump_start := Vector2.ZERO
@@ -90,7 +91,7 @@ func _physics_process(delta: float) -> void:
 	var jump_pressed := false
 	if not frozen:
 		dir = Input.get_axis("move_left", "move_right")
-		jump_pressed = Input.is_action_just_pressed("jump")
+		jump_pressed = Input.is_action_just_pressed("jump") and not no_jump
 		if Input.is_action_just_pressed("debug_toggle_burden"):
 			burdened = not burdened
 	var jump_down := Input.is_action_pressed("jump") and not frozen

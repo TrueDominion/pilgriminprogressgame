@@ -69,3 +69,25 @@ S3_KNOCK_01,"May I now enter here? Will he within open to sorry me, though I hav
 S3_GOODWILL_01,"Who is there? Where do you come from, and what would you have?"
 S3_GOODWILL_02,I am willing with all my heart. We make no objections against any.
 S3_END_01,"As Christian stepped in, Goodwill gave him a pull, for arrows fly from that castle at all who come up to this gate."
+STAGE4_TITLE,The Interpreter's House
+S4_INTRO_01,"Christian came to the house of the Interpreter, and knocked over and over."
+S4_INTERP_01,Come in. I will show you that which will be profitable to you.
+S4_DUST_SIGN,"A large parlour, full of dust, because it was never swept."
+S4_BROOM_01,"He began to sweep, and the dust flew about so that it almost choked him."
+S4_DAMSEL_01,"Bring water, and sprinkle the room."
+S4_JUG_TAKE,Christian took up the jug of water.
+S4_POUR_01,"The water laid the dust, and the room was swept and cleansed with pleasure."
+S4_POUR_WITHOUT,The dust is too thick. I need something to settle it.
+S4_INTERP_02,"The dust is sin. The broom is the Law, which only stirs it up. The water is the Gospel, which lays it down."
+S4_FIRE_SIGN,"One stands by the fire, always casting water on it, yet the fire burns higher and hotter."
+S4_OIL_01,"Behind the wall stood a man with a vessel of oil, secretly casting it into the fire."
+S4_INTERP_03,"This is Christ, who with the oil of his grace keeps alive the work already begun in the heart."
+S4_WALL_SIGN,Salvation will God appoint for walls and bulwarks.
+S4_CLIMB_01,"Up this way ran Christian, but not without great difficulty, because of the load on his back."
+S4_CROSS_01,"Just as Christian came up to the Cross, his burden loosed from his shoulders and fell from his back. It tumbled till it came to the mouth of the sepulchre, where it fell in, and was seen no more."
+S4_CHRISTIAN_01,"He has given me rest by his sorrow, and life by his death."
+S4_SHINING_01,Your sins are forgiven.
+S4_SHINING_02,Put off your rags. Here is a change of clothes.
+S4_SHINING_03,"Take this Roll with its seal. Look on it as you run, and give it in at the Celestial Gate."
+S4_LEAPS_01,"Then Christian gave three leaps for joy, and went on singing."
+S4_LEAP_SIGN,"Free of the burden, you can jump again in the air."

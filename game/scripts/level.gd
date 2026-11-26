@@ -27,6 +27,8 @@ var _playtime_start := 0.0
 var _gloom: CanvasModulate
 var hazards: Hazards
 var _lamps: HopeLamps
+var _dust: Polygon2D             # the dusty parlour (stage 4): hides its route until settled
+var _permanent := {}             # hidden group id -> true when a reveal never fades
 
 @onready var _camera: Camera2D = $Camera
 @onready var _world: Node2D = $World
@@ -191,6 +193,8 @@ func _build() -> void:
 				var r := Rect2(d["x"] * TILE, -d["top"] * TILE, (d["x1"] - d["x"]) * TILE, (d["top"] - d["h"]) * TILE)
 				var wall := _tex_poly(r, _tex("tex_timber"), _world, Color("352a52"))
 				wall.modulate = Color(0.75, 0.7, 0.85)
+			"fire", "cross", "sepulchre", "walls":
+				_draw_decor(d)
 			_:
 				_sprite("prop_" + str(d["kind"]), _tile_pos(d["x"], d["h"]))
 	for pr: Dictionary in def.get("props", []):
@@ -216,14 +220,35 @@ func _build() -> void:
 	if def.has("gloom"):
 		_gloom = CanvasModulate.new()
 		add_child(_gloom)
+	for b: Array in def.get("blocks", []):
+		_block(b[0], b[1], b[2], b[3])
 	for hd: Dictionary in def.get("hidden", []):
 		var nodes: Array = []
-		for p: Array in hd["platforms"]:
+		for p: Array in hd.get("platforms", []):
 			var n := _platform(p[0], p[1], p[2], _world, Color("f0b94d"))
 			n.process_mode = Node.PROCESS_MODE_DISABLED
 			n.visible = false
 			nodes.append(n)
+		for s: Array in hd.get("solids", []):
+			# a hidden full block (a step that appears): drawn gold like the Book's ledges
+			var n := _block(s[0], s[1], s[2], -12.0, Color("c99a3b"))
+			n.process_mode = Node.PROCESS_MODE_DISABLED
+			n.visible = false
+			nodes.append(n)
 		_hidden[hd["id"]] = nodes
+		if hd.get("permanent", false):
+			_permanent[hd["id"]] = true
+		if SaveSystem.data.get("flags", {}).get("%s_revealed_%s" % [level_id, hd["id"]], false):
+			_reveal.call_deferred(hd["id"])
+	if def.has("dust"):
+		var d: Dictionary = def["dust"]
+		_dust = _rect_poly(Rect2(d["x0"] * TILE, -d["top"] * TILE, (d["x1"] - d["x0"]) * TILE, d["top"] * TILE + 4),
+			Color(0.55, 0.47, 0.36, 0.78))
+		_dust.z_index = 5
+		if SaveSystem.data.get("flags", {}).get("%s_revealed_%s" % [level_id, d["group"]], false):
+			_dust.visible = false
+	for it: Dictionary in def.get("items", []):
+		_add_item(it)
 	var saved_light: Array = SaveSystem.data.get("light", [])
 	var saved_scrolls: Array = SaveSystem.data.get("scrolls", [])
 	var flags: Dictionary = SaveSystem.data.get("flags", {})
@@ -525,6 +550,12 @@ func _add_event(ev: Dictionary, flags: Dictionary) -> void:
 func _run_event(ev: Dictionary) -> void:
 	_busy = true
 	player.no_fail = true   # Christian is frozen in place; standing in mud must not fail him
+	if str(ev.get("action", "")) == "burden_off":
+		await _burden_falls(ev)
+	for h: String in ev.get("helpers", []):
+		var hn := _world.get_node_or_null(h) as Node2D
+		if hn:
+			hn.visible = true
 	match str(ev.get("action", "")):
 		"rescue":
 			# Christian sinks whatever the player does; a helper appears and pulls him out
@@ -553,6 +584,8 @@ func _run_event(ev: Dictionary) -> void:
 				t.tween_property(_follower, "position:x", _follower.position.x - 220.0, 2.4)
 				t.parallel().tween_property(_follower, "modulate:a", 0.0, 2.4)
 				t.tween_callback(func() -> void: _follower.visible = false)
+		"reveal":
+			_reveal(str(ev["reveals"]))
 		"return":
 			# turned back: to the last waystation
 			await _teleport(_checkpoint_pos)
@@ -590,11 +623,139 @@ func _teleport(pos: Vector2) -> void:
 	t = create_tween()
 	t.tween_property(_fade, "color:a", 0.0, 0.4)
 
+
+func _block(x0: float, x1: float, top_h: float, bottom_h: float, colour := Color.TRANSPARENT) -> StaticBody2D:
+	## A solid rectangle between two heights: walls that hang from above (a passage runs
+	## under them) or, with bottom_h -12, an ordinary block.
+	var rect := Rect2(x0 * TILE, -top_h * TILE, (x1 - x0) * TILE, (top_h - bottom_h) * TILE)
+	var body := StaticBody2D.new()
+	var shape := CollisionShape2D.new()
+	var rs := RectangleShape2D.new()
+	rs.size = rect.size
+	shape.shape = rs
+	shape.position = rect.get_center()
+	body.add_child(shape)
+	_world.add_child(body)
+	if colour.a > 0.0:
+		_rect_poly(rect, Color("241a38"), body)
+		_rect_poly(rect.grow(-1), colour, body)
+	else:
+		_rect_poly(rect, Color("241a38"), body)
+		var tex := _tex("tex_stone_wall")
+		if tex:
+			_tex_poly(rect.grow(-1), tex, body)
+		else:
+			_rect_poly(rect.grow(-1), Color("4a3f5c"), body)
+	return body
+
+
+func _add_item(it: Dictionary) -> void:
+	## Something to take or use with Action (stage 4 puzzles): "gives" puts it in the
+	## satchel, "needs" requires one first, "reveals" settles a hidden group for good.
+	var flags: Dictionary = SaveSystem.data.get("flags", {})
+	if flags.get("%s_used_%s" % [level_id, it["id"]], false):
+		return
+	var pos := _tile_pos(it["x"] + 0.5, it["h"])
+	var holder := Node2D.new()
+	holder.position = pos
+	holder.name = "Item_" + str(it["id"])
+	_world.add_child(holder)
+	if _sprite("prop_" + str(it.get("look", it["id"])), Vector2.ZERO, holder) == null:
+		var c := Color(str(it.get("colour", "c9b48a")))
+		_rect_poly(Rect2(-5, -12, 10, 12), Color("241a38"), holder)
+		_rect_poly(Rect2(-4, -11, 8, 10), c, holder)
+	_interactables.append({"pos": pos, "kind": "item", "data": it, "node": holder})
+
+
+func _use_item(entry: Dictionary) -> void:
+	var it: Dictionary = entry["data"]
+	var flags: Dictionary = SaveSystem.data["flags"]
+	_busy = true
+	if it.has("needs") and not flags.get("item_" + str(it["needs"]), false):
+		await Dialogue.say(it.get("lines_without", []))
+		_busy = false
+		return
+	Audio.sfx("menu_select", -2.0)
+	await player.play_action("interact")
+	await Dialogue.say(it.get("lines", []))
+	if it.get("stirs_dust", false) and _dust and _dust.visible:
+		# the broom: sweeping only raises the dust (the Law stirs sin up)
+		var t := create_tween()
+		t.tween_property(_dust, "color:a", 0.95, 0.4)
+		t.tween_property(_dust, "color:a", 0.78, 2.0)
+	if it.has("gives"):
+		flags["item_" + str(it["gives"])] = true
+	if it.has("reveals"):
+		_reveal(str(it["reveals"]))
+	if it.get("once", true):
+		flags["%s_used_%s" % [level_id, it["id"]]] = true
+		_interactables.erase(entry)
+		if it.has("gives"):
+			(entry["node"] as Node2D).queue_free()
+	_busy = false
+	_save_progress()
+
+
+func _draw_decor(d: Dictionary) -> void:
+	## Shapes for scenery that has no art yet; replaced by sprites when it exists.
+	var base := _tile_pos(d["x"], d["h"])
+	match str(d["kind"]):
+		"fire":
+			var flame := Polygon2D.new()
+			flame.polygon = PackedVector2Array([Vector2(-10, 0), Vector2(-6, -14), Vector2(-2, -8), Vector2(1, -20),
+				Vector2(4, -9), Vector2(8, -15), Vector2(10, 0)])
+			flame.color = Color("e3765a")
+			flame.position = base
+			_world.add_child(flame)
+			var t := create_tween().set_loops()
+			t.tween_property(flame, "scale", Vector2(1.0, 1.15), 0.3)
+			t.tween_property(flame, "scale", Vector2(1.0, 0.9), 0.3)
+			_rect_poly(Rect2(base + Vector2(-14, -2), Vector2(28, 4)), Color("241a38"))
+		"cross":
+			_rect_poly(Rect2(base + Vector2(-4, -72), Vector2(8, 72)), Color("85704f"))
+			_rect_poly(Rect2(base + Vector2(-20, -58), Vector2(40, 8)), Color("85704f"))
+			_rect_poly(Rect2(base + Vector2(-4, -72), Vector2(2, 72)), Color("c9b48a"))
+		"sepulchre":
+			_rect_poly(Rect2(base + Vector2(-28, -40), Vector2(56, 40)), Color("6c677d"))
+			_rect_poly(Rect2(base + Vector2(-12, -26), Vector2(24, 26)), Color("1d1530"))
+		"walls":
+			# the walled way (Isaiah 26:1): a high wall behind the climb
+			var r := Rect2(d["x"] * TILE, -float(d["top"]) * TILE, (float(d["x1"]) - d["x"]) * TILE, (float(d["top"]) - d["h"]) * TILE)
+			var w := _tex_poly(r, _tex("tex_stone_wall"), _world, Color("352a52"))
+			w.modulate = Color(0.55, 0.52, 0.65)
+			w.z_index = -1
+
+
+func _burden_falls(ev: Dictionary) -> void:
+	## The Cross (stage 4): the burden comes off without the player doing anything. It rolls
+	## down the slope into the sepulchre, and Christian moves with the free set from now on.
+	await get_tree().create_timer(0.8).timeout
+	var sack := Polygon2D.new()
+	sack.polygon = PackedVector2Array([Vector2(-8, -16), Vector2(8, -16), Vector2(10, -4), Vector2(6, 0),
+		Vector2(-6, 0), Vector2(-10, -4)])
+	sack.color = Color("6c677d")
+	sack.position = player.global_position + Vector2(-10 * player.facing, -18)
+	_world.add_child(sack)
+	player.burdened = false
+	Audio.sfx("land_heavy", -2.0)
+	var to: Array = ev["sepulchre"]
+	var dest := _tile_pos(to[0], to[1])
+	var t := create_tween()
+	t.tween_property(sack, "position:y", player.global_position.y, 0.35)
+	t.tween_property(sack, "position", dest, 2.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	t.parallel().tween_property(sack, "rotation", 9.0, 2.2)
+	t.tween_property(sack, "modulate:a", 0.0, 0.5)
+	await t.finished
+	sack.queue_free()
+	SaveSystem.data["flags"]["burden_off"] = true
+	SaveSystem.data["flags"]["has_roll"] = true
+
 # ------------------------------------------------------------------ play
 
 func _spawn_player() -> void:
 	player = PLAYER_SCENE.instantiate()
-	player.burdened = true
+	# the burden comes off at the Cross (stage 4) and stays off
+	player.burdened = not SaveSystem.data.get("flags", {}).get("burden_off", false)
 	_world.add_child(player)
 	var sp: Array = def["spawn"]
 	_checkpoint_pos = _tile_pos(sp[0], sp[1])
@@ -632,6 +793,10 @@ func _physics_process(delta: float) -> void:
 		player.surface = "grass" if player.global_position.x >= float(def.get("field_from", 99999)) * TILE else "stone"
 	_update_town_fade()
 	_update_gloom()
+	if def.has("walk_only"):
+		var wo: Array = def["walk_only"]
+		var wx := player.global_position.x / TILE
+		player.no_jump = wx >= wo[0] and wx <= wo[1] and player.burdened
 	_update_focus()
 	if not _focus.is_empty() and not player.frozen and Input.is_action_just_pressed("action"):
 		_interact(_focus)
@@ -671,13 +836,16 @@ func _update_focus() -> void:
 			break
 	_prompt.visible = not _focus.is_empty() and not Dialogue.active
 	if _prompt.visible:
-		var key: String = {"read": "HINT_READ", "knock": "HINT_KNOCK"}.get(_focus["kind"], "HINT_TALK")
+		var key: String = {"read": "HINT_READ", "knock": "HINT_KNOCK", "item": str(_focus["data"].get("hint", "HINT_USE"))}.get(_focus["kind"], "HINT_TALK")
 		var btn: String = {"keys": "E", "pad": "X", "touch": tr("TOUCH_ACT")}[InputSetup.last_device]
 		_prompt.text = "%s  [%s]" % [tr(key), btn]
 
 
 func _interact(it: Dictionary) -> void:
 	var sg: Dictionary = it["data"]
+	if it["kind"] == "item":
+		_use_item(it)
+		return
 	if it["kind"] == "knock":
 		_busy = true
 		_interactables.erase(it)
@@ -703,6 +871,14 @@ func _reveal(id: String) -> void:
 	for n: Node2D in _hidden.get(id, []):
 		n.visible = true
 		n.process_mode = Node.PROCESS_MODE_INHERIT
+	if _permanent.has(id):
+		# a puzzle answer: stays revealed, and the save remembers it
+		SaveSystem.data["flags"]["%s_revealed_%s" % [level_id, id]] = true
+		if _dust and def["dust"]["group"] == id and _dust.visible:
+			var t := create_tween()
+			t.tween_property(_dust, "modulate:a", 0.0, 1.5)
+			t.tween_callback(func() -> void: _dust.visible = false)
+		return
 	await get_tree().create_timer(float(def.get("reveal_seconds", 8))).timeout
 	for n: Node2D in _hidden.get(id, []):
 		var t := create_tween()

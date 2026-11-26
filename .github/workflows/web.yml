@@ -76,7 +76,7 @@ jobs:
       - name: Stage bot playthroughs and hazard tests
         run: |
           set -euo pipefail
-          for level in stage1 stage2 stage3; do
+          for level in stage1 stage2 stage3 stage4; do
             ~/godot/godot --headless --fixed-fps 60 --path game res://tests/stage_playthrough.tscn -- --level=$level 2>&1 | tee $level.log
             grep -q "RESULT: PASS" $level.log
           done
@@ -84,6 +84,8 @@ jobs:
           grep -q "RESULT: PASS" cover.log
           ~/godot/godot --headless --fixed-fps 60 --path game res://tests/detour_test.tscn 2>&1 | tee detour.log
           grep -q "RESULT: PASS" detour.log
+          ~/godot/godot --headless --fixed-fps 60 --path game res://tests/stage4_test.tscn 2>&1 | tee stage4gates.log
+          grep -q "RESULT: PASS" stage4gates.log
 
       - name: Asset pipeline test
         run: |

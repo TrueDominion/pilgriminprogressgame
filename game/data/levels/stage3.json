@@ -2,7 +2,7 @@
   "_doc": "Stage 3 greybox, from design/levels/stage3.md. Same units as stage1.json. events may carry a choice whose options send Christian elsewhere (goto). The Sinai detour is a separate area (tiles 316 to 404) behind its own camera region; Evangelist sends him back to checkpoint A. rocks: falling rocks with a shadow warning. arrows: volleys with a glint warning; any solid is cover. Each rock has a ledge at 3 tiles reaching 2 tiles left over the hiding spot, because a 2-tile rock alone cannot shield a 36 px Christian from arrows at 45 degrees (tests/arrow_cover_test.gd). The exit is a gate: knock to finish. Art in assets/env/stage3 (tools/build_stage3_env.py); rock ledges are drawn as stone slabs (kind slab).",
   "id": "stage3",
   "title_key": "STAGE3_TITLE",
-  "next": "",
+  "next": "stage4",
   "bounds": [0, 404],
   "camera_regions": [[0, 284], [316, 404]],
   "spawn": [3, 0],
