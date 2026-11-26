@@ -45,7 +45,7 @@ A: start of fields (30). B: narrow way (120). C: halfway through the arrow field
 |---|---|
 | New systems | Hope (3 lamps, top left), hits with 1 s blink and knockback, Pilgrim's Aid toggle in the pause menu, falling rocks, arrow volleys, choices that branch, knocking at a gate |
 | Worldly Wiseman | Tile 33, after checkpoint A. Three lines, then "Which way?": the smooth road sends Christian to the detour; the narrow way carries on |
-| Sinai detour | Rocks every 1.6 s aimed where Christian will be in 1 s; a shadow grows for that second. Standing still or stepping back avoids them. Scroll 1 near the end; Evangelist (4 lines) sends him back to waystation A |
+| Sinai detour | Rocks every 1.6 s aimed where Christian will be when they land (1 s warning plus 0.22 s fall); a shadow grows meanwhile. Standing still or stepping back avoids them. Scroll 1 near the end; Evangelist (4 lines) sends him back to waystation A |
 | Narrow way | Hedges 1 to 2 tiles high, a 2-tile gap, Scroll 2 on a ledge above a hedge |
 | Arrow field | Tiles 130 to 262. A volley every 5 s with a 1.2 s glint and chime first. Nine rocks, 12 tiles apart, each with a ledge 2 tiles out over its hiding spot |
 | The gate | Knock (Action). Goodwill appears, three lines at the gate, then the stage ends |

@@ -10,6 +10,7 @@ extends Node2D
 
 const TILE := 16.0
 const ARROW_SPEED := 260.0          # px/s; slow on purpose, the burdened jump is slow
+const ROCK_FALL_S := 0.22           # a rock's drop after its shadow's warning ends
 const ARROW_OFFSETS := [-56.0, -24.0, 0.0, 24.0, 56.0]   # px around Christian
 
 var level: Level
@@ -52,8 +53,9 @@ func _physics_process(delta: float) -> void:
 		_rock_t[i] -= delta
 		if _rock_t[i] <= 0.0:
 			_rock_t[i] = float(z["every"])
-			# aim where he will be, so standing still and walking on are both answered
-			_drop_rock(p.global_position.x + p.velocity.x * float(z["warn"]) + randf_range(-8, 8),
+			# aim where he will be when it lands (warning plus fall), so walking on is answered
+			# as surely as standing still; stopping or stepping back is the way out
+			_drop_rock(p.global_position.x + p.velocity.x * (float(z["warn"]) + ROCK_FALL_S) + randf_range(-6, 6),
 				-float(z.get("h", 0)) * TILE, float(z["warn"]))
 	var fields: Array = level.def.get("arrows", [])
 	var warning := false
@@ -105,7 +107,7 @@ func _rock_falls(x: float, ground_y: float, shadow: Polygon2D) -> void:
 	rock.position = Vector2(x, ground_y - 240)
 	level.get_node("World").add_child(rock)
 	var t := create_tween()
-	t.tween_property(rock, "position:y", ground_y, 0.22).set_ease(Tween.EASE_IN)
+	t.tween_property(rock, "position:y", ground_y, ROCK_FALL_S).set_ease(Tween.EASE_IN)
 	t.tween_callback(func() -> void:
 		var p := level.player
 		if p and absf(p.global_position.x - x) < 14.0 and p.global_position.y > ground_y - 44.0:
