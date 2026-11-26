@@ -25,3 +25,12 @@ The model ignored "facing left" for three of five; level data records each sprit
 |---|---|---|---|---|
 | worldly_wiseman | 5ee1b2ae | Self-satisfied gentleman, black coat, lace collar, tall hat, gold buttons, cane, persuading gesture | magenta | right |
 | goodwill | 878f18ec | Kindly gatekeeper, grey-blue robe, rope belt, keys, grey beard, arms open in welcome | magenta | right |
+
+## Stage 4 (2026-11-26)
+
+| Sprite | Job | Subject | Key | Drawn facing |
+|---|---|---|---|---|
+| interpreter | 5568c444 | Wise old teacher, deep-purple robe, candle lantern raised, long white beard | magenta | left |
+| damsel | 9ce500d9 | Young household servant, blue dress, white apron and cap, holding a small jug | magenta | left |
+| oil_pourer | 2b2b5b8d | Quiet man in a hooded cream robe pouring oil from a golden vessel | magenta | left |
+| shining_one | ece0be17 | Radiant messenger in white and pale gold, soft glow, hands open, no wings (used for all three) | magenta | right |

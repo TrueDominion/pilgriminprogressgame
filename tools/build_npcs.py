@@ -18,7 +18,8 @@ REPO = Path(__file__).resolve().parent.parent
 SRC = REPO / "art-src" / "characters" / "npcs"
 OUT = REPO / "game" / "assets" / "sprites" / "npc"
 HEIGHTS = {"obstinate": 46, "pliable": 46, "wife": 44, "townsfolk_a": 46, "townsfolk_b": 42, "help": 50,
-           "worldly_wiseman": 50, "goodwill": 48}
+           "worldly_wiseman": 50, "goodwill": 48,
+           "interpreter": 50, "damsel": 44, "oil_pourer": 48, "shining_one": 52}
 
 
 def main() -> None:

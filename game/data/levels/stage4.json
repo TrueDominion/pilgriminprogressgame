@@ -1,10 +1,10 @@
 {
-  "_doc": "Stage 4 greybox, from design/levels/stage4.md. Same units as stage1.json. blocks: [x0, x1, top_h, bottom_h] solid rectangles between two heights (a wall a passage runs under). items: things to take or use with Action (gives, needs, reveals, stirs_dust). hidden groups may hold solids (steps that appear) and be permanent (a puzzle answer that stays). dust: the parlour's dust cloud, gone once its group is revealed. walk_only: tiles where jumping is locked while burdened. The cross event takes the burden off for good (flag burden_off). env borrows Stage 1 until Stage 4's own art exists.",
+  "_doc": "Stage 4 greybox, from design/levels/stage4.md. Same units as stage1.json. blocks: [x0, x1, top_h, bottom_h] solid rectangles between two heights (a wall a passage runs under). items: things to take or use with Action (gives, needs, reveals, stirs_dust). hidden groups may hold solids (steps that appear) and be permanent (a puzzle answer that stays). dust: the parlour's dust cloud, gone once its group is revealed. walk_only: tiles where jumping is locked while burdened. The cross event takes the burden off for good (flag burden_off). faces says which way an NPC sprite is drawn; drawn-right sprites are turned to face left, so the Shining One left of the Cross is marked left to keep facing right, toward Christian. Art in assets/env/stage4 (tools/build_stage4_env.py): the house layer indoors, the hill with the Cross from field_from on.",
   "id": "stage4",
   "title_key": "STAGE4_TITLE",
   "next": "",
-  "env": "stage1",
-  "music": "stage1",
+  "field_from": 92,
+  "backdrop": {"mid": [6], "fields": [10], "sky": [-30]},
   "bounds": [0, 232],
   "spawn": [3, 0],
   "reveal_seconds": 8,
@@ -25,7 +25,7 @@
   "platforms": [[222, 225, 15]],
   "hidden": [
     {"id": "dust_route", "permanent": true, "solids": [[36, 39, 2], [39, 42, 4], [42, 45, 5]], "platforms": [[41, 44, 7]]},
-    {"id": "braziers", "permanent": true, "solids": [[88, 92, -2]]}
+    {"id": "braziers", "permanent": true, "prop": "brazier", "solids": [[88, 92, -2]]}
   ],
   "dust": {"x0": 34, "x1": 48, "top": 9, "group": "dust_route"},
   "items": [
@@ -44,9 +44,9 @@
     {"id": "interpreter", "x": 8, "h": 0, "colour": "8c6fb0", "trigger_x": 6, "lines": ["S4_INTERP_01"], "faces": "left"},
     {"id": "damsel", "x": 24, "h": 0, "colour": "c9b48a", "trigger_x": 22, "lines": ["S4_DAMSEL_01"], "faces": "left"},
     {"id": "oil_pourer", "x": 87, "h": -4, "colour": "a8906a", "faces": "left"},
-    {"id": "shining_one_a", "x": 160, "h": 12, "colour": "fff2c2", "appears_on": "cross", "faces": "right"},
-    {"id": "shining_one_b", "x": 169, "h": 12, "colour": "fff2c2", "appears_on": "cross", "faces": "left"},
-    {"id": "shining_one_c", "x": 172, "h": 11, "colour": "fff2c2", "appears_on": "cross", "faces": "left"}
+    {"id": "shining_one_a", "x": 160, "h": 12, "colour": "fff2c2", "appears_on": "cross", "sprite": "res://assets/sprites/npc/shining_one.png", "faces": "left"},
+    {"id": "shining_one_b", "x": 169, "h": 12, "colour": "fff2c2", "appears_on": "cross", "sprite": "res://assets/sprites/npc/shining_one.png", "faces": "right"},
+    {"id": "shining_one_c", "x": 172, "h": 11, "colour": "fff2c2", "appears_on": "cross", "sprite": "res://assets/sprites/npc/shining_one.png", "faces": "right"}
   ],
   "events": [
     {"id": "oil", "x": 85, "h": -4, "lines": ["S4_OIL_01", "S4_INTERP_03"], "action": "reveal", "reveals": "braziers"},

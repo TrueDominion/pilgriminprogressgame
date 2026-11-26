@@ -232,6 +232,8 @@ func _build() -> void:
 		for s: Array in hd.get("solids", []):
 			# a hidden full block (a step that appears): drawn gold like the Book's ledges
 			var n := _block(s[0], s[1], s[2], -12.0, Color("c99a3b"))
+			if hd.has("prop"):
+				_sprite("prop_" + str(hd["prop"]), Vector2((s[0] + s[1]) * TILE / 2.0, -float(s[2]) * TILE), n)
 			n.process_mode = Node.PROCESS_MODE_DISABLED
 			n.visible = false
 			nodes.append(n)
@@ -699,6 +701,8 @@ func _use_item(entry: Dictionary) -> void:
 func _draw_decor(d: Dictionary) -> void:
 	## Shapes for scenery that has no art yet; replaced by sprites when it exists.
 	var base := _tile_pos(d["x"], d["h"])
+	if str(d["kind"]) != "walls" and _sprite("prop_" + str(d["kind"]), base):
+		return   # the art exists; the shapes below are only stand-ins
 	match str(d["kind"]):
 		"fire":
 			var flame := Polygon2D.new()
@@ -730,6 +734,7 @@ func _burden_falls(ev: Dictionary) -> void:
 	## The Cross (stage 4): the burden comes off without the player doing anything. It rolls
 	## down the slope into the sepulchre, and Christian moves with the free set from now on.
 	await get_tree().create_timer(0.8).timeout
+	Audio.sting("cross")
 	var sack := Polygon2D.new()
 	sack.polygon = PackedVector2Array([Vector2(-8, -16), Vector2(8, -16), Vector2(10, -4), Vector2(6, 0),
 		Vector2(-6, 0), Vector2(-10, -4)])

@@ -85,6 +85,29 @@ func music(name: String, fade := 1.0) -> void:
 	t.tween_property(_music, "volume_db", 0.0, fade * 0.5)
 
 
+## Plays a one-off musical moment (the Cross) over the stage music: the music dips,
+## the sting plays once, then the music comes back. Files: res://assets/audio/music/sting_<name>.ogg
+func sting(name: String) -> void:
+	if not enabled:
+		return
+	var s := _load(MUSIC_DIR + "sting_" + name + ".ogg")
+	if s == null:
+		return
+	if s is AudioStreamOggVorbis:
+		(s as AudioStreamOggVorbis).loop = false
+	var p := AudioStreamPlayer.new()
+	p.bus = "Music"
+	p.stream = s
+	add_child(p)
+	var t := create_tween()
+	t.tween_property(_music, "volume_db", -30.0, 0.6)
+	p.play()
+	await p.finished
+	p.queue_free()
+	t = create_tween()
+	t.tween_property(_music, "volume_db", 0.0, 2.0)
+
+
 ## Stops everything and releases the streams (used before quitting).
 func stop_all() -> void:
 	_music_name = ""
