@@ -255,7 +255,12 @@ func _start_jump(vy: float, kind: String) -> void:
 		_in_jump = true
 	jumped.emit(kind)
 	if kind == "double":
-		Audio.sfx("jump", 0.0, 0.08)
+		Audio.sfx("jump", 0.0, 0.08, 1.15)
+		# the free set's somersault, if the sheet exists; the jump/fall poses resume after it
+		if _sprite.visible and _sprite.sprite_frames.has_animation("double_jump"):
+			_one_shot = "double_jump"
+			_sprite.speed_scale = 1.0
+			_sprite.play("double_jump")
 	else:
 		Audio.sfx("jump_burdened" if burdened else "jump", 0.0, 0.05)
 

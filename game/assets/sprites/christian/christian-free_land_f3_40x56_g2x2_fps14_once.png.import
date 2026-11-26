@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl27g66gcjt1s"
-path="res://.godot/imported/christian-free_walk_f11_40x56_g4x3_fps10_loop.png-a81a76e87a86d4225b4629ca6c57d804.ctex"
+uid="uid://cuhh5fou7lxk7"
+path="res://.godot/imported/christian-free_land_f3_40x56_g2x2_fps14_once.png-aa4d4fe90a007a81974b3260d561a71a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/christian/christian-free_walk_f11_40x56_g4x3_fps10_loop.png"
-dest_files=["res://.godot/imported/christian-free_walk_f11_40x56_g4x3_fps10_loop.png-a81a76e87a86d4225b4629ca6c57d804.ctex"]
+source_file="res://assets/sprites/christian/christian-free_land_f3_40x56_g2x2_fps14_once.png"
+dest_files=["res://.godot/imported/christian-free_land_f3_40x56_g2x2_fps14_once.png-aa4d4fe90a007a81974b3260d561a71a.ctex"]
 
 [params]
 
