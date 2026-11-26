@@ -57,4 +57,4 @@ Changes from the beat map:
 - "Goodwill pulls him through as the last volley strikes the door" is told in the closing line, not staged.
 - Pilgrim's Aid does not yet return Christian to safe ground after a fall; pits still send him to the last waystation.
 
-Art and audio added 2026-11-25 (22.64 credits): castle on the far layer, Mount Sinai over the detour, rock and hedge textures with stone-slab ledges, the wicket gate, Worldly Wiseman and Goodwill sprites, music (take A until the owner picks), and hurt, knock, arrow and rockfall sounds.
+Art and audio added 2026-11-25 (22.64 credits): castle on the far layer, Mount Sinai over the detour, rock and hedge textures with stone-slab ledges, the wicket gate, Worldly Wiseman and Goodwill sprites, music (owner chose take B), and hurt, knock, arrow and rockfall sounds.
