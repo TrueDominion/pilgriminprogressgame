@@ -54,4 +54,4 @@ A: door. B: foot of the walled way. C: halfway up. D: after the Cross.
 | Dialogue | 21 lines (`content/dialogue/stage4.csv`), the most of any stage; this one carries the payload |
 | Tests | Bot run 57 s, all puzzles solved, burden off. `stage4_test`: a walker that never uses items stops at the parlour wall (tile 44.6) and in the passage (91.6) |
 
-Not yet built: the bespoke music sting at the Cross, the free Christian's full animation set (only his walk exists, so his other moves hold one frame), and art for the house, the fire, the Cross, the sepulchre and the Shining Ones.
+Art and audio added 2026-11-26 (31.02 credits): dawn sky, the house layer, the hillside with the Cross, props (fire, Cross, tomb, jug, basin, broom, braziers on the lit steps), the Interpreter, the damsel, the oil-pourer, the Shining Ones, music and a one-off sting at the Cross that plays over the music (take A of each until the owner picks). Christian's free animation set was added the same day.

@@ -51,6 +51,13 @@ def build_music(src: Path, dst: Path) -> None:
     ff("-i", str(src), "-filter_complex", graph, "-map", "[o]", "-ar", "44100", "-c:a", "libvorbis", "-q:a", "3", str(dst))
 
 
+def build_sting(src: Path, dst: Path) -> None:
+    """A one-off cue: no loop, same loudness as the music, a short fade-out at the end."""
+    d = duration(src)
+    ff("-i", str(src), "-af", f"afade=t=out:st={max(d - 1.5, 0)}:d=1.5,loudnorm=I={MUSIC_LUFS}:TP=-3:LRA=11",
+       "-ar", "44100", "-c:a", "libvorbis", "-q:a", "3", str(dst))
+
+
 def build_sfx(src: Path, dst: Path) -> None:
     trim = ("silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.01,"
             "areverse,silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.02,areverse")
@@ -72,6 +79,11 @@ def main() -> None:
         src = SRC / "music" / f"{track}-{take}.m4a"
         build_music(src, OUT / "music" / f"{track}.ogg")
         print(f"music {track}: take {take}")
+    for name, take in choices.get("stings", {}).items():
+        if only and "sting_" + name not in only:
+            continue
+        build_sting(SRC / "music" / f"{name}-{take}.m4a", OUT / "music" / f"sting_{name}.ogg")
+        print(f"sting {name}: take {take}")
     for src in sorted((SRC / "sfx").glob("*.mp3")):
         if only and src.stem not in only:
             continue

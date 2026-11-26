@@ -28,3 +28,14 @@ SFX (mirelo_text_to_audio): mud_squelch_a 4fd3195e and mud_squelch_b fa067f18 (s
 | stage3-b | 9e93c3df | Hurdy-gurdy drone, plucked viol bass ostinato, tin whistle in D minor rising to D major, light tabor, 88 bpm, courage under pressure |
 
 SFX (mirelo_text_to_audio): hurt 26daab7f (soft knock-back thud, no voice), knock ac8f3091 (three knocks on a wooden door), arrow dc3fa820 (whistle and thud, once per volley), rockfall a94c7378 (rock crashing on stony ground).
+
+# Stage 4 audio prompts (2026-11-26)
+
+| File | Job | Prompt summary |
+|---|---|---|
+| stage4-a | c9460c3d | Viol consort and lute, patient searching melody in F major, slowly building, 72 bpm, reverent, no drums |
+| stage4-b | a17a76f6 | Recorder and harp over soft strings, rising hymn-like melody in D major, gentle frame drum, 76 bpm |
+| cross-a | 052264c3 | 30 s sting: held low note, rising strings and a clear recorder line, resolving to a bright D major chord with bells |
+| cross-b | a5ccc2bd | 30 s sting: hushed organ chord, rising solo violin, harp and strings in a radiant G major hymn cadence, bells |
+
+Stings are built without a loop (tools/build_audio.py build_sting) and played once by Audio.sting(), which dips the stage music under them.

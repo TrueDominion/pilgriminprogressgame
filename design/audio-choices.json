@@ -1,9 +1,13 @@
 {
-  "_doc": "Which generated take each music track uses (audio-src/music/<track>-<take>.m4a). Owner picks by ear; change the letter and run python3 tools/build_audio.py. Owner chose 2026-11-24: title A, stage1 B. Owner chose 2026-11-25: stage2 B. stage3: take A in the game provisionally (2026-11-25) until the owner picks.",
+  "_doc": "Which generated take each music track uses (audio-src/music/<track>-<take>.m4a). Owner picks by ear; change the letter and run python3 tools/build_audio.py. Owner chose 2026-11-24: title A, stage1 B. Owner chose 2026-11-25: stage2 B. Owner chose 2026-11-26: stage3 B. stage4 and the Cross sting: take A provisionally (2026-11-26) until the owner picks. Stings play once, without a loop.",
   "music": {
     "title": "a",
     "stage1": "b",
     "stage2": "b",
-    "stage3": "a"
+    "stage3": "b",
+    "stage4": "a"
+  },
+  "stings": {
+    "cross": "a"
   }
 }
